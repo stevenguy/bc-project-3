@@ -4,7 +4,7 @@ import Books from "./pages/Books";
 import Nav from "./components/Nav";
 
 import NoMatch from "./pages/NoMatch";
-
+import BunrithTest from "./pages/bunrithTest";
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
         <Switch>
             <Route exact path="/" component={Books} />
             <Route exact path="/books" component={Books} />
+            <Route exact path="/buntest" component={BunrithTest} />
             <Route component={NoMatch} />
         </Switch>
       </div>
