@@ -1,6 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Books from "./pages/Books";
+import Transactions from "./pages/Transactions";
 import Nav from "./components/Nav";
 
 import NoMatch from "./pages/NoMatch";
@@ -8,17 +7,16 @@ import BunrithTest from "./pages/bunrithTest";
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Nav />
-        <Switch>
+    <div>
+      <Nav />
+      <Switch>
             <Route exact path="/" component={Books} />
             <Route exact path="/books" component={Books} />
             <Route exact path="/buntest" component={BunrithTest} />
             <Route component={NoMatch} />
-        </Switch>
-      </div>
-    </Router>
+      </Switch>
+      <Transactions />
+    </div>
   );
 }
 
