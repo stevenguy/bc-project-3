@@ -14,7 +14,10 @@ const transactionSchema = new Schema({
   preparer: { type: String, required: true },
   prepared_date: { type: Date, default: Date.now },
   approver: { type: String, required: true },
-  approved_date: { type: Date, default: Date.now }
+  approved_date: { type: Date, default: Date.now },
+  year: { type: Number, required: true },
+  month: { type: Number, required: true },
+  quarter: { type: Number, required: true }
 
 });
 
