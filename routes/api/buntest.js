@@ -1,13 +1,13 @@
 const router = require("express").Router();
-// const booksController = require("../../controllers/bunController");
+const transactionsController = require("../../controllers/transactionsController");
 
-// Matches with "/api/books"
+
 router.route("/")
   .post((req, res) => {
       let data = JSON.parse(req.body.header)
-      console.log(data)
-      //console.log((req.body).replace(' : ""', ''))
-      
+      console.log(data[0])
+      transactionsController.create({body: data[0]})
+
   });
 
 module.exports = router;
