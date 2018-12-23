@@ -6,7 +6,8 @@ router.route("/")
   .post((req, res) => {
       let data = JSON.parse(req.body.header)
       console.log(data[0])
-      transactionsController.create({body: data[0]})
+    //   transactionsController.create({body: data[0]})
+    transactionsController.create({body: data})
 
   });
 
