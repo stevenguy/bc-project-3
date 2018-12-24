@@ -5,7 +5,13 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import classNames from 'classnames';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   //Style goes here
@@ -42,13 +48,74 @@ const styles = theme => ({
       display: 'flex',
       flexWrap: 'wrap',
       alignContent: 'center',
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    flexWrap: 'wrap',
+    display: 'flex',
+    width: '100%',
+    color: 'white'
+  },
+  whiteText: {
+      color: 'white',
+  },
+  cssLabel: {
+      color: 'white !important',
+    '&$cssFocused': {
+      color: 'white',
+    },
+  },
+  cssFocused: {
+      color: 'white',
+      borderColor: 'white',
+  },
+  cssUnderline: {
+    '&:after': {
+      borderBottomColor: 'white',
+      color: 'white',
+      borderColor: 'white',
+    },
+  },
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: 'white',
+    },
+  },
+  notchedOutline: {
+      borderColor: 'rgb(109, 112, 123) !important',
+  },
+  button: {
+      color: 'white',
+      margin: '10px'
   }
 });
 
 class Login extends Component {
     state = {
-      //State goes here
+        userName: '',
+        password: '',
+        showPassword: false,
     }
+
+    handleChange = prop => event => {
+        this.setState({
+          [prop]: event.target.value,
+        });
+      };
+
+    handleFormSubmit = event => {
+    event.preventDefault()
+    console.log('Submit')
+    };
+
+    handleClickShowPassword = () => {
+    this.setState(state => ({ showPassword: !state.showPassword }));
+    };
  
     render() {
       const { classes } = this.props;
@@ -77,12 +144,71 @@ class Login extends Component {
             <Grid item className={classes.card} md={4}>
                 <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
                 <div className={classes.flex}>
-                    <Typography color='inherit' variant="h1" component="h1">
+                    <Typography color='inherit' variant="h5" component="h5">
                     Sign In
                     </Typography>
-                    <Typography color='inherit' variant='h3' component="h3">
-                    Sign In Form Here
-                    </Typography>
+                    <form className={classes.container} noValidate autoComplete="off">
+                        <TextField
+                        id="Username-input"
+                        label="Username"
+                        className={classes.textField}
+                        type="Username"
+                        name="username"
+                        margin="normal"
+                        variant="outlined"
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.cssLabel,
+                                focused: classes.cssFocused,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                input: classes.whiteText,
+                                root: classes.cssOutlinedInput,
+                                focused: classes.cssFocused,
+                                notchedOutline: classes.notchedOutline,
+                            }
+                        }}
+                        />
+                        <TextField
+                        id="outlined-adornment-password"
+                        className={classNames(classes.margin, classes.textField)}
+                        variant="outlined"
+                        type={this.state.showPassword ? 'text' : 'password'}
+                        label="Password"
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.cssLabel,
+                                focused: classes.cssFocused,
+                            },
+                        }}
+                        InputProps={{
+                            endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="Toggle password visibility"
+                                onClick={this.handleClickShowPassword}
+                                className={classes.whiteText}
+                                >
+                                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                            ),
+                            classes: {
+                                input: classes.whiteText,
+                                root: classes.cssOutlinedInput,
+                                focused: classes.cssFocused,
+                                notchedOutline: classes.notchedOutline,
+                              },
+                        }}
+                        />
+                        <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={classes.button}>
+                            Submit
+                        </Button>
+                    </form>
                 </div>
                 </Paper>
             </Grid>
