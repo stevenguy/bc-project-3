@@ -22,15 +22,26 @@ const styles = theme => ({
     height: "100%"
   },
   card: {
-      height: "80%"
+      height: "80%",
   },
   brand: {
-      backgroundColor: "rgb(229, 115, 106)",
-      color: 'white'
+    backgroundColor: "rgb(229, 115, 106)",
+    color: 'rgb(236, 236, 238)',
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignSelf: 'center',
   },
   form: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignSelf: 'center',
     backgroundColor: "rgb(46, 50, 68)",
-    color: 'white'
+    color: 'rgb(109, 112, 123)'
+  },
+  flex: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      alignContent: 'center',
   }
 });
 
@@ -52,6 +63,7 @@ class Login extends Component {
         >
             <Grid item className={classes.card} md={4}>
                 <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
+                    <div className={classes.flex}>
                     <Typography color='inherit' variant="h1" component="h1">
                     Logo Here
                     </Typography>
@@ -59,16 +71,19 @@ class Login extends Component {
                     Welcome to <br />
                     Web Accountant
                     </Typography>
+                    </div>
                 </Paper>
             </Grid>
             <Grid item className={classes.card} md={4}>
                 <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
+                <div className={classes.flex}>
                     <Typography color='inherit' variant="h1" component="h1">
                     Sign In
                     </Typography>
                     <Typography color='inherit' variant='h3' component="h3">
                     Sign In Form Here
                     </Typography>
+                </div>
                 </Paper>
             </Grid>
         </Grid>
