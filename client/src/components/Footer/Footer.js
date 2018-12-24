@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+const drawerWidth = 240;
+
 const styles = theme => ({
     footer: {
       padding: "10px 0px",
@@ -13,6 +15,11 @@ const styles = theme => ({
       bottom: 0,
       left: 0,
       width: "100%",
+      flexGrow: 1,
+      [theme.breakpoints.up('sm')]: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
     },
     link: {
         textDecoration: "none",
