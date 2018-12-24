@@ -83,6 +83,7 @@ const styles = theme => ({
 class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
+    menuArr: ['Dashboard', 'Entries', 'Search', 'Upload', 'Reports']
   };
 
   handleDrawerToggle = () => {
@@ -113,36 +114,25 @@ class ResponsiveDrawer extends React.Component {
       </ExpansionPanel>
         <Divider />
         <List>
-            <NavLink to="/">
-            <ListItem button>
-              <ListItemIcon><HomeIcon /></ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-            </NavLink>
-            <NavLink to="/entries">
-            <ListItem button>
-              <ListItemIcon><CreateIcon /></ListItemIcon>
-              <ListItemText primary="Entries" />
-            </ListItem>
-            </NavLink>
-            <NavLink to="/search">
-            <ListItem button>
-              <ListItemIcon><SearchIcon /></ListItemIcon>
-              <ListItemText primary="Search" />
-            </ListItem>
-            </NavLink>
-            <NavLink to="/upload">
-            <ListItem button>
-              <ListItemIcon><AttachFileIcon /></ListItemIcon>
-              <ListItemText primary="Upload" />
-            </ListItem>
-            </NavLink>
-            <NavLink to="/reports">
-            <ListItem button>
-              <ListItemIcon><BarChartIcon /></ListItemIcon>
-              <ListItemText primary="Reports" />
-            </ListItem>
-            </NavLink>
+        {this.state.menuArr.map(text => (
+             <NavLink to={text}>
+             <ListItem button>
+               <ListItemIcon>{text === "Dashboard" 
+               ? <HomeIcon /> 
+               : text === "Entries"
+               ? <CreateIcon />
+               : text === "Search"
+               ? <SearchIcon />
+               : text === "Upload"
+               ? <AttachFileIcon />
+               : text === "Reports"
+               ? <BarChartIcon />
+               : ""
+              }</ListItemIcon>
+               <ListItemText primary={text} />
+             </ListItem>
+             </NavLink>
+          ))}
         </List>
         <Divider />
       </div>
@@ -162,8 +152,11 @@ class ResponsiveDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-            <Route path="/" exact render={() => <div>Home</div>}/>
-            <Route path="/entries" exact render={() => <div>Entries</div>}/>
+            {this.state.menuArr.map(text => (
+              text === "Home" 
+              ? <Route path="/" exact render={() => <div>Home</div>}/>
+              : <Route path={'/' + text} exact render={() => <div>{text}</div>}/>
+            ))}
             </Typography>
           </Toolbar>
         </AppBar>

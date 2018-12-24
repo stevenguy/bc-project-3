@@ -21,7 +21,7 @@ const styles = theme => ({
   }
 });
 
-class Entries extends Component {
+class Upload extends Component {
     state = {
       //State goes here
     }
@@ -35,7 +35,7 @@ class Entries extends Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography paragraph>
-            This is Entries Component
+           This is Upload Component
           </Typography>
           <Typography paragraph>
             Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
@@ -55,8 +55,8 @@ class Entries extends Component {
           );
         }
       }
-Entries.propTypes = {
+Upload.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Entries);
+export default withStyles(styles)(Upload);
