@@ -77,6 +77,10 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     width: "100%"
+  },
+  brand: {
+    margin: "0",
+    textAlign: 'center'
   }
 });
 
@@ -95,7 +99,9 @@ class ResponsiveDrawer extends React.Component {
 
     const drawer = (
       <div>
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}>
+        <p className={classes.brand}>Logo and Brand Here</p>
+        </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
           <Avatar alt="Login User" src="./images/1.png" className={classes.avatar} />

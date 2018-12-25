@@ -206,7 +206,7 @@ class Login extends Component {
                         }}
                         />
                         <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={classes.button}>
-                            Submit
+                            Log In
                         </Button>
                     </form>
                 </div>
