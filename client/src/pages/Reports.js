@@ -13,7 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { entry } from "prop-types";
-// import Financials from "../components/OptionMenu/financials";
+import Financials from "../components/OptionMenu/financials";
 
 
 const styles = theme => ({
@@ -212,8 +212,8 @@ class Transactions extends Component {
 
   state = {
     financials: 'Select',
-    // accounts: [],
-    year: 'Select',
+    accounts: [],
+    year: [],
     quarter: 'Select',
     month: 'Select',
     transactions: [],
@@ -222,63 +222,65 @@ class Transactions extends Component {
     monthTransactions: []
   };
 
-  handleFinancials = name => event => {
+  handleFinancials = fin => event => {
     this.setState({
-      [name]: event.target.value,
+      [fin]: event.target.value,
     });
   };
 
-  handleYear = name => event => {
+  handleYear = yr => event => {
     this.setState({
-      [name]: event.target.value,
+      [yr]: event.target.value,
     });
   };
 
-  handleQuarter = name => event => {
+  handleQuarter = qtr => event => {
     this.setState({
-      [name]: event.target.value,
+      [qtr]: event.target.value,
     });
   };
 
-  handleMonth = name => event => {
+  handleMonth = mth => event => {
     this.setState({
-      [name]: event.target.value,
+      [mth]: event.target.value,
     });
   };
 
-  // handleAccounts = name => event => {
-  //   this.setState({
-  //     [name]: event.target.value,
-  //   });
-  // };
+  handleAccounts = acct => event => {
+    this.setState({
+      [acct]: event.target.value,
+    });
+  };
 
-  // componentDidMount() {
-  //   this.loadYears();
-  //   this.loadAccounts();
-  // }
-
-  // loadYears = () => {
-  //   API.year()
-  //   .then(res => this.setState({ year: res.data }))
-  //   .catch(err => console.log(err));
-  // };
-
-  // loadAccounts = () => {
-  //   API.accounts()
-  //   .then(res => this.setState({ accounts: res.data }))
-  //   .catch(err => console.log(err));
-  // };
-  
   componentDidMount() {
-    this.loadAggr();
+    API.year()
+    .then(res => this.setState({ year: res.data }))
+    .catch(err => console.log(err));
+    API.accounts()
+    .then(res => this.setState({ accounts: res.data }))
+    .catch(err => console.log(err));
   }
 
+  // componentDidMount() {
+  //   this.loadAggr();
+  // }
+
+  // loadAggr = event => {
+
   loadAggr = () => {
-    API.aggrTransactions()
-    .then(res => 
-      
-      
-      this.setState({ transactions: res.data }))
+    // event.preventDefault();
+    API.aggrTransactions( 
+      // {
+      // type: this.state.financials,
+      // year: this.state.year,
+      // quarter: this.state.quarter,
+      // month: this.state.month,
+      // }
+    )
+
+    // For Each Loop through Menu List
+
+    .then(res => this.setState({ transactions: res.data }))
     .catch(err => console.log(err));
   };
 
@@ -289,9 +291,9 @@ class Transactions extends Component {
     return (
       <Container className={classes.container}>
       <Paper className="row">
-      <form className={classes.container} noValidate autoComplete="off">
+      {/* <form className={classes.container} noValidate autoComplete="off"> */}
       
-        <TextField
+        {/* <TextField
           id="financials"
           select
           label="Financial Report"
@@ -337,7 +339,7 @@ class Transactions extends Component {
             </option>
           ))}
         </TextField> */}
-        <TextField
+        {/* <TextField
           id="year"
           select
           label="Year"
@@ -404,16 +406,16 @@ class Transactions extends Component {
               {m.labelMonth}
             </option>
           ))}
-        </TextField>
-        <Button variant="contained" color="default" className={classes.button}>
+        </TextField> */}
+        {/* <Button variant="contained" color="default" className={classes.button}>
           Run
-        </Button>
-      </form>
-      </Paper>
+        </Button> */}
+      {/* </form> */}
+      </Paper> 
       <div style={ { height: 10 }}></div>
-        {/* <Paper className="row">
-          {/* <Financials /> 
-        </Paper> */}
+        <Paper className="row">
+           <Financials /> 
+        </Paper>
         
         <Paper>
           <Table>
@@ -447,10 +449,6 @@ class Transactions extends Component {
                   // <TableCell colSpan={2}>Total</TableCell>
                   // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
                   // </TableRow>
-                  // <TableRow>
-                  //   <TableCell colSpan={2}>Total</TableCell>
-                  //   <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-                  // </TableRow>
                 );  
               })}
               {/* <TableRow>
@@ -464,14 +462,15 @@ class Transactions extends Component {
               </TableRow> */}
             </TableBody>
           </Table>
+
         </Paper>
       </Container>
     );
   }
 }
 
-// OutlinedTextFields.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
+Transactions.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(Transactions);

@@ -10,6 +10,6 @@ export function List({ children }) {
   );
 }
 
-export function ListItem({ children }) {
-  return <li className="list-group-item">{children}</li>;
+export function Subtotal({ items }) {
+  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }

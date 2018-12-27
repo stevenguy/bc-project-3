@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import API from "../../utils/API";
+import API from "../../utils/API";
 
 const styles = theme => ({
   container: {
@@ -31,198 +30,189 @@ const styles = theme => ({
 
 const financials = [
   {
-    value: '1',
+    value: 1,
     label: 'Balance Sheet',
   },
   {
-    value: '2',
+    value: 2,
     label: 'Income Statement',
   },
   {
-    value: '3',
+    value: 3,
     label: 'Account Details',
   }
 ];
 
-const year = [
-  {
-    value: '0',
-    label: '',
-  },
-  {
-    value: '2019',
-    label: '2019',
-  },
-  {
-    value: '2018',
-    label: '2018',
-  },
-  {
-    value: '2017',
-    label: '2017',
-  }
-];
+// const year = [
+//   {
+//     value: 0,
+//     label: '',
+//   },
+//   {
+//     value: 2019,
+//     label: '2019',
+//   },
+//   {
+//     value: 2018,
+//     label: '2018',
+//   },
+//   {
+//     value: 2017,
+//     label: '2017',
+//   }
+// ];
 
 const month = [
   {
-    valueMonth: '0',
+    valueMonth: 0,
     labelMonth: '',
-    value: '0',
+    value: 0,
     label: '',
   },
   {
-    valueMonth: '1',
+    valueMonth: 1,
     labelMonth: 'January',
-    value: '1',
+    value: 1,
     label: 'Q1',
   },
   {
-    valueMonth: '2',
+    valueMonth: 2,
     labelMonth: 'February',
-    value: '1',
+    value: 1,
     label: 'Q1',
   },
   {
-    valueMonth: '3',
+    valueMonth: 3,
     labelMonth: 'March',
-    value: '1',
+    value: 1,
     label: 'Q1',
   },
   {
-    valueMonth: '4',
+    valueMonth: 4,
     labelMonth: 'April',
-    value: '2',
+    value: 2,
     label: 'Q2',
   },
   {
-    valueMonth: '5',
+    valueMonth: 5,
     labelMonth: 'May',
-    value: '2',
+    value: 2,
     label: 'Q2',
   },
   {
-    valueMonth: '6',
+    valueMonth: 6,
     labelMonth: 'June',
-    value: '2',
+    value: 2,
     label: 'Q2',
   },
   {
-    valueMonth: '7',
+    valueMonth: 7,
     labelMonth: 'July',
-    value: '3',
+    value: 3,
     label: 'Q3',
   },
   {
-    valueMonth: '8',
+    valueMonth: 8,
     labelMonth: 'August',
-    value: '3',
+    value: 3,
     label: 'Q3',
   },
   {
-    valueMonth: '9',
+    valueMonth: 9,
     labelMonth: 'September',
-    value: '3',
+    value: 3,
     label: 'Q3',
   },
   {
-    valueMonth: '10',
+    valueMonth: 10,
     labelMonth: 'October',
-    value: '4',
+    value: 4,
     label: 'Q4',
   },
   {
-    valueMonth: '11',
+    valueMonth: 11,
     labelMonth: 'November',
-    value: '4',
+    value: 4,
     label: 'Q4',
   },
   {
-    valueMonth: '12',
+    valueMonth: 12,
     labelMonth: 'December',
-    value: '4',
+    value: 4,
     label: 'Q4',
   },
 ];
 
 const quarter = [
   {
-    value: '0',
+    value: 0,
     label: '',
   },
   {
-    value: '1',
+    value: 1,
     label: 'Q1',
   },
   {
-    value: '2',
+    value: 2,
     label: 'Q2',
   },
   {
-    value: '3',
+    value: 3,
     label: 'Q3',
   },
   {
-    value: '4',
+    value: 4,
     label: 'Q4',
   }
 ];
 
-class OutlinedTextFields extends React.Component {
+export class OutlinedTextFields extends React.Component {
   state = {
-    financials: 'Select',
-    // accounts: [],
-    year: 'Select',
-    quarter: 'Select',
-    month: 'Select',
+    financials: '',
+    accounts: [],
+    year: [],
+    quarter: '',
+    month: '',
   };
 
-  handleFinancials = name => event => {
+  handleFinancials = fin => event => {
     this.setState({
-      [name]: event.target.value,
+      [fin]: event.target.value,
     });
   };
 
-  handleYear = name => event => {
+  handleYear = yr => event => {
     this.setState({
-      [name]: event.target.value,
+      [yr]: event.target.value,
     });
   };
 
-  handleQuarter = name => event => {
+  handleQuarter = qtr => event => {
     this.setState({
-      [name]: event.target.value,
+      [qtr]: event.target.value,
     });
   };
 
-  handleMonth = name => event => {
+  handleMonth = mth => event => {
     this.setState({
-      [name]: event.target.value,
+      [mth]: event.target.value,
     });
   };
 
-  // handleAccounts = name => event => {
-  //   this.setState({
-  //     [name]: event.target.value,
-  //   });
-  // };
+  handleAccounts = acct => event => {
+    this.setState({
+      [acct]: event.target.value,
+    });
+  };
 
-  // componentDidMount() {
-  //   this.loadYears();
-  //   this.loadAccounts();
-  // }
-
-  // loadYears = () => {
-  //   API.year()
-  //   .then(res => this.setState({ year: res.data }))
-  //   .catch(err => console.log(err));
-  // };
-
-  // loadAccounts = () => {
-  //   API.accounts()
-  //   .then(res => this.setState({ accounts: res.data }))
-  //   .catch(err => console.log(err));
-  // };
-
+  componentDidMount() {
+    API.year()
+    .then(res => this.setState({ year: res.data }))
+    .catch(err => console.log(err));
+    API.accounts()
+    .then(res => this.setState({ accounts: res.data }))
+    .catch(err => console.log(err));
+  }
 
   render() {
     const { classes } = this.props;
@@ -247,35 +237,33 @@ class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {financials.map(f => (
-            <MenuItem key={f.value} value={f.value}>
+            <option key={f.value} value={f.value}>
               {f.label}
-              console.log({this.handleFinancials.value})
-            </MenuItem>
+            </option>
           ))}
         </TextField>
-        {/* <TextField
-          id="year"
+        <TextField
+          id="accounts"
           select
-          label="Year"
+          label="Account"
           className={classes.textField}
-          value={this.state.year}
-          onChange={this.handleYear('year')}
+          value={this.state.accounts}
+          onChange={this.handleAccounts('accounts')}
           SelectProps={{
-            native: true,
             MenuProps: {
               className: classes.menu,
             },
           }}
-          helperText="Year Selection"
+          helperText="Account Selection"
           margin="normal"
           variant="outlined"
         >
           {this.state.accounts.map(i => (
-            <option key={i._id.description} value={i._id.description}>
+            <option key={i._id.account} value={i._id.account}>
               {i._id.description}
             </option>
           ))}
-        </TextField> */}
+        </TextField>
         <TextField
           id="year"
           select
@@ -284,7 +272,6 @@ class OutlinedTextFields extends React.Component {
           value={this.state.year}
           onChange={this.handleYear('year')}
           SelectProps={{
-            native: true,
             MenuProps: {
               className: classes.menu,
             },
@@ -293,9 +280,9 @@ class OutlinedTextFields extends React.Component {
           margin="normal"
           variant="outlined"
         >
-          {year.map(y => (
-            <option key={y.value} value={y.value}>
-              {y.label}
+          {this.state.year.map(y => (
+            <option key={y._id.year} value={y._id.year}>
+              {y._id.year}
             </option>
           ))}
         </TextField>
@@ -316,9 +303,9 @@ class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {quarter.map(q => (
-            <MenuItem key={q.value} value={q.value}>
+            <option key={q.value} value={q.value}>
               {q.label}
-            </MenuItem>
+            </option>
           ))}
         </TextField>
         <TextField
@@ -329,7 +316,6 @@ class OutlinedTextFields extends React.Component {
           value={this.state.month}
           onChange={this.handleMonth('month')}
           SelectProps={{
-            native: true,
             MenuProps: {
               className: classes.menu,
             },
@@ -338,13 +324,14 @@ class OutlinedTextFields extends React.Component {
           margin="normal"
           variant="outlined"
         >
+          {/* Populate based on quarters */}
           {month.map(m => (
             <option key={m.valueMonth} value={m.valueMonth}>
-              {m.labelMonth}  
+              {m.labelMonth}
             </option>
           ))}
         </TextField>
-        <Button variant="contained" color="default" className={classes.button}>
+        <Button onClick={this.props.loadAggr} variant="contained" color="default" className={classes.button}>
           Run
         </Button>
       </form>
