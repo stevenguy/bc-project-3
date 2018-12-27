@@ -9,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { entry } from "prop-types";
@@ -71,24 +70,24 @@ const financials = [
   }
 ];
 
-const year = [
-  {
-    value: 0,
-    label: '',
-  },
-  {
-    value: 2019,
-    label: '2019',
-  },
-  {
-    value: 2018,
-    label: '2018',
-  },
-  {
-    value: 2017,
-    label: '2017',
-  }
-];
+// const year = [
+//   {
+//     value: 0,
+//     label: '',
+//   },
+//   {
+//     value: 2019,
+//     label: '2019',
+//   },
+//   {
+//     value: 2018,
+//     label: '2018',
+//   },
+//   {
+//     value: 2017,
+//     label: '2017',
+//   }
+// ];
 
 const month = [
   {
@@ -253,33 +252,28 @@ class Transactions extends Component {
   };
 
   componentDidMount() {
+    this.loadAccounts();
+    this.loadYear();
+    this.loadAggr();
+  }
+
+  loadYear = () => {
     API.year()
     .then(res => this.setState({ year: res.data }))
     .catch(err => console.log(err));
+  }
+
+  loadAccounts = () => {
     API.accounts()
     .then(res => this.setState({ accounts: res.data }))
     .catch(err => console.log(err));
   }
 
-  // componentDidMount() {
-  //   this.loadAggr();
-  // }
-
   // loadAggr = event => {
 
   loadAggr = () => {
     // event.preventDefault();
-    API.aggrTransactions( 
-      // {
-      // type: this.state.financials,
-      // year: this.state.year,
-      // quarter: this.state.quarter,
-      // month: this.state.month,
-      // }
-    )
-
-    // For Each Loop through Menu List
-
+    API.aggrTransactions()
     .then(res => this.setState({ transactions: res.data }))
     .catch(err => console.log(err));
   };
@@ -291,9 +285,9 @@ class Transactions extends Component {
     return (
       <Container className={classes.container}>
       <Paper className="row">
-      {/* <form className={classes.container} noValidate autoComplete="off"> */}
+      <form className={classes.container} noValidate autoComplete="off">
       
-        {/* <TextField
+        <TextField
           id="financials"
           select
           label="Financial Report"
@@ -310,36 +304,34 @@ class Transactions extends Component {
           variant="outlined"
         >
           {financials.map(f => (
-            <MenuItem key={f.value} value={f.value}>
+            <option key={f.value} value={f.value}>
               {f.label}
-            </MenuItem>
+            </option>
           ))}
         </TextField>
-        {/* { if ()} */}
-        {/* <TextField
-          id="year"
+        <TextField
+          id="accounts"
           select
-          label="Year"
+          label="Account"
           className={classes.textField}
-          value={this.state.year}
-          onChange={this.handleYear('year')}
+          value={this.state.accounts}
+          onChange={this.handleAccounts('accounts')}
           SelectProps={{
-            native: true,
             MenuProps: {
               className: classes.menu,
             },
           }}
-          helperText="Year Selection"
+          helperText="Account Selection"
           margin="normal"
           variant="outlined"
         >
           {this.state.accounts.map(i => (
-            <option key={i._id.description} value={i._id.description}>
+            <option key={i._id.account} value={i._id.account}>
               {i._id.description}
             </option>
           ))}
-        </TextField> */}
-        {/* <TextField
+        </TextField>
+        <TextField
           id="year"
           select
           label="Year"
@@ -347,7 +339,6 @@ class Transactions extends Component {
           value={this.state.year}
           onChange={this.handleYear('year')}
           SelectProps={{
-            native: true,
             MenuProps: {
               className: classes.menu,
             },
@@ -356,9 +347,9 @@ class Transactions extends Component {
           margin="normal"
           variant="outlined"
         >
-          {year.map(y => (
-            <option key={y.value} value={y.value}>
-              {y.label}
+          {this.state.year.map(y => (
+            <option key={y._id.year} value={y._id.year}>
+              {y._id.year}
             </option>
           ))}
         </TextField>
@@ -379,9 +370,9 @@ class Transactions extends Component {
           variant="outlined"
         >
           {quarter.map(q => (
-            <MenuItem key={q.value} value={q.value}>
+            <option key={q.value} value={q.value}>
               {q.label}
-            </MenuItem>
+            </option>
           ))}
         </TextField>
         <TextField
@@ -392,7 +383,6 @@ class Transactions extends Component {
           value={this.state.month}
           onChange={this.handleMonth('month')}
           SelectProps={{
-            native: true,
             MenuProps: {
               className: classes.menu,
             },
@@ -401,47 +391,86 @@ class Transactions extends Component {
           margin="normal"
           variant="outlined"
         >
+          {/* Populate based on quarters */}
           {month.map(m => (
             <option key={m.valueMonth} value={m.valueMonth}>
               {m.labelMonth}
             </option>
           ))}
-        </TextField> */}
-        {/* <Button variant="contained" color="default" className={classes.button}>
+        </TextField>
+        <Button onClick={this.props.loadAggr} variant="contained" color="default" className={classes.button}>
           Run
-        </Button> */}
-      {/* </form> */}
-      </Paper> 
+        </Button>
+      </form>
+      </Paper>
       <div style={ { height: 10 }}></div>
         <Paper className="row">
-           <Financials /> 
+           {/* <Financials />  */}
         </Paper>
-        
+      <div style={ { height: 10 }}></div>  
+      {/* ASSETS */}
         <Paper>
           <Table>
             <TableHead>
               <TableRow className={classes.head}>
-                <TableCell>Description</TableCell>
+                <TableCell>ASSETS</TableCell>
                 <TableCell align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
+          </Table>
+          <Table>
             <TableBody>
-              
-              {this.state.transactions.map((output, i) => {
-                // let sumyearTransactions = {}
-                // if(i.year === 2018 && i.quarter === 3 && i.month === 9){
-                //   sumyearTransactions[i.description] = 0;
-                // }
-                // sumyearTransactions[i.description] += i.amount;
-                // console.log(sumyearTransactions)
-                
+            {this.state.transactions.map((output, i) => {
+                // const assets = output.filter(function(element) {
+                //     return element.type.includes('Expenses');
+                // });
+                // const aSum = assets.reduce(function(sum, element) {
+                //   return sum + element.amount;
+                // }, 0)
+                // console.log(aSum)
+                if (output._id.type === 'Assets'
+                  && output._id.year === 2018
+                  && output._id.quarter === 1
+                  && output._id.month === 1
+                ) {
                 return (
                   <TableRow key={i}>
                     <TableCell>{output._id.description}</TableCell>
-                    {/* <TableCell>{output._id.type}</TableCell>
-                    <TableCell>{output._id.year}</TableCell>
-                    <TableCell>{output._id.quarter}</TableCell>
-                    <TableCell>{output._id.month}</TableCell> */}
+                    <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2} >Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
+                );  
+                }
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+        <div style={ { height: 10 }}></div>
+        {/* Liabilities */}
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow className={classes.head}>
+                <TableCell>LIABILITIES</TableCell>
+                <TableCell align="right">Amount</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+          <Table>
+            <TableBody>
+            {this.state.transactions.map((output, i) => {
+                if (output._id.type === 'Liability'
+                  && output._id.year === 2018
+                  && output._id.quarter === 1
+                  && output._id.month === 1
+                  ) {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{output._id.description}</TableCell>
                     <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
                   </TableRow>
                   // <TableRow>
@@ -450,19 +479,150 @@ class Transactions extends Component {
                   // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
                   // </TableRow>
                 );  
+                }
               })}
-              {/* <TableRow>
-                <TableCell rowSpan={3} />
-                <TableCell colSpan={2}>Total</TableCell>
-                <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell colSpan={2}>Total</TableCell>
-                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-              </TableRow> */}
             </TableBody>
           </Table>
-
+        </Paper>
+        <div style={ { height: 10 }}></div>
+        {/* Retained Earnings */}
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow className={classes.head}>
+                <TableCell>RETAINED EARNINGS</TableCell>
+                <TableCell align="right">Amount</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+          <Table>
+            <TableBody>
+            {this.state.transactions.map((output, i) => {
+                if (output._id.type === 'Retained Earnings' 
+                  && output._id.year === 2018
+                  && output._id.quarter === 1
+                  && output._id.month === 1
+                  ) {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{output._id.description}</TableCell>
+                    <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
+                );  
+                }
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+        <div style={ { height: 10 }}></div>
+        {/* REVENUE */}
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow className={classes.head}>
+                <TableCell>REVENUE</TableCell>
+                <TableCell align="right">Amount</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+          <Table>
+            <TableBody>
+            {this.state.transactions.map((output, i) => {
+                if (output._id.type === 'Revenue'
+                  && output._id.year === 2018
+                  && output._id.quarter === 1
+                  && output._id.month === 1
+                  ) {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{output._id.description}</TableCell>
+                    <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
+                );  
+                }
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+        <div style={ { height: 10 }}></div>
+        {/* EXPENSES */}
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow className={classes.head}>
+                <TableCell>EXPENSES</TableCell>
+                <TableCell align="right">Amount</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+          <Table>
+            <TableBody>
+            {this.state.transactions.map((output, i) => {
+                if (output._id.type === 'Expenses' 
+                  && output._id.year === 2018
+                  && output._id.quarter === 1
+                  && output._id.month === 1
+                  ) {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{output._id.description}</TableCell>
+                    <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
+                );  
+                }
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+        <div style={ { height: 10 }}></div>
+        {/* ACCOUNT DETAILS */}
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow className={classes.head}>
+                <TableCell>ACCOUNT DETAILS</TableCell>
+                <TableCell align="right">Amount</TableCell>
+              </TableRow>
+            </TableHead>
+          </Table>
+          <Table>
+            <TableBody>
+            {this.state.transactions.map((output, i) => {
+                if (output._id.description === 'Advertising' 
+                  && output._id.year === 2018
+                  // && output._id.quarter === 1
+                  // && output._id.month === 1
+                  ) {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{output._id.description}</TableCell>
+                    <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
+                );  
+                }
+              })}
+            </TableBody>
+          </Table>
         </Paper>
       </Container>
     );

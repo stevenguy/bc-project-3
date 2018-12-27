@@ -237,7 +237,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {financials.map(f => (
-            <option key={f.value} value={f.value}>
+            <option ref={this.state.financials} key={f.value} value={f.value}>
               {f.label}
             </option>
           ))}
@@ -259,7 +259,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {this.state.accounts.map(i => (
-            <option key={i._id.account} value={i._id.account}>
+            <option ref={this.state.accounts} key={i._id.account} value={i._id.account}>
               {i._id.description}
             </option>
           ))}
@@ -281,7 +281,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {this.state.year.map(y => (
-            <option key={y._id.year} value={y._id.year}>
+            <option ref={this.state.year} key={y._id.year} value={y._id.year}>
               {y._id.year}
             </option>
           ))}
@@ -303,7 +303,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {quarter.map(q => (
-            <option key={q.value} value={q.value}>
+            <option ref={this.state.quarter} key={q.value} value={q.value}>
               {q.label}
             </option>
           ))}
@@ -326,7 +326,7 @@ export class OutlinedTextFields extends React.Component {
         >
           {/* Populate based on quarters */}
           {month.map(m => (
-            <option key={m.valueMonth} value={m.valueMonth}>
+            <option ref={this.state.month} key={m.valueMonth} value={m.valueMonth}>
               {m.labelMonth}
             </option>
           ))}
