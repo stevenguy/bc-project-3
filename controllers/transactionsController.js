@@ -33,5 +33,95 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  aggr: function(req, res) {
+    console.log('hereeeee')
+    db.Transaction
+      .aggregate(
+        [{ $match: { status: 'Approved' }},
+        { $group: {
+            _id: {
+            description: "$description",
+            type: "$type",
+            year: "$year",
+            quarter: "$quarter",
+            month: "$month",
+            },
+            amount: { $sum: "$amount" }
+          }
+        }]
+      )
+      .then(dbModel => {console.log('here' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .catch(err => {console.log('here2' + err);res.json(err)});
+  },  
+  year: function(req, res) {
+    console.log('hereeeee')
+    db.Transaction
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+              year: "$year"
+            },
+              amount: { $sum: "$amount" }
+          }
+        }]
+      )
+      .then(dbModel => {console.log('here' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .catch(err => {console.log('here2' + err);res.json(err)});
+  },  
+  accounts: function(req, res) {
+    console.log('hereeeee')
+    db.Transaction
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+              account: "$account",
+              description: "$description"
+            },
+              amount: { $sum: "$amount" }
+          }
+        }]
+      )
+      .then(dbModel => {console.log('here' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .catch(err => {console.log('here2' + err);res.json(err)});
+  },  
+  yearly: function(req, res) {
+    console.log('hereeeee')
+    db.Transaction
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+            description: "$description",
+            type: "$type",
+            year: "$year"
+            },
+            amount: { $sum: "$amount" }
+          }
+        }]
+      )
+      .then(dbModel => {console.log('here' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .catch(err => {console.log('here2' + err);res.json(err)});
+  },  
+  quarterly: function(req, res) {
+    console.log('hereeeee')
+    db.Transaction
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+            description: "$description",
+            type: "$type",
+            year: "$year",
+            quarter: "$quarter"
+            },
+            amount: { $sum: "$amount" }
+          }
+        }]
+      )
+      .then(dbModel => {console.log('here' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .catch(err => {console.log('here2' + err);res.json(err)});
   }
 };
