@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { entry } from "prop-types";
 import Financials from "../components/OptionMenu/financials";
+import grey from '@material-ui/core/colors/grey';
 
 
 const styles = theme => ({
@@ -45,7 +46,7 @@ const styles = theme => ({
     minWidth: 700,
   },
   head: {
-    backgroundColor: theme.palette.common.default,
+    backgroundColor: grey[300],
     color: theme.palette.common.white,
   },
   paper: {
@@ -53,6 +54,11 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  // desc: {
+  //   fontWeight: bold,
+  //   fontStyle: italic,
+  //   textDecorationLine: underline,
+  // },
 });
 
 const financials = [
@@ -196,9 +202,9 @@ const quarter = [
 function ccyFormat(num) {
   var nf = new Intl.NumberFormat();
   if (num < 0 ) {
-  return `${nf.format(num * - 1)}`;
+  return `${nf.format(num.toFixed(0))}`;
   }
-  return `${nf.format(num)}`;
+  return `${nf.format(num.toFixed(0))}`;
 }
 
 // function subtotal(items) {
@@ -398,7 +404,7 @@ class Transactions extends Component {
             </option>
           ))}
         </TextField>
-        <Button onClick={this.props.loadAggr} variant="contained" color="default" className={classes.button}>
+        <Button onClick={this.props.loadAggr} variant="contained" color="grey" className={classes.button}>
           Run
         </Button>
       </form>
@@ -430,8 +436,8 @@ class Transactions extends Component {
                 // console.log(aSum)
                 if (output._id.type === 'Assets'
                   && output._id.year === 2018
-                  && output._id.quarter === 1
-                  && output._id.month === 1
+                  && output._id.quarter === 2
+                  && output._id.month === 4
                 ) {
                 return (
                   <TableRow key={i}>
@@ -465,8 +471,8 @@ class Transactions extends Component {
             {this.state.transactions.map((output, i) => {
                 if (output._id.type === 'Liability'
                   && output._id.year === 2018
-                  && output._id.quarter === 1
-                  && output._id.month === 1
+                  && output._id.quarter === 2
+                  && output._id.month === 4
                   ) {
                 return (
                   <TableRow key={i}>
@@ -498,10 +504,10 @@ class Transactions extends Component {
           <Table>
             <TableBody>
             {this.state.transactions.map((output, i) => {
-                if (output._id.type === 'Retained Earnings' 
+                if (output._id.type === 'Retained Earnings'
                   && output._id.year === 2018
-                  && output._id.quarter === 1
-                  && output._id.month === 1
+                  && output._id.quarter === 2
+                  && output._id.month === 4
                   ) {
                 return (
                   <TableRow key={i}>
@@ -596,7 +602,9 @@ class Transactions extends Component {
             <TableHead>
               <TableRow className={classes.head}>
                 <TableCell>ACCOUNT DETAILS</TableCell>
-                <TableCell align="right">Amount</TableCell>
+                <TableCell align="right">MONTH</TableCell>
+                <TableCell align="right">YEAR</TableCell>
+                <TableCell align="right">AMOUNT</TableCell>
               </TableRow>
             </TableHead>
           </Table>
@@ -611,6 +619,8 @@ class Transactions extends Component {
                 return (
                   <TableRow key={i}>
                     <TableCell>{output._id.description}</TableCell>
+                    <TableCell align="right">{output._id.month}</TableCell>
+                    <TableCell align="right">{output._id.year}</TableCell>
                     <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
                   </TableRow>
                   // <TableRow>
