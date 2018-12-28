@@ -6,13 +6,11 @@ import Search from "./pages/Search"
 import Upload from "./pages/Upload"
 import Reports from "./pages/Reports"
 import Login from "./pages/Login"
-import BunrithTest from "./pages/bunrithTest"
 import "./App.css";
 
 function App() {
   return (
     <React.Fragment>
-
       <Router>
       <div className="routerContainer">
         <Switch>
@@ -22,8 +20,6 @@ function App() {
           <Route exact path="/Search" component={Search} />
           <Route exact path="/Upload" component={Upload} />
           <Route exact path="/Reports" component={Reports} />
-          <Route exact path="/buntest" component={BunrithTest} />
-          <Route exact path="/upload" component={Upload} />
         </Switch>
       </div>
       </Router>
