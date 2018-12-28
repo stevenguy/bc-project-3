@@ -104,6 +104,7 @@ module.exports = {
           }
         }]
       )
+      .sort({ amount: -1 })
       .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
   },  
@@ -123,6 +124,7 @@ module.exports = {
           }
         }]
       )
+      .sort({ amount: -1 })
       .then(dbModel => {console.log('QTRLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('QTRLY AGGREGATE2' + err);res.json(err)});
   },
@@ -145,7 +147,8 @@ module.exports = {
         }
       }]
     )
-      .then(dbModel => {console.log('REPORT' + JSON.stringify(dbModel[1])); res.json(dbModel)})
-      .catch(err => {console.log('REPORT 2 ' + err);res.json(err)});
+    .sort({ amount: -1 })
+    .then(dbModel => {console.log('REPORT' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+    .catch(err => {console.log('REPORT 2 ' + err);res.json(err)});
   }
 };
