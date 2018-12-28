@@ -144,7 +144,7 @@ class Upload extends Component {
                             justify="center"
                             style={{padding: '10px'}}>
                             <Paper>
-                            <Grid item xs={12} sm={12}> <h2 style={{textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</h2></Grid>
+                            <Grid item xs={12} sm={12}> <Typography style={{fontSize: 24, textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</Typography></Grid>
                                 <Grid item xs={12} sm={12} >
                                     
                                     <Dropzone onDrop={this.onDrop}>
