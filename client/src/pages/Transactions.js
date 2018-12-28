@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import DeleteBtn from "../components/DeleteBtn";
-import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+
 
 class Transactions extends Component {
   state = {
@@ -12,7 +8,7 @@ class Transactions extends Component {
   };
 
   componentDidMount() {
-    this.loadTransactions();
+    this.loadTransactions()
   }
 
   loadTransactions = () => {
@@ -35,7 +31,7 @@ class Transactions extends Component {
               <TextArea name="synopsis" placeholder="Synopsis (Optional)" />
               <FormBtn>Submit transactions</FormBtn>
             </form>
-          </Col>
+          </Col>  
           <Col size="md-6 sm-12">
             <Jumbotron>
               <h1>transactions On My List</h1>
