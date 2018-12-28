@@ -52,12 +52,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  },
-  // desc: {
-  //   fontWeight: bold,
-  //   fontStyle: italic,
-  //   textDecorationLine: underline,
-  // },
+  }
 });
 
 const financials = [
@@ -223,7 +218,9 @@ class Transactions extends Component {
     transactions: [],
     yearTransactions: [],
     quarterTransactions: [],
-    monthTransactions: []
+    monthTransactions: [],
+    years: '',
+    account:'',
   };
 
   handleFinancials = fin => event => {
@@ -319,7 +316,7 @@ class Transactions extends Component {
           select
           label="Account"
           className={classes.textField}
-          value={this.state.accounts}
+          value={this.state.account}
           onChange={this.handleAccounts('accounts')}
           SelectProps={{
             MenuProps: {
@@ -341,7 +338,7 @@ class Transactions extends Component {
           select
           label="Year"
           className={classes.textField}
-          value={this.state.year}
+          value={this.state.years}
           onChange={this.handleYear('year')}
           SelectProps={{
             MenuProps: {

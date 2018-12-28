@@ -22,12 +22,12 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  // update: function(req, res) {
-  //   db.Transaction
-  //     .findOneAndUpdate({ _id: req.params.id }, req.body)
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => res.status(422).json(err));
-  // },
+  update: function(req, res) {
+    db.Transaction
+      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   remove: function(req, res) {
     db.Transaction
       .findById({ _id: req.params.id })
@@ -37,29 +37,22 @@ module.exports = {
   },
   aggr: function(req, res) {
     console.log('AGGREGATE DATA')
-    console.log(req.params.year)
+    console.log(req.query)
     db.Transaction
-      .find({
-        year: req.params.year
-      })
-
-      // .then(dbModel => {
-      //   dbModel.aggregate(
-      //     [{ $match: { status: 'Approved' }},
-      //     { $group: {
-      //         _id: {
-      //         description: "$description",
-      //         type: "$type",
-      //         year: "$year",
-      //         quarter: "$quarter",
-      //         month: "$month",
-      //         },
-      //         amount: { $sum: "$amount" }
-      //       }
-      //     }]  
-      //   )
-      // }
-      // )
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+              description: "$description",
+              type: "$type",
+              year: "$year",
+              quarter: "$quarter",
+              month: "$month",
+            },
+              amount: { $sum: "$amount" }
+          }
+        }]
+      )
       .then(dbModel => {console.log('AGGREGATE DATA' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('AGGREGATE DATA 2 ' + err);res.json(err)});
   },  
