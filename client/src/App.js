@@ -6,9 +6,7 @@ import Search from "./pages/Search"
 import Upload from "./pages/Upload"
 import Reports from "./pages/Reports"
 import Login from "./pages/Login"
-import Transactions from "./pages/Transactions"
 import BunrithTest from "./pages/bunrithTest"
-import Upload from "./pages/Upload"
 import "./App.css";
 
 function App() {
@@ -24,7 +22,6 @@ function App() {
           <Route exact path="/Search" component={Search} />
           <Route exact path="/Upload" component={Upload} />
           <Route exact path="/Reports" component={Reports} />
-          <Route exact path="/transactions" component={Transactions} />
           <Route exact path="/buntest" component={BunrithTest} />
           <Route exact path="/upload" component={Upload} />
         </Switch>
