@@ -119,9 +119,13 @@ class Upload extends Component {
         if(this.state.length === 0){
             alert('You have not selected any CSV files to Upload.')
         }else{
+            console.log('here')
             var i;
             for(i = 0 ; i < this.state.csv.length ; i++){
-                API.buntest(this.state.csv)
+                if(this.state.csv[i] !== null){
+                    console.log(`this.state[${i}] ` + this.state.csv[i])
+                    API.buntest({data: this.state.csv[i], name: 'Bunrith Buth'})
+                }
             }
         }
       }
@@ -136,12 +140,12 @@ class Upload extends Component {
                     style={{padding: '10px'}}>
                     <Paper>
                     <Grid item xs={12} sm={12}> <h2 style={{textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</h2></Grid>
-                        <Grid item xs={12} sm={12}  style={{  margin: '20px', background: 'white', borderRadius: '5px', border: '2px dashed rgb(0, 135, 247)', height: '200px'}}>
+                        <Grid item xs={12} sm={12} >
                             
                             <Dropzone onDrop={this.onDrop}>
         {({getRootProps, getInputProps, isDragActive}) => {
           return (
-            <div
+            <div style={{  margin: '20px', background: 'white', borderRadius: '5px', border: '2px dashed rgb(0, 135, 247)', height: '200px'}}
               {...getRootProps()}
             >
               <input {...getInputProps()} />
@@ -188,7 +192,7 @@ class Upload extends Component {
                                                     data={i}
                                                     onClick={(e) => this.handleClick(e, i) }
                                                     InputLabelProps={{ shrink: true }}
-                                                    value={(this.state.nameOption == null || this.state.nameOption == '' ) ? '' : this.state.nameOption[i]}
+                                                    value={(this.state.nameOption === null || this.state.nameOption === '' ) ? '' : this.state.nameOption[i]}
                                                     style={{padding: '10px' }}
                                                 />
                                             </ReactFileReader>
