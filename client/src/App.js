@@ -2,8 +2,6 @@ import React from "react";
 import Reports from "./pages/Reports";
 import Nav from "./components/Nav";
 
-import NoMatch from "./pages/NoMatch";
-
 
 function App() {
   return (
@@ -15,4 +13,3 @@ function App() {
 }
 
 export default App;
-
