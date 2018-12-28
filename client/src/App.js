@@ -1,28 +1,35 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Transactions from "./pages/Transactions";
-import Nav from "./components/Nav";
-
-import NoMatch from "./pages/NoMatch";
-import BunrithTest from "./pages/bunrithTest";
-import Upload from "./pages/Upload";
+import Dashboard from "./pages/Dashboard"
+import Entries from "./pages/Entries"
+import Search from "./pages/Search"
+import Upload from "./pages/Upload"
+import Reports from "./pages/Reports"
+import Login from "./pages/Login"
+import BunrithTest from "./pages/bunrithTest"
+import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Nav />
+    <React.Fragment>
+
+      <Router>
+      <div className="routerContainer">
         <Switch>
-          <Route exact path="/" component={Transactions} />
-          <Route exact path="/transactions" component={Transactions} />
+          <Route exact path="/" component={Login} />
+          <Route exact path="/Dashboard" component={Dashboard} />
+          <Route exact path="/Entries" component={Entries} />
+          <Route exact path="/Search" component={Search} />
+          <Route exact path="/Upload" component={Upload} />
+          <Route exact path="/Reports" component={Reports} />
           <Route exact path="/buntest" component={BunrithTest} />
           <Route exact path="/upload" component={Upload} />
-          <Route component={NoMatch} />
         </Switch>
       </div>
-    </Router>
+      </Router>
+    </React.Fragment>
+
   );
 }
 
 export default App;
-

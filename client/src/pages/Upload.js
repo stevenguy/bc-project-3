@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import ReactFileReader from 'react-file-reader';
 import Papa from 'papaparse';
 import Dropzone from 'react-dropzone';
-
+import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import API from '../utils/API'
-
+import Footer from "../components/Footer"
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles'; 
 import TextField from '@material-ui/core/TextField';
@@ -133,6 +133,8 @@ class Upload extends Component {
     render() {
         
         return (
+            <React.Fragment>
+                <ResponsiveDrawer />
             <div style={{ flexGrow: 1 }}>
             <Grid   container 
                     direction="column"
@@ -224,7 +226,8 @@ class Upload extends Component {
                 </Paper>
             </Grid>
             </div>
-
+            <Footer />
+        </React.Fragment>
         )
     }
 }
