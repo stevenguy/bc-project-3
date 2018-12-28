@@ -1,35 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Books from "./pages/Books";
-import Nav from "./components/Nav";
-import firebase from 'firebase'
-import NoMatch from "./pages/NoMatch";
+// import Dashboard from "./pages/Dashboard"
+// import Entries from "./pages/Entries"
+// import Search from "./pages/Search"
+// import Upload from "./pages/Upload"
+// import Reports from "./pages/Reports"
+import Login from "./pages/Login"
+import "./App.css";
+import firebase, { auth, provider } from './utils/firebase.js';
 
 
-firebase.initializeApp({
-  apiKey: "AIzaSyDEdL_X9tsVjxAohlmo-N6z94Fe4Hm2kDQ",
-  authDomain: "project-3-10d7a.firebaseapp.com",
-  databaseURL: "https://project-3-10d7a.firebaseio.com",
-  projectId: "project-3-10d7a",
-  storageBucket: "project-3-10d7a.appspot.com",
-  messagingSenderId: "967245710812"
-});
+class App extends Component {
+
+    render() {
+      return (
+        <React.Fragment>
 
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <Nav />
-        <Switch>
-            <Route exact path="/" component={Books} />
-            <Route exact path="/books" component={Books} />
-            <Route component={NoMatch} />
-        </Switch>
-      </div>
-    </Router>
-  );
-}
 
-export default App;
+          <Router>
+            <div className="routerContainer">
+              <Switch>
+                <Route exact path="/" component={Login} />
+                {/* <Route exact path="/Dashboard" component={Dashboard} />
+          <Route exact path="/Entries" component={Entries} />
+          <Route exact path="/Search" component={Search} />
+          <Route exact path="/Upload" component={Upload} />
+          <Route exact path="/Reports" component={Reports} /> */}
+              </Switch>
+            </div>
+          </Router>
+        </React.Fragment>
+      );
+    }
+  }
+
+  export default App;
+
 
