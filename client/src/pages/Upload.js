@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     root: {
@@ -135,98 +136,100 @@ class Upload extends Component {
         return (
             <React.Fragment>
             <ResponsiveDrawer />
-            <div style={{ flexGrow: 1 }}>
-                <a style={{margin: '80px', display: 'block'}}/>
-                <Grid   container 
-                        direction="column"
-                        justify="center"
-                        style={{padding: '10px'}}>
-                        <Paper>
-                        <Grid item xs={12} sm={12}> <h2 style={{textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</h2></Grid>
-                            <Grid item xs={12} sm={12} >
-                                
-                                <Dropzone onDrop={this.onDrop}>
-                                    {({getRootProps, getInputProps, isDragActive}) => {
-                                    return (
-                                        <div style={{  margin: '20px', background: 'white', borderRadius: '5px', border: '2px dashed rgb(0, 135, 247)', height: '200px'}}
-                                        {...getRootProps()}
-                                        >
-                                        <input {...getInputProps()} />
-                                        {
-                                            isDragActive ?
-                                            <p>Drop files here...</p> :
-                                            <p>Drag in files or Click to Upload. (4 CSV file limit)</p>
-                                        }
-                                        </div> )
-                                    }}
-                                </Dropzone>
-                                            
-                            </Grid>
-                        </Paper>
-                </Grid>
-                {
-                    [1,2,3,4].map((item, i) => {
-                        var varFile = 'File ' + item
-                        return (
-                            <Grid   container 
+            <div style={{ flexGrow: 1}}>
+                <paper>
+                    <a style={{margin: '80px', display: 'block'}}/>
+                    <Grid   container 
                             direction="column"
                             justify="center"
                             style={{padding: '10px'}}>
-                                <Grid item xs={12}>
-                                    <Paper>
-                                        <Grid   container
-                                                direction="row"
-                                                alignItems="center"
-                                                justify="center">
-                                            <Grid item xs={12} sm={3}>
-                                                <h5 style={{padding: '10px', fontWeight: 400}}>Select</h5>
+                            <Paper>
+                            <Grid item xs={12} sm={12}> <h2 style={{textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</h2></Grid>
+                                <Grid item xs={12} sm={12} >
+                                    
+                                    <Dropzone onDrop={this.onDrop}>
+                                        {({getRootProps, getInputProps, isDragActive}) => {
+                                        return (
+                                            <div style={{  margin: '20px', background: 'white', borderRadius: '5px', border: '2px dashed rgb(0, 135, 247)', height: '200px'}}
+                                            {...getRootProps()}
+                                            >
+                                            <input {...getInputProps()} />
+                                            {
+                                                isDragActive ?
+                                                <Typography paragraph>Drop files here...</Typography> :
+                                                <Typography paragraph>Drag in files or Click to Upload. (4 CSV file limit)</Typography>
+                                            }
+                                            </div> )
+                                        }}
+                                    </Dropzone>
+                                                
+                                </Grid>
+                            </Paper>
+                    </Grid>
+                    {
+                        [1,2,3,4].map((item, i) => {
+                            var varFile = 'File ' + item
+                            return (
+                                <Grid   container 
+                                direction="column"
+                                justify="center"
+                                style={{padding: '10px'}}>
+                                    <Grid item xs={12}>
+                                        <Paper>
+                                            <Grid   container
+                                                    direction="row"
+                                                    alignItems="center"
+                                                    justify="center">
+                                                <Grid item xs={12} sm={3}>
+                                                    <Typography h5 style={{padding: '10px', fontWeight: 400}}>Select</Typography>
+                                                </Grid>
+                                                <Grid item xs={12} sm={9}>
+                                                    <ReactFileReader fileTypes={[".csv"]} base64={true} multipleFiles={false} data={i} ref={this.setCurrent} handleFiles={this.handleFiles.bind(this)}>
+                                                        <TextField
+                                                            id="outlined-full-width"
+                                                            label={varFile}
+                                                            placeholder="your_csv_file.csv"
+                                                            //helperText="Full width!"
+                                                            fullWidth
+                                                            margin="normal"
+                                                            variant="outlined"
+                                                            data={i}
+                                                            onClick={(e) => this.handleClick(e, i) }
+                                                            InputLabelProps={{ shrink: true }}
+                                                            value={(this.state.nameOption === null || this.state.nameOption === '' ) ? '' : this.state.nameOption[i]}
+                                                            style={{padding: '10px' }}
+                                                        />
+                                                    </ReactFileReader>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12} sm={9}>
-                                                <ReactFileReader fileTypes={[".csv"]} base64={true} multipleFiles={false} data={i} ref={this.setCurrent} handleFiles={this.handleFiles.bind(this)}>
-                                                    <TextField
-                                                        id="outlined-full-width"
-                                                        label={varFile}
-                                                        placeholder="your_csv_file.csv"
-                                                        //helperText="Full width!"
-                                                        fullWidth
-                                                        margin="normal"
-                                                        variant="outlined"
-                                                        data={i}
-                                                        onClick={(e) => this.handleClick(e, i) }
-                                                        InputLabelProps={{ shrink: true }}
-                                                        value={(this.state.nameOption === null || this.state.nameOption === '' ) ? '' : this.state.nameOption[i]}
-                                                        style={{padding: '10px' }}
-                                                    />
-                                                </ReactFileReader>
-                                            </Grid>
-                                        </Grid>
-                                    </Paper>
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
+                            )
+                        })
+                    }
+                    <Grid item xs={12} style={{padding: '10px'}} justify="center">
+                        <Paper>
+                            <Grid   container
+                                    direction="row"
+                                    alignItems="center"
+                                    justify="center">
+                                <Grid item xs={6} sm={3}>
+                                    <Typography h5 style={{padding: '10px', fontWeight: 400}}>Upload</Typography>
+                                </Grid>
+                                <Grid item xs={6} sm={9}  style={{padding: '10px'}}>
+                                    {this.state.uploaded === 0 ? (
+                                    <Button variant="contained" color="primary" onClick={ this.UploadButton } style={{width:'100%'}}>
+                                        Upload
+                                        <CloudUploadIcon/>
+                                    </Button>) : <h2 color="success">CSV Uploaded!</h2>}
                                 </Grid>
                             </Grid>
-                        )
-                    })
-                }
-                <Grid item xs={12} style={{padding: '10px'}} justify="center">
-                    <Paper>
-                        <Grid   container
-                                direction="row"
-                                alignItems="center"
-                                justify="center">
-                            <Grid item xs={6} sm={3}>
-                                <h5 style={{padding: '10px', fontWeight: 400}}>Upload</h5>
-                            </Grid>
-                            <Grid item xs={6} sm={9}  style={{padding: '10px'}}>
-                                {this.state.uploaded === 0 ? (
-                                <Button variant="contained" color="primary" onClick={ this.UploadButton } style={{width:'100%'}}>
-                                    Upload
-                                    <CloudUploadIcon/>
-                                </Button>) : <h2 color="success">CSV Uploaded!</h2>}
-                            </Grid>
-                        </Grid>
-                    </Paper>
-                </Grid>
+                        </Paper>
+                    </Grid>
+                </paper>
             </div>
-            <Footer /> d
+            <Footer /> 
         </React.Fragment>
         )
     }
