@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import HomeIcon from '@material-ui/icons/Home';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import CreateIcon from '@material-ui/icons/Create';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -124,7 +124,7 @@ class ResponsiveDrawer extends React.Component {
              <NavLink to={text}>
              <ListItem button>
                <ListItemIcon>{text === "Dashboard" 
-               ? <HomeIcon /> 
+               ? <DashboardIcon /> 
                : text === "Entries"
                ? <CreateIcon />
                : text === "Search"

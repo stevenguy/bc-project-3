@@ -22,13 +22,18 @@ const styles = theme => ({
      background: "linear-gradient(42deg, rgba(4,4,32,1) 0%, rgba(26,26,69,1) 32%, rgba(191,76,95,1) 59%, rgba(186,17,17,1) 100%)"
  },
  root: {
-    ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    height: "100%"
+    height: "100%",
+    [theme.breakpoints.down('xs')]: {
+        maxHeight: "300px"
+      },
   },
   card: {
       height: "80%",
+      [theme.breakpoints.down('xs')]: {
+        height: "100%"
+      }
   },
   brand: {
     backgroundColor: "rgb(229, 115, 106)",
@@ -42,7 +47,13 @@ const styles = theme => ({
     flexWrap: 'wrap',
     alignSelf: 'center',
     backgroundColor: "rgb(46, 50, 68)",
-    color: 'rgb(109, 112, 123)'
+    color: 'rgb(109, 112, 123)',
+    [theme.breakpoints.down('xs')]: {
+        position: 'absolute',
+        top: "45%",
+        left: 0,
+        width: "100%"
+      }
   },
   flex: {
       display: 'flex',
@@ -128,20 +139,20 @@ class Login extends Component {
         justify="center"
         alignItems='center'
         >
-            <Grid item className={classes.card} md={4}>
+            <Grid item className={classes.card} sm={6} md={4}>
                 <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
                     <div className={classes.flex}>
-                    <Typography color='inherit' variant="h1" component="h1">
+                    <Typography className={classes.flex} color='inherit' variant="h1" component="h1">
                     Logo Here
                     </Typography>
-                    <Typography color='inherit' variant='h3' component="h3">
+                    <Typography className={classes.flex} color='inherit' variant='h3' component="h3">
                     Welcome to <br />
                     Web Accountant
                     </Typography>
                     </div>
                 </Paper>
             </Grid>
-            <Grid item className={classes.card} md={4}>
+            <Grid item className={classes.card} sm={6} md={4}>
                 <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
                 <div className={classes.flex}>
                     <Typography color='inherit' variant="h5" component="h5">
