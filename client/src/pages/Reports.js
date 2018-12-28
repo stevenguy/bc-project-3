@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import { Col, Row, Container } from "../components/Grid";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -304,7 +303,7 @@ class Transactions extends Component {
     const { classes } = this.props;
 
     return (
-      <Container className={classes.container}>
+      <div className="container">
       <div style={ { height: 10 }}></div>
       <Paper className="row">
       <div style={ { height: 10 }}></div>
@@ -646,7 +645,7 @@ class Transactions extends Component {
           </Table>
         </Paper>
         <div style={ { height: 10 }}></div>
-      </Container>
+      </div>
     );
   }
 }
