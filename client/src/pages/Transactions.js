@@ -6,18 +6,18 @@ import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 
-class Books extends Component {
+class Transactions extends Component {
   state = {
-    books: []
+    transactions: []
   };
 
   componentDidMount() {
-    this.loadBooks();
+    this.loadTransactions();
   }
 
-  loadBooks = () => {
-    API.getBooks()
-      .then(res => this.setState({ books: res.data }))
+  loadTransactions = () => {
+    API.getTransactions()
+      .then(res => this.setState({ transactions: res.data }))
       .catch(err => console.log(err));
   };
 
@@ -27,26 +27,26 @@ class Books extends Component {
         <Row>
           <Col size="md-6">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+              <h1>What transactions Should I Read?</h1>
             </Jumbotron>
             <form>
               <Input name="title" placeholder="Title (required)" />
               <Input name="author" placeholder="Author (required)" />
               <TextArea name="synopsis" placeholder="Synopsis (Optional)" />
-              <FormBtn>Submit Book</FormBtn>
+              <FormBtn>Submit transactions</FormBtn>
             </form>
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
-              <h1>Books On My List</h1>
+              <h1>transactions On My List</h1>
             </Jumbotron>
-            {this.state.books.length ? (
+            {this.state.transactions.length ? (
               <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <a href={"/books/" + book._id}>
+                {this.state.transactions.map(transactions => (
+                  <ListItem key={transactions._id}>
+                    <a href={"/transactions/" + transactions._id}>
                       <strong>
-                        {book.title} by {book.author}
+                        {transactions.title} by {transactions.author}
                       </strong>
                     </a>
                     <DeleteBtn />
@@ -63,4 +63,4 @@ class Books extends Component {
   }
 }
 
-export default Books;
+export default Transactions;
