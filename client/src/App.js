@@ -6,6 +6,9 @@ import Search from "./pages/Search"
 import Upload from "./pages/Upload"
 import Reports from "./pages/Reports"
 import Login from "./pages/Login"
+import Transactions from "./pages/Transactions"
+import BunrithTest from "./pages/bunrithTest"
+import Upload from "./pages/Upload"
 import "./App.css";
 
 function App() {
