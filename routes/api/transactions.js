@@ -5,7 +5,7 @@ const transactionsController = require("../../controllers/transactionsController
 router.route("/")
   .get(transactionsController.findAll)
   .post(transactionsController.create)
-  .get(transactionsController.aggr)
+  .get(transactionsController.reports)
 
 // Aggregate Data by Description, Type, Year, Quarter, Month, and Amount
 router.route("/aggr")

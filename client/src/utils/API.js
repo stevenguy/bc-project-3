@@ -39,6 +39,8 @@ export default {
   // sums data from the database
   accounts: function() {
     return axios.get("/api/transactions/accounts");
+  },
+  reports: function() {
+    return axios.get("/api/transactions/");
   }
-
 };
