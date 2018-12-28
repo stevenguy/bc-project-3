@@ -20,10 +20,6 @@ export default {
   saveTransaction: function(transactionData) {
     return axios.post("/api/transactions", transactionData);
   },
-  // sums data from the database (monthly)
-  aggrTransactions: function() {
-    return axios.get("/api/transactions/aggr");
-  },
   // sums data from the database (quarterly)
   quarterly: function() {
     return axios.get("/api/transactions/quarterly");
@@ -32,14 +28,15 @@ export default {
   yearly: function() {
     return axios.get("/api/transactions/yearly");
   },
-  // sums data from the database
+  // Pulls all the years from the database
   year: function() {
     return axios.get("/api/transactions/year");
   },
-  // sums data from the database
+  // Pulls all the accounts from the database
   accounts: function() {
     return axios.get("/api/transactions/accounts");
   },
+  // sums data from the database (month)
   reports: function() {
     return axios.get("/api/transactions/reports");
   }

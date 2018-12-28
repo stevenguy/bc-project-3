@@ -9,10 +9,6 @@ router.route("/")
 router.route("/reports")
   .get(transactionsController.reports)  
 
-// Aggregate Data by Description, Type, Year, Quarter, Month, and Amount
-router.route("/aggr")
-  .get(transactionsController.aggr)
-
 // Aggregate Data by Description, Type, Year, and Amount
 router.route("/yearly")
   .get(transactionsController.yearly)

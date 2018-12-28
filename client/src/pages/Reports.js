@@ -243,7 +243,6 @@ class Report extends Component {
   componentDidMount() {
     this.loadAccounts();
     this.loadYear();
-    // this.loadAggr();
   }
 
   loadYear = () => {
