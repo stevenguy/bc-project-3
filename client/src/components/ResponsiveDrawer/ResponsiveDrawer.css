@@ -1,0 +1,9 @@
+.green {
+    box-shadow: 0 4px 8px 0 rgba(5, 247, 37, 0.2), 0 6px 20px 0 rgba(8, 226, 44, 0.19) !important;
+    transition: ease-in 300ms;
+}
+
+.red {
+    box-shadow: 0 4px 8px 0 rgba(247, 5, 5, 0.2), 0 6px 20px 0 rgba(226, 8, 8, 0.19) !important;
+    transition: ease-in 300ms;
+}
