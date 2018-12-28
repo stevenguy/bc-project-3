@@ -21,8 +21,8 @@ export default {
     return axios.post("/api/transactions", transactionData);
   },
   // sums data from the database (monthly)
-  aggrTransactions: function() {
-    return axios.get("/api/transactions/aggr");
+  aggrTransactions: function(year) {
+    return axios.get("/api/transactions/aggr/" + year);
   },
   // sums data from the database (quarterly)
   quarterly: function() {

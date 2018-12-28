@@ -223,9 +223,7 @@ class Transactions extends Component {
     transactions: [],
     yearTransactions: [],
     quarterTransactions: [],
-    monthTransactions: [],
-    years: "",
-    account: "",
+    monthTransactions: []
   };
 
   handleFinancials = fin => event => {
@@ -285,29 +283,15 @@ class Transactions extends Component {
     .catch(err => console.log(err));
   };
 
-  handleRun = () => {
-    API.aggrTransactions(
-      {
-        year: this.state.year,
-        quarter: this.state.quarter ? this.state.quarter : '',
-        month: this.state.month ? this.state.month : '',
-        description: this.state.description,
-        type: this.state.type,
-      }
-    )
-    .then(res => this.setState({ transactions: res.data }))
-  }
-
   render() {
     
     const { classes } = this.props;
 
     return (
       <div className="container">
-      <div style={ { height: 10 }}></div>
       <Paper className="row">
-      <div style={ { height: 10 }}></div>
       <form className={classes.container} noValidate autoComplete="off">
+      
         <TextField
           id="financials"
           select
@@ -335,8 +319,8 @@ class Transactions extends Component {
           select
           label="Account"
           className={classes.textField}
-          value={this.state.account}
-          onChange={this.handleAccounts('account')}
+          value={this.state.accounts}
+          onChange={this.handleAccounts('accounts')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -357,8 +341,8 @@ class Transactions extends Component {
           select
           label="Year"
           className={classes.textField}
-          value={this.state.years}
-          onChange={this.handleYear('years')}
+          value={this.state.year}
+          onChange={this.handleYear('year')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -435,38 +419,39 @@ class Transactions extends Component {
             <TableHead>
               <TableRow className={classes.head}>
                 <TableCell>ASSETS</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
+                <TableCell align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
           </Table>
           <Table>
             <TableBody>
             {this.state.transactions.map((output, i) => {
-              // const assets = output.filter(function(element) {
-              //     return element.type.includes('Expenses');
-              // });
-              // const aSum = assets.reduce(function(sum, element) {
-              //   return sum + element.amount;
-              // }, 0)
-              // console.log(aSum)
-              if (output._id.type === 'Assets'
-                && output._id.year === 2018
-                && output._id.quarter === 2
-                && output._id.month === 4
-              ) {
+                // const assets = output.filter(function(element) {
+                //     return element.type.includes('Expenses');
+                // });
+                // const aSum = assets.reduce(function(sum, element) {
+                //   return sum + element.amount;
+                // }, 0)
+                // console.log(aSum)
+                if (output._id.type === 'Assets'
+                  && output._id.year === 2018
+                  && output._id.quarter === 2
+                  && output._id.month === 4
+                ) {
                 return (
                   <TableRow key={i}>
                     <TableCell>{output._id.description}</TableCell>
                     <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
                   </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2} >Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
                 );  
-              }
-            })}
+                }
+              })}
             </TableBody>
-            <TableRow>
-              <TableCell rowSpan={3}>Total</TableCell>
-              <TableCell align="right">CALCULATE BALANCE</TableCell>
-            </TableRow>
           </Table>
         </Paper>
         <div style={ { height: 10 }}></div>
@@ -476,31 +461,32 @@ class Transactions extends Component {
             <TableHead>
               <TableRow className={classes.head}>
                 <TableCell>LIABILITIES</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
+                <TableCell align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
           </Table>
           <Table>
             <TableBody>
             {this.state.transactions.map((output, i) => {
-              if (output._id.type === 'Liability'
-                && output._id.year === 2018
-                && output._id.quarter === 2
-                && output._id.month === 4
-                ) {
+                if (output._id.type === 'Liability'
+                  && output._id.year === 2018
+                  && output._id.quarter === 2
+                  && output._id.month === 4
+                  ) {
                 return (
                   <TableRow key={i}>
                     <TableCell>{output._id.description}</TableCell>
                     <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
                   </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
                 );  
-              }
-            })}
+                }
+              })}
             </TableBody>
-            <TableRow>
-              <TableCell rowSpan={3}>Total</TableCell>
-              <TableCell align="right">CALCULATE BALANCE</TableCell>
-            </TableRow>
           </Table>
         </Paper>
         <div style={ { height: 10 }}></div>
@@ -510,31 +496,32 @@ class Transactions extends Component {
             <TableHead>
               <TableRow className={classes.head}>
                 <TableCell>RETAINED EARNINGS</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
+                <TableCell align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
           </Table>
           <Table>
             <TableBody>
             {this.state.transactions.map((output, i) => {
-              if (output._id.type === 'Retained Earnings'
-                && output._id.year === 2018
-                && output._id.quarter === 2
-                && output._id.month === 4
-                ) {
+                if (output._id.type === 'Retained Earnings'
+                  && output._id.year === 2018
+                  && output._id.quarter === 2
+                  && output._id.month === 4
+                  ) {
                 return (
                   <TableRow key={i}>
                     <TableCell>{output._id.description}</TableCell>
                     <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
                   </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
                 );  
-              }
-            })}
+                }
+              })}
             </TableBody>
-            <TableRow>
-              <TableCell rowSpan={3}>Total</TableCell>
-              <TableCell align="right">CALCULATE BALANCE</TableCell>
-            </TableRow>
           </Table>
         </Paper>
         <div style={ { height: 10 }}></div>
@@ -544,31 +531,32 @@ class Transactions extends Component {
             <TableHead>
               <TableRow className={classes.head}>
                 <TableCell>REVENUE</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
+                <TableCell align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
           </Table>
           <Table>
             <TableBody>
             {this.state.transactions.map((output, i) => {
-              if (output._id.type === 'Revenue'
-                && output._id.year === 2018
-                && output._id.quarter === 1
-                && output._id.month === 1
-                ) {
+                if (output._id.type === 'Revenue'
+                  && output._id.year === 2018
+                  && output._id.quarter === 1
+                  && output._id.month === 1
+                  ) {
                 return (
                   <TableRow key={i}>
                     <TableCell>{output._id.description}</TableCell>
                     <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
                   </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
                 );  
-              }
-            })}
+                }
+              })}
             </TableBody>
-            <TableRow>
-              <TableCell rowSpan={3}>Total</TableCell>
-              <TableCell align="right">CALCULATE BALANCE</TableCell>
-            </TableRow>
           </Table>
         </Paper>
         <div style={ { height: 10 }}></div>
@@ -578,7 +566,7 @@ class Transactions extends Component {
             <TableHead>
               <TableRow className={classes.head}>
                 <TableCell>EXPENSES</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
+                <TableCell align="right">Amount</TableCell>
               </TableRow>
             </TableHead>
           </Table>
@@ -590,19 +578,20 @@ class Transactions extends Component {
                   && output._id.quarter === 1
                   && output._id.month === 1
                   ) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{output._id.description}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
-                    </TableRow>
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{output._id.description}</TableCell>
+                    <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  // <TableRow>
+                  // <TableCell rowSpan={3} />
+                  // <TableCell colSpan={2}>Total</TableCell>
+                  // <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                  // </TableRow>
                 );  
-              }
-            })}
+                }
+              })}
             </TableBody>
-            <TableRow>
-              <TableCell rowSpan={3}>Total</TableCell>
-              <TableCell align="right">CALCULATE BALANCE</TableCell>
-            </TableRow>
           </Table>
         </Paper>
         <div style={ { height: 10 }}></div>
@@ -644,7 +633,6 @@ class Transactions extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 }}></div>
       </div>
     );
   }
