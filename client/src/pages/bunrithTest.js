@@ -35,6 +35,7 @@ class BunrithTest extends Component {
     handleFiles = files => {
         console.log(files.fileList[0])
         console.log(files.base64)
+        console.log(files.fileList[0].name)
 
         Papa.parse(files.fileList[0], {
             header: true,

@@ -5,6 +5,7 @@ import Nav from "./components/Nav";
 
 import NoMatch from "./pages/NoMatch";
 import BunrithTest from "./pages/bunrithTest";
+import Upload from "./pages/Upload";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/" component={Transactions} />
           <Route exact path="/transactions" component={Transactions} />
           <Route exact path="/buntest" component={BunrithTest} />
+          <Route exact path="/upload" component={Upload} />
           <Route component={NoMatch} />
         </Switch>
       </div>
