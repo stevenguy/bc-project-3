@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import API from "../utils/API";
+import Footer from "../components/Footer";
+import Steppers from '../components/Steppers';
+import Typography from '@material-ui/core/Typography';
+import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -52,6 +56,11 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    paddingBottom: '130px',
   }
 });
 
@@ -220,7 +229,7 @@ class Transactions extends Component {
     quarterTransactions: [],
     monthTransactions: [],
     years: '',
-    account:'',
+    account: '',
   };
 
   handleFinancials = fin => event => {
@@ -285,7 +294,11 @@ class Transactions extends Component {
     const { classes } = this.props;
 
     return (
-      <div className="container">
+      <React.Fragment>
+      <ResponsiveDrawer />
+      <main className={classes.content}>
+          <div className={classes.toolbar} />
+      
       <Paper className="row">
       <form className={classes.container} noValidate autoComplete="off">
       
@@ -317,7 +330,7 @@ class Transactions extends Component {
           label="Account"
           className={classes.textField}
           value={this.state.account}
-          onChange={this.handleAccounts('accounts')}
+          onChange={this.handleAccounts('account')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -339,7 +352,7 @@ class Transactions extends Component {
           label="Year"
           className={classes.textField}
           value={this.state.years}
-          onChange={this.handleYear('year')}
+          onChange={this.handleYear('years')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -630,7 +643,10 @@ class Transactions extends Component {
             </TableBody>
           </Table>
         </Paper>
-      </div>
+       
+        </main>
+        <Footer />
+        </React.Fragment>
     );
   }
 }
