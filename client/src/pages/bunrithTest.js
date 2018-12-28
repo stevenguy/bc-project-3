@@ -5,8 +5,6 @@ import Papa from 'papaparse';
 import API from '../utils/API'
 
 
-
-
 class BunrithTest extends Component {
 
     constructor(props) {
