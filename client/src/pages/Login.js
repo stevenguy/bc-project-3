@@ -97,6 +97,8 @@ const styles = theme => ({
     }
 });
 
+var local = localStorage.getItem('user')
+
 class Login extends Component {
     state = {
         userName: '',
@@ -123,16 +125,19 @@ class Login extends Component {
     logout() {
         auth.signOut()
             .then(() => {
-                this.setState(state => ({ user: null}))
+                // this.setState(({user: null}))
+                localStorage.removeItem('user');
+                local = null;
             });
     }
 
     login() {
         auth.signInWithPopup(provider)
             .then((result) => {
-                const user = result.user;
-                console.log(user)
-                this.state.user = user;
+                console.log(result.user);
+                localStorage.setItem('user', result.user);
+                local = localStorage.getItem('user');
+                // this.setState(({ user: result.user}))
             });
     }
 
@@ -173,15 +178,11 @@ class Login extends Component {
                     <Grid item className={classes.card} md={4}>
                         <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
                             <div className={classes.flex}>
-
-                                {this.state.user ?
+                                {local ?
                                     <button onClick={this.logout}>Log Out</button>
                                     :
                                     <button onClick={this.login}>Log In</button>
                                 }
-
-
-
                             </div>
                         </Paper>
                     </Grid>
