@@ -21,10 +21,14 @@ function App() {
           <Route exact path="/Search" component={Search} />
           <Route exact path="/Upload" component={Upload} />
           <Route exact path="/Reports" component={Reports} />
+          <Route exact path="/transactions" component={Transactions} />
+          <Route exact path="/buntest" component={BunrithTest} />
+          <Route exact path="/upload" component={Upload} />
         </Switch>
       </div>
       </Router>
     </React.Fragment>
+
   );
 }
 
