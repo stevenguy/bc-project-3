@@ -41,6 +41,6 @@ export default {
     return axios.get("/api/transactions/accounts");
   },
   reports: function() {
-    return axios.get("/api/transactions/");
+    return axios.get("/api/transactions/reports");
   }
 };

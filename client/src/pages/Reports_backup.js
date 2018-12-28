@@ -216,7 +216,7 @@ function ccyFormat(num) {
 
 // const total = subtotal();
 
-class Report extends Component {
+class Transactions extends Component {
 
   state = {
     accounts: [],
@@ -656,8 +656,8 @@ class Report extends Component {
   }
 }
 
-Report.propTypes = {
+Transactions.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Report);
+export default withStyles(styles)(Transactions);

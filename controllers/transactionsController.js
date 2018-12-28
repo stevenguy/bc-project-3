@@ -127,24 +127,25 @@ module.exports = {
       .catch(err => {console.log('QTRLY AGGREGATE2' + err);res.json(err)});
   },
   reports: function(req, res) {
-    console.log('AGGREGATE DATA')
+    console.log('REPORT DATA')
     console.log(req.query)
+    console.log(req.params)
     db.Transaction
-      .aggregate(
-        [{ $match: {status: 'Approved' }},
-        { $group: {
-            _id: {
-              description: "$description",
-              type: "$type",
-              year: "$year",
-              quarter: "$quarter",
-              month: "$month",
-            },
-              amount: { $sum: "$amount" }
-          }
-        }]
-      )
-      .then(dbModel => {console.log('AGGREGATE DATA' + JSON.stringify(dbModel[1])); res.json(dbModel)})
-      .catch(err => {console.log('AGGREGATE DATA 2 ' + err);res.json(err)});
+    .aggregate(
+      [{ $match: {status: 'Approved' }},
+      { $group: {
+          _id: {
+            description: "$description",
+            type: "$type",
+            year: "$year",
+            quarter: "$quarter",
+            month: "$month",
+          },
+            amount: { $sum: "$amount" }
+        }
+      }]
+    )
+      .then(dbModel => {console.log('REPORT' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .catch(err => {console.log('REPORT 2 ' + err);res.json(err)});
   }
 };
