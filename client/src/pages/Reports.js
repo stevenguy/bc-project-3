@@ -286,6 +286,19 @@ class Transactions extends Component {
     .catch(err => console.log(err));
   };
 
+  handleRun = () => {
+    API.aggrTransactions(
+      {
+        year: this.state.year,
+        quarter: this.state.quarter ? this.state.quarter : '',
+        month: this.state.month ? this.state.month : '',
+        description: this.state.description,
+        type: this.state.type,
+      }
+    )
+    .then(res => this.setState({ transactions: res.data }))
+  }
+
   render() {
     
     const { classes } = this.props;

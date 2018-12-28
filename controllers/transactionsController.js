@@ -37,20 +37,25 @@ module.exports = {
   },
   aggr: function(req, res) {
     console.log('AGGREGATE DATA')
+    console.log(req.query)
     db.Transaction
-      .aggregate(
-        [{ $match: { status: 'Approved' }},
-        { $group: {
-            _id: {
-            description: "$description",
-            type: "$type",
-            year: "$year",
-            quarter: "$quarter",
-            month: "$month",
-            },
-            amount: { $sum: "$amount" }
-          }
-        }]
+      .find(req.query)
+      .then(dbModel => {
+        dbModel.aggregate(
+          [{ $match: { status: 'Approved' }},
+          { $group: {
+              _id: {
+              description: "$description",
+              type: "$type",
+              year: "$year",
+              quarter: "$quarter",
+              month: "$month",
+              },
+              amount: { $sum: "$amount" }
+            }
+          }]
+        )
+      }
       )
       .then(dbModel => {console.log('AGGREGATE DATA' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('AGGREGATE DATA 2 ' + err);res.json(err)});
