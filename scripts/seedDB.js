@@ -13168,7 +13168,7 @@ const transactionSeed = [
     quarter: 1
   },
   {
-    date: new Date('2017-01-28'),
+    date: new Date('2017-02-28'),
     account: '70000',
     description: 'Close Account',
     type: 'Month End',
@@ -13182,7 +13182,7 @@ const transactionSeed = [
     approved_date: new Date('2017-01-28'),
     status: 'Approved',
     year: 2017,
-    month: 1,
+    month: 2,
     quarter: 1
   },
   {
@@ -13384,7 +13384,7 @@ const transactionSeed = [
     quarter: 1
   },
   {
-    date: new Date('2017-01-28'),
+    date: new Date('2017-02-28'),
     account: '60000',
     description: 'Retained Earnings',
     type: 'Retained Earnings',
@@ -13398,7 +13398,7 @@ const transactionSeed = [
     approved_date: new Date('2017-01-28'),
     status: 'Approved',
     year: 2017,
-    month: 1,
+    month: 2,
     quarter: 1
   },
   {
@@ -13600,7 +13600,7 @@ const transactionSeed = [
     quarter: 1
   },
   {
-    date: new Date('2018-01-28'),
+    date: new Date('2018-02-28'),
     account: '70000',
     description: 'Close Account',
     type: 'Month End',
@@ -13614,7 +13614,7 @@ const transactionSeed = [
     approved_date: new Date('2018-01-28'),
     status: 'Approved',
     year: 2018,
-    month: 1,
+    month: 2,
     quarter: 1
   },
   {
@@ -13816,7 +13816,7 @@ const transactionSeed = [
     quarter: 1
   },
   {
-    date: new Date('2018-01-28'),
+    date: new Date('2018-02-28'),
     account: '60000',
     description: 'Retained Earnings',
     type: 'Retained Earnings',
@@ -13830,7 +13830,7 @@ const transactionSeed = [
     approved_date: new Date('2018-01-28'),
     status: 'Approved',
     year: 2018,
-    month: 1,
+    month: 2,
     quarter: 1
   },
   {

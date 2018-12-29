@@ -448,11 +448,11 @@ class Report extends Component {
         </Button>
       </form>
       </Paper>
-      <div style={ { height: 10 }}></div>
+      <div style={ { height: 10 } }></div>
         <Paper className="row">
            {/* <Financials />  */}
         </Paper>
-      <div style={ { height: 10 }}></div>  
+      <div style={ { height: 10 } }></div>
       {/* ASSETS */}
         <Paper>
           <Table>
@@ -494,7 +494,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 }}></div>
+        <div style={ { height: 10 } }></div>
         {/* Liabilities */}
         <Paper>
           <Table>
@@ -529,7 +529,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 }}></div>
+        <div style={ { height: 10 } }></div>
         {/* Retained Earnings */}
         <Paper>
           <Table>
@@ -564,7 +564,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 }}></div>
+        <div style={ { height: 10 } }></div>
         {/* REVENUE */}
         <Paper>
           <Table>
@@ -599,7 +599,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 }}></div>
+        <div style={ { height: 10 } }></div>
         {/* EXPENSES */}
         <Paper>
           <Table>
@@ -634,7 +634,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 }}></div>
+        <div style={ { height: 10 } }></div>
         {/* ACCOUNT DETAILS */}
         <Paper>
           <Table>
