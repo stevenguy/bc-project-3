@@ -188,6 +188,7 @@ function ccyFormat(num) {
   if (num < 0 ) {
   return `${nf.format(num.toFixed(0))}`;
   }
+  return `${nf.format(num.toFixed(0))}`;
 }
 
 // function subtotal(items) {
