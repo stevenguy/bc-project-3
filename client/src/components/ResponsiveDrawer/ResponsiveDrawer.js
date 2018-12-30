@@ -121,7 +121,7 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>
         {this.state.menuArr.map(text => (
-             <NavLink to={text}>
+             <NavLink key={text} to={text}>
              <ListItem button>
                <ListItemIcon>{text === "Dashboard" 
                ? <DashboardIcon /> 
@@ -160,8 +160,8 @@ class ResponsiveDrawer extends React.Component {
             <Typography variant="h6" color="inherit" noWrap>
             {this.state.menuArr.map(text => (
               text === "Home" 
-              ? <Route path="/" exact render={() => <div>Home</div>}/>
-              : <Route path={'/' + text} exact render={() => <div>{text}</div>}/>
+              ? <Route key={text} path="/" exact render={() => <div>Home</div>}/>
+              : <Route key={text} path={'/' + text} exact render={() => <div>{text}</div>}/>
             ))}
             </Typography>
           </Toolbar>

@@ -19,6 +19,10 @@ export default {
   // Saves a transaction to the database
   saveTransaction: function(transactionData) {
     return axios.post("/api/transactions", transactionData);
+  },
+  // Get list of available accounts
+  getAccount: function() {
+    return axios.get("/api/accounts")
   }
 
 };

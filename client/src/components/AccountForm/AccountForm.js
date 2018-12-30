@@ -25,61 +25,84 @@ const styles = theme => ({
 
 class AccountForm extends Component {
     state = {
-      //State goes here
         name: '',
         number: '',
-        type: '',
+        newName: this.props.newAccount.name || '',
+        newNumber: this.props.newAccount.number || '',
+        newType: this.props.newAccount.type || '',
+        type: this.props.account.type || '',
         labelWidth: 0,
-        newBtn: "Create New Account"
+        newBtn: "Create New Account",
+        accountID: this.props.account._id || ''
     }
 
-    handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value })
-    };
+    handleChange = name => event => {
+        let account = this.props.accounts.find(account => account._id === event.target.value )
+        this.setState({ 
+            [name]: event.target.value,
+            type: account.type,
+            name: account.name,
+            number: account.number
+        }, () => this.props.storeAccount(account))
+    }
+
+    handleNewChange = event => {
+        let newAccount = {
+            name: this.state.newName,
+            number: this.state.newNumber,
+            type: this.state.newType
+        }
+        this.setState({[event.target.name]: event.target.value}, 
+            () => this.props.storeAccount(newAccount)
+        )
+    }
     
     createNew = event => {
-       console.log('click')
+      this.props.isNew 
+      ? this.setState({newBtn: 'Create New Account'}, () => this.props.checkNew(false))
+      : this.setState({newBtn: 'Select Existing Account'}, () => this.props.checkNew(true)) 
     }
+
     render() {
       const { classes } = this.props;
 
       return (
         <React.Fragment>
             <form className={classes.root} autoComplete="off">
-            {this.props.new ?
+            {this.props.isNew ?
                 <React.Fragment>
                 <FormControl className={classes.formControl}>
                     <TextField
-                        id="name"
-                        name="name"
+                        id="newName"
+                        name="newName"
                         label="Account Name"
                         className={classes.textField}
-                        value={this.state.name}
-                        onChange={this.handleChange}
+                        value={this.state.newName}
+                        onChange={this.handleNewChange}
                         margin="normal"
                         >
                     </TextField>
                 </FormControl>
                 <FormControl className={classes.formControl}>
                     <TextField
-                        id="number"
-                        name="number"
+                        id="newNumber"
+                        name="newNumber"
                         label="Account Number"
                         className={classes.textField}
-                        value={this.state.number}
-                        onChange={this.handleChange}
+                        value={this.state.newNumber}
+                        onChange={this.handleNewChange}
                         margin="normal"
                         >
                     </TextField>
                 </FormControl>
                 <FormControl className={classes.formControl}>
                     <TextField
-                        id="type"
-                        name="type"
+                        id="newType"
+                        name="newType"
                         label="Account Type"
                         className={classes.textField}
-                        value={this.state.type}
-                        onChange={this.handleChange}
+                        value={this.state.newType}
+                        onChange={this.handleNewChange}
                         margin="normal"
                         >
                     </TextField>
@@ -93,8 +116,8 @@ class AccountForm extends Component {
                         select
                         label="Account Name"
                         className={classes.textField}
-                        value={this.state.name}
-                        onChange={this.handleChange}
+                        value={this.state.accountID}
+                        onChange={this.handleChange('accountID')}
                         SelectProps={{
                             MenuProps: {
                             className: classes.formControl,
@@ -102,9 +125,9 @@ class AccountForm extends Component {
                         }}
                         margin="normal"
                         >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {this.props.accounts.map(account=> (
+                           <MenuItem key={account._id} value={account._id}>{account.name}</MenuItem> 
+                        ))}
                     </TextField>
                 </FormControl>
                 <FormControl className={classes.formControl}>
@@ -114,8 +137,8 @@ class AccountForm extends Component {
                         name="number"
                         label="Account Number"
                         className={classes.textField}
-                        value={this.state.number}
-                        onChange={this.handleChange}
+                        value={this.state.accountID}
+                        onChange={this.handleChange('accountID')}
                         SelectProps={{
                             MenuProps: {
                             className: classes.formControl,
@@ -123,9 +146,9 @@ class AccountForm extends Component {
                         }}
                         margin="normal"
                         >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {this.props.accounts.map(account => (
+                           <MenuItem key={account._id} value={account._id}>{account.number}</MenuItem> 
+                        ))}
                     </TextField>
                 </FormControl>
                 <FormControl className={classes.formControl}>

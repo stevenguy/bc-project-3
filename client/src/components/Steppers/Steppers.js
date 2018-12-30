@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {AccountForm, EntriesForm} from "../AccountForm";
 
+
 const styles = theme => ({
   root: {
     width: '90%',
@@ -29,19 +30,30 @@ class Steppers extends React.Component {
   state = {
     activeStep: 0,
     isError: false,
-    index: null
+    index: null,
   };
 
-  isStepFailed = (step) => {
-    return step === this.state.index;
-  };
+    isStepFailed = (step) => {
+        return step === this.state.index;
+    };
+
 
   handleNext = () => {
-    this.props.validate 
-    ? this.setState(state => ({
-      activeStep: state.activeStep + 1, isError: false, index: null 
-    }))
-    : this.setState({isError: true, index: this.state.activeStep})
+    if(this.props.isNew) {
+        if (this.props.newAccount.name && this.props.newAccount.number && this.props.newAccount.type) {
+            this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+        }
+        else {
+            this.setState({isError: true, index: this.state.activeStep})
+        } 
+    } else {
+        if (this.props.account.name) {
+            this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+        }
+        else {
+            this.setState({isError: true, index: this.state.activeStep})
+        } 
+    }
   };
 
   handleBack = () => {
@@ -59,7 +71,7 @@ class Steppers extends React.Component {
   getStepContent = (stepIndex) => {  
   switch (stepIndex) {
     case 0:
-      return <AccountForm />
+      return <AccountForm newAccount={this.props.newAccount} checkNew={this.props.checkNew} isNew={this.props.isNew} account= {this.props.account} accounts= {this.props.accounts} storeAccount= {this.props.storeAccount} />
     case 1:
       return <EntriesForm />
     case 2:

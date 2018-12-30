@@ -8,6 +8,34 @@ mongoose.connect(
   "mongodb://localhost/bookkeeping"
 );
 
+const accountSeed = [
+  {
+    name: 'Inventory',
+    number: 12000,
+    type: 'Assets'
+  },
+  {
+    name: 'Supplies',
+    number: 50200,
+    type: 'Expenses'
+  },
+  {
+    name: 'Cash',
+    number: 10000,
+    type: 'Assets'
+  },
+  {
+    name: 'Investment',
+    number: 10500,
+    type: 'Assets'
+  },
+  {
+    name: 'Advertising',
+    number: 50500,
+    type: 'Expenses'
+  }
+]
+
 const transactionSeed = [
   {
     date: new Date('2017-01-01'),
@@ -27158,10 +27186,9 @@ const transactionSeed = [
 db.Transaction
   .remove({})
   .then(() => db.Transaction.collection.insertMany(transactionSeed))
-  .then(data => {
-    console.log(data.result.n + " records inserted!");
-    process.exit(0);
-  })
+  .then(() => db.Account.remove({}))
+  .then(() => db.Account.collection.insertMany(accountSeed))
+  .then(() => process.exit(0))
   .catch(err => {
     console.error(err);
     process.exit(1);
