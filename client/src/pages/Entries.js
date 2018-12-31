@@ -84,10 +84,9 @@ class Entries extends Component {
         let entriesArr = []
         let account
         this.state.isNew ? account = this.state.newAccount : account = this.state.account
-        console.log(account)
         for (let i = 0; i < this.state.entries.length; i++) {
           entriesArr.push({
-            date: new Date(),
+            date: this.state.entries[i].date,
             account: account.number,
             description: account.name,
             type: account.type,
@@ -97,12 +96,10 @@ class Entries extends Component {
             amount: this.state.entries[i].amount,
             preparer: 'Mearat',
             prepared_date: new Date(),
-            status: 'Pending',
-
+            status: 'Pending'
           })
-          
         }
-        // API.postEntries()
+        API.saveTransaction(entriesArr)
       }
 
     render() {
