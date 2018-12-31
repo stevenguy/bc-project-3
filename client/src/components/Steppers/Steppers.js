@@ -44,6 +44,9 @@ class Steppers extends React.Component {
 
   handleNext = (event) => {
     event.preventDefault()
+    if (this.state.activeStep === 2) {
+        this.props.submitForm()
+    }
     if (this.state.activeStep === 0) {
         if (this.props.isNew) {
             if (this.props.newAccount.name && this.props.newAccount.number && this.props.newAccount.type) {
@@ -82,7 +85,13 @@ class Steppers extends React.Component {
   getStepContent = (stepIndex) => {  
   switch (stepIndex) {
     case 0:
-      return <AccountForm newAccount={this.props.newAccount} checkNew={this.props.checkNew} isNew={this.props.isNew} account= {this.props.account} accounts= {this.props.accounts} storeAccount= {this.props.storeAccount} />
+      return <AccountForm 
+      newAccount={this.props.newAccount} 
+      checkNew={this.props.checkNew} 
+      isNew={this.props.isNew} 
+      account= {this.props.account} 
+      accounts= {this.props.accounts} 
+      storeAccount= {this.props.storeAccount} />
     case 1:
       return <EntriesForm 
       entries={this.props.entries} 
@@ -95,6 +104,8 @@ class Steppers extends React.Component {
       handleChange={this.props.handleChange} 
       handleAdd={this.props.handleAdd} 
       handleRemove={this.props.handleRemove}
+      selectedDate={this.props.selectedDate}
+      handleDateChange={this.props.handleDateChange}
       />
     case 2:
       return <SubmitForm

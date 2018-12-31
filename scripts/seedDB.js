@@ -27187,9 +27187,30 @@ db.Transaction
   .remove({})
   .then(() => db.Transaction.collection.insertMany(transactionSeed))
   .then(() => db.Account.remove({}))
-  .then(() => db.Account.collection.insertMany(accountSeed))
+  .then(() => db.Transaction.aggregate(
+    [
+      {
+        $group: {
+          _id: {
+            number: {$toInt : '$account'}, 
+            name: '$description', 
+            type: '$type'
+          }
+        }
+      }
+    ]
+  ))
+  .then((data) => {
+    let dataArr =[]
+    data.forEach(element => {
+      dataArr.push(element._id)
+    })
+    return db.Account.collection.insertMany(dataArr)
+  })
   .then(() => process.exit(0))
   .catch(err => {
     console.error(err);
     process.exit(1);
   });
+
+  

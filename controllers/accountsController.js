@@ -4,7 +4,10 @@ module.exports = {
     findAll: function(req, res) {
       db.Account
         .find({})
-        .then(accounts => res.json(accounts))
+        .then(accounts => {
+            console.log(accounts)
+            res.json(accounts)
+        })
         .catch(err => res.status(422).json(err));
     }
 }

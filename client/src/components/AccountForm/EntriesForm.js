@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -14,6 +15,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const styles = theme => ({
   //Style goes here
@@ -31,7 +34,7 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing.unit,
-    alignSelf: 'center'
+    alignSelf: 'center',
   }
 });
 
@@ -40,8 +43,6 @@ class EntriesForm extends Component {
       //State goes here
         labelWidth: 0,
     }
-
-    
 
     render() {
       const { classes } = this.props;
@@ -68,6 +69,20 @@ class EntriesForm extends Component {
                 {this.props.entries.map((entry, index) => (
                     <React.Fragment key={index}>
                     <div className={classes.root}>
+                    <FormControl className={classes.formControl}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Grid container className={classes.grid} justify="space-around">
+                    <DatePicker
+                        id='date'
+                        margin="normal"
+                        label="Date"
+                        format='MM/dd/yy'
+                        value={this.props.entries[index].date}
+                        onChange={this.props.handleDateChange(index)}
+                    />
+                    </Grid>
+                    </MuiPickersUtilsProvider>
+                    </FormControl>
                     <FormControl className={classes.formControl}>
                         <TextField
                             id="description"

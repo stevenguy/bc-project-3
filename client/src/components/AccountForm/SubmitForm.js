@@ -47,7 +47,8 @@ class SubmitForm extends Component {
                     <TableCell align='justify'>Account Name</TableCell>
                     <TableCell align="justify">Account Number</TableCell>
                     <TableCell align="justify">Account Type</TableCell>
-                    <TableCell align="justify">Description</TableCell>
+                    <TableCell align="justify">Date</TableCell>
+                    <TableCell align="justify">Transaction</TableCell>
                     <TableCell align="justify">Memo</TableCell>
                     <TableCell align="justify">Details</TableCell>
                     <TableCell align="justify">Amount</TableCell>
@@ -59,6 +60,7 @@ class SubmitForm extends Component {
                         <TableCell align='justify'>{this.props.isNew ? this.props.newAccount.name : this.props.account.name}</TableCell>
                         <TableCell align="justify">{this.props.isNew ? this.props.newAccount.number : this.props.account.number}</TableCell>
                         <TableCell align="justify">{this.props.isNew ? this.props.newAccount.type : this.props.account.type}</TableCell>
+                        <TableCell align="justify">{entry.date.toLocaleDateString()}</TableCell>
                         <TableCell align="justify">{entry.description}</TableCell>
                         <TableCell align="justify">{entry.memo}</TableCell>
                         <TableCell align="justify">{entry.details}</TableCell>
