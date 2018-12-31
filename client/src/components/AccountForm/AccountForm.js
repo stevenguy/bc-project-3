@@ -12,6 +12,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center'
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -21,6 +22,9 @@ const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
+  div: {
+      flex: '100%'
+  }
 });
 
 class AccountForm extends Component {
@@ -68,56 +72,76 @@ class AccountForm extends Component {
 
       return (
         <React.Fragment>
-            <form className={classes.root} autoComplete="off">
+            <div className={classes.root}>
+            <Button className={classes.div} onClick={this.createNew} color="primary">
+                {this.state.newBtn}
+            </Button>
             {this.props.isNew ?
                 <React.Fragment>
-                <FormControl className={classes.formControl}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="newName"
                         name="newName"
                         label="Account Name"
+                        required
                         className={classes.textField}
                         value={this.state.newName}
                         onChange={this.handleNewChange}
                         margin="normal"
+                        InputProps={{
+                            form:'form1'
+                            }}
                         >
                     </TextField>
                 </FormControl>
-                <FormControl className={classes.formControl}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="newNumber"
                         name="newNumber"
+                        type="number"
                         label="Account Number"
+                        required
                         className={classes.textField}
                         value={this.state.newNumber}
                         onChange={this.handleNewChange}
                         margin="normal"
+                        InputProps={{
+                            form:'form1'
+                            }}
                         >
                     </TextField>
                 </FormControl>
-                <FormControl className={classes.formControl}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="newType"
                         name="newType"
                         label="Account Type"
+                        required
                         className={classes.textField}
                         value={this.state.newType}
                         onChange={this.handleNewChange}
                         margin="normal"
+                        InputProps={{
+                            form:'form1'
+                            }}
                         >
                     </TextField>
                 </FormControl>
                 </React.Fragment>
                 : <React.Fragment>
-                <FormControl className={classes.formControl}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="name"
                         name="name"
                         select
                         label="Account Name"
+                        required
                         className={classes.textField}
                         value={this.state.accountID}
                         onChange={this.handleChange('accountID')}
+                        InputProps={{
+                            form:'form1'
+                            }}
                         SelectProps={{
                             MenuProps: {
                             className: classes.formControl,
@@ -130,15 +154,19 @@ class AccountForm extends Component {
                         ))}
                     </TextField>
                 </FormControl>
-                <FormControl className={classes.formControl}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="number"
                         select
                         name="number"
                         label="Account Number"
+                        required
                         className={classes.textField}
                         value={this.state.accountID}
                         onChange={this.handleChange('accountID')}
+                        InputProps={{
+                            form:'form1'
+                            }}
                         SelectProps={{
                             MenuProps: {
                             className: classes.formControl,
@@ -151,24 +179,23 @@ class AccountForm extends Component {
                         ))}
                     </TextField>
                 </FormControl>
-                <FormControl className={classes.formControl}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="type"
                         label="Account Type"
                         name="type"
+                        required
                         value={this.state.type}
                         className={classes.textField}
                         margin="normal"
                         InputProps={{
-                            readOnly: true,
+                            form:'form1',
+                            readOnly: true
                         }}
                     />
                 </FormControl>
                 </React.Fragment>}
-            </form>
-            <Button onClick={this.createNew} color="primary">
-            {this.state.newBtn}
-          </Button>
+            </div>
         </React.Fragment>
           );
         }

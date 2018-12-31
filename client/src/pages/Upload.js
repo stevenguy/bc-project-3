@@ -203,7 +203,7 @@ class Upload extends Component {
                                                     data={i}
                                                     onClick={(e) => this.handleClick(e, i) }
                                                     InputLabelProps={{ shrink: true }}
-                                                    value={(this.state.nameOption == null || this.state.nameOption == '' ) ? '' : this.state.nameOption[i]}
+                                                    value={(this.state.nameOption === null || this.state.nameOption === '' ) ? '' : this.state.nameOption[i]}
                                                     style={{padding: '10px' }}
                                                 />
                                             </ReactFileReader>

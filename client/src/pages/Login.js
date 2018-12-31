@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Grid from '@material-ui/core/Grid';
-import API from "../utils/API";
+// import API from "../utils/API";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +18,6 @@ const styles = theme => ({
  login: {
      height: '100vh',
      width: '100%',
-     background: "rgb(4,4,32)",
      background: "linear-gradient(42deg, rgba(4,4,32,1) 0%, rgba(26,26,69,1) 32%, rgba(191,76,95,1) 59%, rgba(186,17,17,1) 100%)"
  },
  root: {
