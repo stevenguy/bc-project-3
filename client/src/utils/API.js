@@ -20,6 +20,10 @@ export default {
   saveTransaction: function(transactionData) {
     return axios.post("/api/transactions", transactionData);
   },
+  // Get list of available accounts
+  getAccount: function() {
+    return axios.get("/api/accounts")
+  },
   // sums data from the database (quarterly)
   quarterly: function() {
     return axios.get("/api/transactions/quarterly");

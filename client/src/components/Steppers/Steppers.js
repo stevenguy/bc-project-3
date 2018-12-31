@@ -6,11 +6,12 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {AccountForm, EntriesForm} from "../AccountForm";
+import {AccountForm, EntriesForm, SubmitForm} from "../AccountForm";
+
 
 const styles = theme => ({
   root: {
-    width: '90%',
+    width: '100%',
   },
   backButton: {
     marginRight: theme.spacing.unit,
@@ -19,6 +20,10 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
+  space: {
+      display: 'flex',
+      justifyContent: 'space-between'
+  }
 });
 
 function getSteps() {
@@ -29,19 +34,37 @@ class Steppers extends React.Component {
   state = {
     activeStep: 0,
     isError: false,
-    index: null
+    index: null,
   };
 
-  isStepFailed = (step) => {
-    return step === this.state.index;
-  };
+    isStepFailed = (step) => {
+        return step === this.state.index;
+    };
 
-  handleNext = () => {
-    this.props.validate 
-    ? this.setState(state => ({
-      activeStep: state.activeStep + 1, isError: false, index: null 
-    }))
-    : this.setState({isError: true, index: this.state.activeStep})
+
+  handleNext = (event) => {
+    event.preventDefault()
+    if (this.state.activeStep === 0) {
+        if (this.props.isNew) {
+            if (this.props.newAccount.name && this.props.newAccount.number && this.props.newAccount.type) {
+                this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+            }
+            else {
+                this.setState({isError: true, index: this.state.activeStep})
+            } 
+        } else if (this.props.isNew === false) {
+            if (this.props.account.name) {
+                this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+            }
+            else {
+                this.setState({isError: true, index: this.state.activeStep})
+            } 
+        }
+    } else {
+        this.props.entries.every(entry => entry.description !== '' && entry.amount !== '' && entry.details !== '')
+        ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+        : this.setState({isError: true, index: this.state.activeStep})
+    }
   };
 
   handleBack = () => {
@@ -59,11 +82,29 @@ class Steppers extends React.Component {
   getStepContent = (stepIndex) => {  
   switch (stepIndex) {
     case 0:
-      return <AccountForm />
+      return <AccountForm newAccount={this.props.newAccount} checkNew={this.props.checkNew} isNew={this.props.isNew} account= {this.props.account} accounts= {this.props.accounts} storeAccount= {this.props.storeAccount} />
     case 1:
-      return <EntriesForm />
+      return <EntriesForm 
+      entries={this.props.entries} 
+      newAccount={this.props.newAccount} 
+      checkNew={this.props.checkNew} 
+      isNew={this.props.isNew} 
+      account= {this.props.account} 
+      accounts= {this.props.accounts} 
+      storeAccount= {this.props.storeAccount}
+      handleChange={this.props.handleChange} 
+      handleAdd={this.props.handleAdd} 
+      handleRemove={this.props.handleRemove}
+      />
     case 2:
-      return 'Verify and submit for an approval';
+      return <SubmitForm
+      entries={this.props.entries} 
+      newAccount={this.props.newAccount} 
+      checkNew={this.props.checkNew} 
+      isNew={this.props.isNew} 
+      account= {this.props.account} 
+      accounts= {this.props.accounts} 
+      />;
     default:
       return 'Uknown stepIndex';
   }
@@ -89,16 +130,16 @@ class Steppers extends React.Component {
             );
           })}
         </Stepper>
-        <div>
+        <React.Fragment>
           {this.state.activeStep === steps.length ? (
             <div>
               <Typography className={classes.instructions}>Submitted!</Typography>
               <Button onClick={this.handleReset}>Input another entry</Button>
             </div>
           ) : (
-            <div>
+            <form id='form1' onSubmit={this.handleNext}>
               {this.getStepContent(activeStep)}
-              <div>
+              <div className={classes.space}>
                 <Button
                   disabled={activeStep === 0}
                   onClick={this.handleBack}
@@ -106,13 +147,13 @@ class Steppers extends React.Component {
                 >
                   Back
                 </Button>
-                <Button variant="contained" color="primary" onClick={this.handleNext}>
+                <Button variant="contained" type='submit' form='form1' color="primary" onClick={this.handleNext}>
                   {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
-            </div>
+            </form>
           )}
-        </div>
+        </React.Fragment>
       </div>
     );
   }

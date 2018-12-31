@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import Footer from "../components/Footer";
-import Steppers from '../components/Steppers';
-import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,6 +16,7 @@ import { entry } from "prop-types";
 import Financials from "../components/OptionMenu/financials";
 import grey from '@material-ui/core/colors/grey';
 
+const drawerWidth = 240;
 
 const styles = theme => ({
   container: {
@@ -61,7 +60,11 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     paddingBottom: '130px',
-  }
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
 });
 
 const financials = [

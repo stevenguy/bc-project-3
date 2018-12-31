@@ -14,6 +14,8 @@ import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
 
+const drawerWidth = 240;
+
 const styles = theme => ({
     root: {
       flexGrow: 1,
@@ -23,6 +25,15 @@ const styles = theme => ({
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },
+    toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    paddingBottom: '130px',
+  }
   });
 
 class Upload extends Component {
@@ -132,13 +143,14 @@ class Upload extends Component {
       }
 
     render() {
-        
+        const { classes } = this.props;
         return (
             <React.Fragment>
             <ResponsiveDrawer />
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
             <div style={{ flexGrow: 1}}>
                 <paper>
-                    <a style={{margin: '80px', display: 'block'}}/>
                     <Grid   container 
                             direction="column"
                             justify="center"
@@ -229,7 +241,8 @@ class Upload extends Component {
                     </Grid>
                 </paper>
             </div>
-            <Footer /> 
+        </main>
+        <Footer /> 
         </React.Fragment>
         )
     }
