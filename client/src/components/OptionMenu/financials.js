@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import API from "../utils/API";
-import Footer from "../components/Footer";
-import ResponsiveDrawer from "../components/ResponsiveDrawer";
+import API from "../../utils/API";
+import Footer from "../Footer";
+import Steppers from '../Steppers';
+import Typography from '@material-ui/core/Typography';
+import ResponsiveDrawer from "../ResponsiveDrawer";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,10 +15,8 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { entry } from "prop-types";
-import Financials from "../components/OptionMenu/financials";
 import grey from '@material-ui/core/colors/grey';
 
-const drawerWidth = 240;
 
 const styles = theme => ({
   container: {
@@ -60,11 +60,7 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     paddingBottom: '130px',
-  },
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth,
-  },
+  }
 });
 
 const financials = [
@@ -451,11 +447,11 @@ class Report extends Component {
         </Button>
       </form>
       </Paper>
-      <div style={ { height: 10 } }></div>
+      <div style={ { height: 10 }}></div>
         <Paper className="row">
            {/* <Financials />  */}
         </Paper>
-      <div style={ { height: 10 } }></div>
+      <div style={ { height: 10 }}></div>  
       {/* ASSETS */}
         <Paper>
           <Table>
@@ -497,7 +493,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+        <div style={ { height: 10 }}></div>
         {/* Liabilities */}
         <Paper>
           <Table>
@@ -532,7 +528,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+        <div style={ { height: 10 }}></div>
         {/* Retained Earnings */}
         <Paper>
           <Table>
@@ -567,7 +563,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+        <div style={ { height: 10 }}></div>
         {/* REVENUE */}
         <Paper>
           <Table>
@@ -602,7 +598,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+        <div style={ { height: 10 }}></div>
         {/* EXPENSES */}
         <Paper>
           <Table>
@@ -637,7 +633,7 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+        <div style={ { height: 10 }}></div>
         {/* ACCOUNT DETAILS */}
         <Paper>
           <Table>

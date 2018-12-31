@@ -87,7 +87,7 @@ const styles = theme => ({
 class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
-    menuArr: ['Dashboard', 'Entries', 'Search', 'Upload', 'Reports']
+    menuArr: ['Dashboard', 'Entries', 'Upload', 'Status', 'Search', 'Reports']
   };
 
   handleDrawerToggle = () => {
@@ -127,10 +127,12 @@ class ResponsiveDrawer extends React.Component {
                ? <DashboardIcon /> 
                : text === "Entries"
                ? <CreateIcon />
-               : text === "Search"
-               ? <SearchIcon />
                : text === "Upload"
                ? <AttachFileIcon />
+               : text === "Status"
+               ? <SearchIcon />
+               : text === "Search"
+               ? <SearchIcon />
                : text === "Reports"
                ? <BarChartIcon />
                : ""
