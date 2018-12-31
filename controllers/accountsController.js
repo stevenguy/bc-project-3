@@ -5,7 +5,6 @@ module.exports = {
       db.Account
         .find({})
         .then(accounts => {
-            console.log(accounts)
             res.json(accounts)
         })
         .catch(err => res.status(422).json(err));
