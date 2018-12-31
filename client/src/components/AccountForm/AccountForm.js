@@ -149,7 +149,7 @@ class AccountForm extends Component {
                         }}
                         margin="normal"
                         >
-                        {this.props.accounts.map(account=> (
+                        {this.props.accounts.sort(function(a,b){return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)}).map(account=> (
                            <MenuItem key={account._id} value={account._id}>{account.name}</MenuItem> 
                         ))}
                     </TextField>
@@ -174,7 +174,7 @@ class AccountForm extends Component {
                         }}
                         margin="normal"
                         >
-                        {this.props.accounts.map(account => (
+                        {this.props.accounts.sort(function(a, b){return a.number - b.number}).map(account => (
                            <MenuItem key={account._id} value={account._id}>{account.number}</MenuItem> 
                         ))}
                     </TextField>

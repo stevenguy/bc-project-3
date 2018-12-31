@@ -8,6 +8,7 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import StatusIcon from '@material-ui/icons/ThumbsUpDown';
 import CreateIcon from '@material-ui/icons/Create';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -27,7 +28,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { NavLink } from 'react-router-dom'
-import { BrowserRouter as Route} from "react-router-dom";
+import { Route } from "react-router-dom";
 
 
 
@@ -130,7 +131,7 @@ class ResponsiveDrawer extends React.Component {
                : text === "Upload"
                ? <AttachFileIcon />
                : text === "Status"
-               ? <SearchIcon />
+               ? <StatusIcon />
                : text === "Search"
                ? <SearchIcon />
                : text === "Reports"
@@ -161,9 +162,7 @@ class ResponsiveDrawer extends React.Component {
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
             {this.state.menuArr.map(text => (
-              text === "Home" 
-              ? <Route key={text} path="/" exact render={() => <div>Home</div>}/>
-              : <Route key={text} path={'/' + text} exact render={() => <div>{text}</div>}/>
+              <Route key={text} path={'/' + text} exact render={() => <div>{text}</div>}/>
             ))}
             </Typography>
           </Toolbar>

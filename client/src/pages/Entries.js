@@ -26,15 +26,17 @@ class Entries extends Component {
     state = {
       //State goes here
       account: {},
-      entries: [{description:'', memo:'', amount:'', details:''}],
+      entries: [{date: new Date(), description:'', memo:'', amount:'', details:''}],
       accounts: [],
       isNew: false,
-      newAccount: {}
+      newAccount: {},
     }
 
     componentDidMount() {
       API.getAccount()
-      .then(res => this.setState({ accounts: res.data }))
+      .then(res => {
+        this.setState({ accounts: res.data })
+      })
       .catch(err => console.log(err));
     }
 
@@ -54,6 +56,12 @@ class Entries extends Component {
       }
     }
 
+    handleDateChange = i => date => {
+      let entries = [...this.state.entries]
+      entries[i].date = date
+      this.setState({ entries })
+    }
+
     handleChange = i => event => {
       let entries = [...this.state.entries]
       entries[i][event.target.name] = event.target.value
@@ -71,6 +79,31 @@ class Entries extends Component {
           entries.splice(i,1)
           this.setState({ entries }) 
       };
+
+      submitForm = () => {
+        let entriesArr = []
+        let account
+        this.state.isNew ? account = this.state.newAccount : account = this.state.account
+        console.log(account)
+        for (let i = 0; i < this.state.entries.length; i++) {
+          entriesArr.push({
+            date: new Date(),
+            account: account.number,
+            description: account.name,
+            type: account.type,
+            transaction: this.state.entries[i].description,
+            memo: this.state.entries[i].memo,
+            details: this.state.entries[i].details,
+            amount: this.state.entries[i].amount,
+            preparer: 'Mearat',
+            prepared_date: new Date(),
+            status: 'Pending',
+
+          })
+          
+        }
+        // API.postEntries()
+      }
 
     render() {
       const { classes } = this.props;
@@ -92,6 +125,9 @@ class Entries extends Component {
           handleChange={this.handleChange}
           handleAdd={this.handleAdd}
           handleRemove={this.handleRemove}
+          submitForm={this.submitForm}
+          selectedDate={this.state.selectedDate}
+          handleDateChange={this.handleDateChange}
            />
         </main>
         <Footer />
