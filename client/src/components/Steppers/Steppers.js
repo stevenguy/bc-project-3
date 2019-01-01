@@ -44,10 +44,13 @@ class Steppers extends React.Component {
 
   handleNext = (event) => {
     event.preventDefault()
+
     if (this.state.activeStep === 2) {
         this.props.submitForm()
     }
+
     if (this.state.activeStep === 0) {
+
         if (this.props.isNew) {
             if (this.props.newAccount.name && this.props.newAccount.number && this.props.newAccount.type) {
                 this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
@@ -63,6 +66,7 @@ class Steppers extends React.Component {
                 this.setState({isError: true, index: this.state.activeStep})
             } 
         }
+
     } else {
         this.props.entries.every(entry => entry.description !== '' && entry.amount !== '' && entry.details !== '')
         ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
@@ -96,11 +100,9 @@ class Steppers extends React.Component {
       return <EntriesForm 
       entries={this.props.entries} 
       newAccount={this.props.newAccount} 
-      checkNew={this.props.checkNew} 
       isNew={this.props.isNew} 
       account= {this.props.account} 
       accounts= {this.props.accounts} 
-      storeAccount= {this.props.storeAccount}
       handleChange={this.props.handleChange} 
       handleAdd={this.props.handleAdd} 
       handleRemove={this.props.handleRemove}
@@ -111,7 +113,6 @@ class Steppers extends React.Component {
       return <SubmitForm
       entries={this.props.entries} 
       newAccount={this.props.newAccount} 
-      checkNew={this.props.checkNew} 
       isNew={this.props.isNew} 
       account= {this.props.account} 
       accounts= {this.props.accounts} 
@@ -159,7 +160,7 @@ class Steppers extends React.Component {
                   Back
                 </Button>
                 <Button variant="contained" type='submit' form='form1' color="primary" onClick={this.handleNext}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                 </Button>
               </div>
             </form>
