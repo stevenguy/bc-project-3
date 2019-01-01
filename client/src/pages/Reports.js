@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { entry } from "prop-types";
-import Financials from "../components/OptionMenu/financials";
+import FinancialMenu from "../components/OptionMenu/financials";
 import grey from '@material-ui/core/colors/grey';
 
 const drawerWidth = 240;
@@ -194,11 +194,10 @@ function ccyFormat(num) {
   return `${nf.format(num.toFixed(0))}`;
 }
 
-// function subtotal(items) {
-//   return items.map(({ amount }) => amount).reduce((sum, i) => sum + i, 0);
+// function dateFormat(date) {
+//   var date = new Date ();
+//   return `${date.format(date.toDateString("mm-dd-yyyy"))}`
 // }
-
-// const total = subtotal();
 
 class Report extends Component {
 
@@ -206,6 +205,8 @@ class Report extends Component {
     accounts: [],
     year: [],
     transactions: [],
+    acctdetails: [],
+    typesum: [],
     financials: 'Select',
     account: '',
     years: 0,
@@ -261,34 +262,173 @@ class Report extends Component {
   }
 
   handleRun = () => {
+    if (this.state.financials === 1 || this.state.financials === 2 ) {
+      if (this.state.month === 0 && this.state.quarter === 0 ){
+        API.yearly()
+        // .then(res => console.log(res))
+        .then(res => {
+          let transactions = []
+          res.data.forEach(element => {
+            transactions.push({
+              description: element._id.description,
+              type: element._id.type,
+              year: element._id.year,
+              amount: element.amount,
+            })
+          })
+          this.setState({ transactions: transactions })
+        })
+        .catch(err => console.log(err));
+      } else if (this.state.month === 0) {
+        API.quarterly()
+        // .then(res => console.log(res))
+        .then(res => {
+          let transactions = []
+          res.data.forEach(element => {
+            if (element._id.quarter === this.state.quarter) {  
+              transactions.push({
+                description: element._id.description,
+                type: element._id.type,
+                year: element._id.year,
+                quarter: element._id.quarter,
+                amount: element.amount,
+              })
+            }
+          })
+          this.setState({ transactions: transactions })
+        })
+        .catch(err => console.log(err));
+      } else {
+        API.reports()
+        // .then(res => console.log(res))
+        .then(res => {
+          let transactions = []
+          res.data.forEach(element => {
+            if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {  
+              transactions.push({
+                description: element._id.description,
+                type: element._id.type,
+                year: element._id.year,
+                quarter: element._id.quarter,
+                month: element._id.month,
+                amount: element.amount,
+              })
+            }
+          })
+          this.setState({ transactions: transactions })
+        })
+        .catch(err => console.log(err));
+      }
+    } else {
+      if (this.state.month === 0 && this.state.quarter === 0 ){
+        API.acctyear()
+        // .then(res => console.log(res))
+        .then(res => {
+          let acctdetails = []
+          res.data.forEach(element => {
+            acctdetails.push({
+              date: element._id.date,
+              account: element._id.account,
+              description: element._id.description,
+              type: element._id.type,
+              transaction: element._id.transaction,
+              memo: element._id.memo,
+              detail: element._id.detail,
+              preparer: element._id.preparer,
+              prepared_date: element._id.prepared_date,
+              approver: element._id.approver,
+              approved_date: element._id.approved_date,
+              year: element._id.year,
+              quarter: element._id.quarter,
+              amount: element.amount,
+            })
+          })
+          this.setState({ acctdetails: acctdetails })
+        })
+
+        // .then(res => this.setState({ transactions: res.data }))
+        .catch(err => console.log(err));
+      } else if (this.state.month === 0) {
+        API.acctquarter()
+        // .then(res => console.log(res))
+        .then(res => {
+          let acctdetails = []
+          res.data.forEach(element => {
+            if (element._id.quarter === this.state.quarter) {  
+              acctdetails.push({
+                date: element._id.date,
+                account: element._id.account,
+                description: element._id.description,
+                type: element._id.type,
+                transaction: element._id.transaction,
+                memo: element._id.memo,
+                detail: element._id.detail,
+                preparer: element._id.preparer,
+                prepared_date: element._id.prepared_date,
+                approver: element._id.approver,
+                approved_date: element._id.approved_date,
+                year: element._id.year,
+                quarter: element._id.quarter,
+                amount: element.amount,
+              })
+            }
+          })
+          this.setState({ acctdetails: acctdetails })
+        })
+        .catch(err => console.log(err));
+      } else {
+        API.acctmonth()
+        // .then(res => console.log(res))
+        .then(res => {
+          let acctdetails = []
+          res.data.forEach(element => {
+            if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {  
+              acctdetails.push({
+                date: element._id.date,
+                account: element._id.account,
+                description: element._id.description,
+                type: element._id.type,
+                transaction: element._id.transaction,
+                memo: element._id.memo,
+                detail: element._id.detail,
+                preparer: element._id.preparer,
+                prepared_date: element._id.prepared_date,
+                approver: element._id.approver,
+                approved_date: element._id.approved_date,
+                year: element._id.year,
+                quarter: element._id.quarter,
+                month: element._id.month,
+                amount: element.amount,
+              })
+            }
+          })
+          this.setState({ acctdetails: acctdetails })
+        })
+        .catch(err => console.log(err));
+      }
+    }
     if (this.state.month === 0 && this.state.quarter === 0 ){
-      API.yearly()
-      // .then(res => console.log(res))
+      API.typeyear()
       .then(res => {
-        let transactions = []
+        let typesum = []
         res.data.forEach(element => {
-          transactions.push({
-            description: element._id.description,
+          typesum.push({
             type: element._id.type,
             year: element._id.year,
             amount: element.amount,
           })
         })
-        this.setState({ transactions: transactions })
+        this.setState({ typesum: typesum })
+        console.log(typesum)
       })
-
-      // .then(res => this.setState({ transactions: res.data }))
       .catch(err => console.log(err));
-    } 
-    else if (this.state.month === 0) {
-      API.quarterly()
-      // .then(res => console.log(res))
+    } else if (this.state.month === 0) {
+      API.typequarter()
       .then(res => {
-        let transactions = []
+        let typesum = []
         res.data.forEach(element => {
           if (element._id.quarter === this.state.quarter) {  
-            transactions.push({
-              description: element._id.description,
+            typesum.push({
               type: element._id.type,
               year: element._id.year,
               quarter: element._id.quarter,
@@ -296,18 +436,17 @@ class Report extends Component {
             })
           }
         })
-        this.setState({ transactions: transactions })
+        this.setState({ typesum: typesum })
+        console.log(typesum)
       })
       .catch(err => console.log(err));
     } else {
-      API.reports()
-      // .then(res => console.log(res))
+      API.typemonth()
       .then(res => {
-        let transactions = []
+        let typesum = []
         res.data.forEach(element => {
-          if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {  
-            transactions.push({
-              description: element._id.description,
+          if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {
+            typesum.push({
               type: element._id.type,
               year: element._id.year,
               quarter: element._id.quarter,
@@ -316,7 +455,8 @@ class Report extends Component {
             })
           }
         })
-        this.setState({ transactions: transactions })
+        this.setState({ typesum: typesum })
+        console.log(typesum)
       })
       .catch(err => console.log(err));
     }
@@ -357,6 +497,9 @@ class Report extends Component {
             </option>
           ))}
         </TextField>
+      </form>
+      {this.state.financials === 3 ?
+        <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="accounts"
           select
@@ -450,231 +593,344 @@ class Report extends Component {
           Run
         </Button>
       </form>
+      : 
+      <form className={classes.container} noValidate autoComplete="off">
+        <TextField
+          id="year"
+          select
+          label="Year"
+          className={classes.textField}
+          value={this.state.years}
+          onChange={this.handleYear('years')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          helperText="Year Selection"
+          margin="normal"
+          variant="outlined"
+        >
+          {this.state.year.map(y => (
+            <option key={y._id.year} value={y._id.year}>
+              {y._id.year}
+            </option>
+          ))}
+        </TextField>
+        <TextField
+          id="quarter"
+          select
+          label="Quarter"
+          className={classes.textField}
+          value={this.state.quarter}
+          onChange={this.handleQuarter('quarter')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          helperText="Quarter Selection"
+          margin="normal"
+          variant="outlined"
+        >
+          {quarter.map(q => (
+            <option key={q.value} value={q.value}>
+              {q.label}
+            </option>
+          ))}
+        </TextField>
+        <TextField
+          id="month"
+          select
+          label="Month"
+          className={classes.textField}
+          value={this.state.month}
+          onChange={this.handleMonth('month')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          helperText="Month Selection"
+          margin="normal"
+          variant="outlined"
+        >
+          {/* Populate based on quarters */}
+          {month.map(m => (
+            <option key={m.valueMonth} value={m.valueMonth}>
+              {m.labelMonth}
+            </option>
+          ))}
+        </TextField>
+        <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
+          Run
+        </Button>
+      </form>
+      }
       </Paper>
       <div style={ { height: 10 } }></div>
-        <Paper className="row">
-           {/* <Financials />  */}
-        </Paper>
-      <div style={ { height: 10 } }></div>
-      {/* ASSETS */}
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow className={classes.head}>
-                <TableCell>ASSETS</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-          <Table>
-            <TableBody>
-              {this.state.transactions.map((output, i) => {
-                  // const assets = output.filter(function(element) {
-                  //     return element.type.includes('Expenses');
-                  // });
-                  // const aSum = assets.reduce(function(sum, element) {
-                  //   return sum + element.amount;
-                  // }, 0)
-                  // console.log(aSum)
-                if (output.type === 'Assets'
-                && output.year === this.state.years
-                ) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{output.description}</TableCell>
-                      <TableCell>{output.year}</TableCell>
-                      <TableCell>{output.quarter}</TableCell>
-                      <TableCell>{output.month}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+      {(() => {
+        switch(this.state.financials) {
+          case 1:
+            return (
+              <React.Fragment>
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow className={classes.head}>
+                      <TableCell>ASSETS</TableCell>
+                      <TableCell align="right">BALANCE</TableCell>
                     </TableRow>
-                  );  
-                }
-              })}
-                <TableRow>
-                  <TableCell rowSpan={3}>TOTAL</TableCell>
-                  <TableCell align="right">CALCULATE TOTAL</TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-        <div style={ { height: 10 } }></div>
-        {/* Liabilities */}
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow className={classes.head}>
-                <TableCell>LIABILITIES</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-          <Table>
-            <TableBody>
-              {this.state.transactions.map((output, i) => {
-                if (output.type === 'Liability'
-                && output.year === this.state.years
-                ) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{output.description}</TableCell>
-                      <TableCell>{output.year}</TableCell>
-                      <TableCell>{output.quarter}</TableCell>
-                      <TableCell>{output.month}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableHead>
+                </Table>
+                <Table>
+                  <TableBody>
+                    {this.state.transactions.map((output, i) => {
+                      if (output.type === 'Assets'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>{output.description}</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                      }
+                    })}
+                    {this.state.typesum.map((output, i) => {
+                      if (output.type === 'Assets'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>TOTAL</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+              <div style={ { height: 10 } }></div>
+              {/* Liabilities */}
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow className={classes.head}>
+                      <TableCell>LIABILITIES</TableCell>
+                      <TableCell align="right">BALANCE</TableCell>
                     </TableRow>
-                  );  
-                  }
-              })}
-                <TableRow>
-                  <TableCell rowSpan={3}>TOTAL</TableCell>
-                  <TableCell align="right">CALCULATE TOTAL</TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-        <div style={ { height: 10 } }></div>
-        {/* Retained Earnings */}
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow className={classes.head}>
-                <TableCell>RETAINED EARNINGS</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-          <Table>
-            <TableBody>
-              {this.state.transactions.map((output, i) => {
-                if (output.type === 'Retained Earnings'
-                && output.year === this.state.years
-                ) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{output.description}</TableCell>
-                      <TableCell>{output.year}</TableCell>
-                      <TableCell>{output.quarter}</TableCell>
-                      <TableCell>{output.month}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableHead>
+                </Table>
+                <Table>
+                  <TableBody>
+                    {this.state.transactions.map((output, i) => {
+                      if (output.type === 'Liability'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>{output.description}</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                    {this.state.typesum.map((output, i) => {
+                      if (output.type === 'Liability'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>TOTAL</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+              <div style={ { height: 10 } }></div>
+              {/* Retained Earnings */}
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow className={classes.head}>
+                      <TableCell>RETAINED EARNINGS</TableCell>
+                      <TableCell align="right">BALANCE</TableCell>
                     </TableRow>
-                  );  
-                  }
-              })}
-                <TableRow>
-                  <TableCell rowSpan={3}>TOTAL</TableCell>
-                  <TableCell align="right">CALCULATE TOTAL</TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-        <div style={ { height: 10 } }></div>
-        {/* REVENUE */}
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow className={classes.head}>
-                <TableCell>REVENUE</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-          <Table>
-            <TableBody>
-              {this.state.transactions.map((output, i) => {
-                if (output.type === 'Revenue'
-                && output.year === this.state.years
-                ) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{output.description}</TableCell>
-                      <TableCell>{output.year}</TableCell>
-                      <TableCell>{output.quarter}</TableCell>
-                      <TableCell>{output.month}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableHead>
+                </Table>
+                <Table>
+                  <TableBody>
+                    {this.state.transactions.map((output, i) => {
+                      if (output.type === 'Retained Earnings'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>{output.description}</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                    {this.state.typesum.map((output, i) => {
+                      if (output.type === 'Retained Earnings'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>TOTAL</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+              </React.Fragment>);
+          case 2:
+            return (
+              <React.Fragment>
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow className={classes.head}>
+                      <TableCell>REVENUE</TableCell>
+                      <TableCell align="right">BALANCE</TableCell>
                     </TableRow>
-                  );  
-                  }
-              })}
-                <TableRow>
-                  <TableCell rowSpan={3}>TOTAL</TableCell>
-                  <TableCell align="right">CALCULATE TOTAL</TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-        <div style={ { height: 10 } }></div>
-        {/* EXPENSES */}
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow className={classes.head}>
-                <TableCell>EXPENSES</TableCell>
-                <TableCell align="right">BALANCE</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-          <Table>
-            <TableBody>
-              {this.state.transactions.map((output, i) => {
-                if (output.type === 'Expenses'
-                && output.year === this.state.years
-                ) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{output.description}</TableCell>
-                      <TableCell>{output.year}</TableCell>
-                      <TableCell>{output.quarter}</TableCell>
-                      <TableCell>{output.month}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableHead>
+                </Table>
+                <Table>
+                  <TableBody>
+                    {this.state.transactions.map((output, i) => {
+                      if (output.type === 'Revenue'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>{output.description}</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );
+                        }
+                    })}
+                    {this.state.typesum.map((output, i) => {
+                      if (output.type === 'Revenue'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>TOTAL</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+            <div style={ { height: 10 } }></div>
+            {/* EXPENSES */}
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow className={classes.head}>
+                      <TableCell>EXPENSES</TableCell>
+                      <TableCell align="right">BALANCE</TableCell>
                     </TableRow>
-                  );  
-                  }
-              })}
-                <TableRow>
-                  <TableCell rowSpan={3}>TOTAL</TableCell>
-                  <TableCell align="right">CALCULATE TOTAL</TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-        <div style={ { height: 10 } }></div>
-        {/* ACCOUNT DETAILS */}
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow className={classes.head}>
-                <TableCell>ACCOUNT DETAILS</TableCell>
-                <TableCell align="right">MONTH</TableCell>
-                <TableCell align="right">YEAR</TableCell>
-                <TableCell align="right">AMOUNT</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-          <Table>
-            <TableBody>
-              {this.state.transactions.map((output, i) => {
-                if (output.description === this.state.account 
-                && output.year === this.state.years
-                ) {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>{output.description}</TableCell>
-                      <TableCell>{output.year}</TableCell>
-                      <TableCell>{output.quarter}</TableCell>
-                      <TableCell>{output.month}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
-                    </TableRow>
-                  );  
-                  }
-              })}
-                <TableRow>
-                  <TableCell colSpan={3}>TOTAL</TableCell>
-                  <TableCell align="right">CALCULATE TOTAL</TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-       
+                  </TableHead>
+                </Table>
+                <Table>
+                  <TableBody>
+                    {this.state.transactions.map((output, i) => {
+                      if (output.type === 'Expenses'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>{output.description}</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                    {this.state.typesum.map((output, i) => {
+                      if (output.type === 'Expenses'
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell>TOTAL</TableCell>
+                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                          </TableRow>
+                        );  
+                        }
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
+            </React.Fragment>
+            );
+          case 3:
+            return (
+              <React.Fragment>
+                <Paper>
+                  <Table>
+                    <TableHead>
+                      <TableRow className={classes.head}>
+                        <TableCell>ACCOUNT DETAILS</TableCell>
+                        <TableCell align="right">MONTH</TableCell>
+                        <TableCell align="right">YEAR</TableCell>
+                        <TableCell align="right">AMOUNT</TableCell>
+                      </TableRow>
+                    </TableHead>
+                  </Table>
+                  <Table>
+                    <TableBody>
+                      {this.state.acctdetails.map((output, i) => {
+                        if (output.description === this.state.account 
+                        && output.year === this.state.years
+                        ) {
+                          return (
+                            <TableRow key={i}>
+                              <TableCell>{output.date}</TableCell>
+                              <TableCell>{output.account}</TableCell>
+                              <TableCell>{output.description}</TableCell>
+                              <TableCell>{output.type}</TableCell>
+                              <TableCell>{output.transaction}</TableCell>
+                              <TableCell>{output.memo}</TableCell>
+                              <TableCell>{output.detail}</TableCell>
+                              <TableCell>{output.preparer}</TableCell>
+                              <TableCell>{output.prepared_date}</TableCell>
+                              <TableCell>{output.approver}</TableCell>
+                              <TableCell>{output.approved_date}</TableCell>
+                              <TableCell>{output.year}</TableCell>
+                              <TableCell>{output.quarter}</TableCell>
+                              <TableCell>{output.month}</TableCell>
+                              <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                            </TableRow>
+                          );  
+                          }
+                      })}
+                        <TableRow>
+                          <TableCell colSpan={3}>TOTAL</TableCell>
+                          <TableCell align="right">CALCULATE TOTAL</TableCell>
+                        </TableRow>
+                    </TableBody>
+                  </Table>
+                </Paper>
+              </React.Fragment>
+            );
+          default:
+            return null;
+        }
+      })()}
+        
         </main>
         <Footer />
         </React.Fragment>
