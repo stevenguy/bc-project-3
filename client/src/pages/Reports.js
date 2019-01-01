@@ -16,7 +16,7 @@ import { entry } from "prop-types";
 import Financials from "../components/OptionMenu/financials";
 import grey from '@material-ui/core/colors/grey';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   container: {

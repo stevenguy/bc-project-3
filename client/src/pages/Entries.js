@@ -7,7 +7,7 @@ import Steppers from '../components/Steppers'
 import API from "../utils/API";
 
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   //Style goes here

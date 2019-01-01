@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
     root: {

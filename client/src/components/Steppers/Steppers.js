@@ -145,7 +145,7 @@ class Steppers extends React.Component {
           {this.state.activeStep === steps.length ? (
             <div>
               <Typography className={classes.instructions}>Submitted!</Typography>
-              <Button onClick={this.handleReset}>Input another entry</Button>
+              <Button className={classes.root} onClick={this.handleReset}>Input another entry</Button>
             </div>
           ) : (
             <form id='form1' onSubmit={this.handleNext}>
