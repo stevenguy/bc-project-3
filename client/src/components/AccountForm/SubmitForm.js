@@ -34,8 +34,6 @@ class SubmitForm extends Component {
         labelWidth: 0,
     }
 
-    
-
     render() {
       const { classes } = this.props;
 
@@ -60,7 +58,7 @@ class SubmitForm extends Component {
                         <TableCell align='justify'>{this.props.isNew ? this.props.newAccount.name : this.props.account.name}</TableCell>
                         <TableCell align="justify">{this.props.isNew ? this.props.newAccount.number : this.props.account.number}</TableCell>
                         <TableCell align="justify">{this.props.isNew ? this.props.newAccount.type : this.props.account.type}</TableCell>
-                        <TableCell align="justify">{entry.date.toLocaleDateString()}</TableCell>
+                        <TableCell align="justify">{entry.date.toLocaleDateString('en-US')}</TableCell>
                         <TableCell align="justify">{entry.description}</TableCell>
                         <TableCell align="justify">{entry.memo}</TableCell>
                         <TableCell align="justify">{entry.details}</TableCell>

@@ -144,7 +144,7 @@ class EntriesForm extends Component {
                             >
                         </TextField>
                     </FormControl>
-                    <Fab size="small" color="secondary" aria-label="Add" onClick={this.props.handleRemove(index)} className={classes.margin}>
+                    <Fab size="small" color="secondary" aria-label="Remove" onClick={this.props.handleRemove(index)} className={classes.margin}>
                         <RemoveIcon />
                     </Fab>
                 </div>

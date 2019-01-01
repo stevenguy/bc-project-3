@@ -69,12 +69,10 @@ class Entries extends Component {
       };
   
       handleAdd = event => {
-          console.log('Clicked')
-          this.setState({ entries: [...this.state.entries, {description:'', memo:'', amount:'', details:''}] }) 
+          this.setState({ entries: [...this.state.entries, {date: new Date(), description:'', memo:'', amount:'', details:''}] }) 
       };
   
       handleRemove = i => event => {
-          console.log('Remove')
           let entries = [...this.state.entries]
           entries.splice(i,1)
           this.setState({ entries }) 
