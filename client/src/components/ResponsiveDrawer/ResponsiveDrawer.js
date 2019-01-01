@@ -33,7 +33,7 @@ import { Route } from "react-router-dom";
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   root: {
