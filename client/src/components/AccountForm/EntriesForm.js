@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -71,7 +70,6 @@ class EntriesForm extends Component {
                     <div className={classes.root}>
                     <FormControl className={classes.formControl}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid container className={classes.grid} justify="space-around">
                     <DatePicker
                         id='date'
                         margin="normal"
@@ -80,7 +78,6 @@ class EntriesForm extends Component {
                         value={this.props.entries[index].date}
                         onChange={this.props.handleDateChange(index)}
                     />
-                    </Grid>
                     </MuiPickersUtilsProvider>
                     </FormControl>
                     <FormControl className={classes.formControl}>
@@ -147,7 +144,7 @@ class EntriesForm extends Component {
                             >
                         </TextField>
                     </FormControl>
-                    <Fab size="small" color="secondary" aria-label="Add" onClick={this.props.handleRemove(index)} className={classes.margin}>
+                    <Fab size="small" color="secondary" aria-label="Remove" onClick={this.props.handleRemove(index)} className={classes.margin}>
                         <RemoveIcon />
                     </Fab>
                 </div>

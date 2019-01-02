@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   //Style goes here

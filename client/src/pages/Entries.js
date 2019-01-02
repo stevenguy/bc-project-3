@@ -7,7 +7,7 @@ import Steppers from '../components/Steppers'
 import API from "../utils/API";
 
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   //Style goes here
@@ -18,7 +18,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    paddingBottom: '130px',
+    paddingBottom: '80px',
   }
 });
 
@@ -29,7 +29,7 @@ class Entries extends Component {
       entries: [{date: new Date(), description:'', memo:'', amount:'', details:''}],
       accounts: [],
       isNew: false,
-      newAccount: {},
+      newAccount: {}
     }
 
     componentDidMount() {
@@ -68,39 +68,62 @@ class Entries extends Component {
       this.setState({ entries })
       };
   
-      handleAdd = event => {
-          console.log('Clicked')
-          this.setState({ entries: [...this.state.entries, {description:'', memo:'', amount:'', details:''}] }) 
-      };
-  
-      handleRemove = i => event => {
-          console.log('Remove')
-          let entries = [...this.state.entries]
-          entries.splice(i,1)
-          this.setState({ entries }) 
-      };
+    handleAdd = event => {
+        this.setState({ 
+          entries: [...this.state.entries, 
+          {date: new Date(), description:'', memo:'', amount:'', details:''}]
+        }) 
+    };
 
-      submitForm = () => {
-        let entriesArr = []
-        let account
-        this.state.isNew ? account = this.state.newAccount : account = this.state.account
-        for (let i = 0; i < this.state.entries.length; i++) {
-          entriesArr.push({
-            date: this.state.entries[i].date,
-            account: account.number,
-            description: account.name,
-            type: account.type,
-            transaction: this.state.entries[i].description,
-            memo: this.state.entries[i].memo,
-            details: this.state.entries[i].details,
-            amount: this.state.entries[i].amount,
-            preparer: 'Mearat',
-            prepared_date: new Date(),
-            status: 'Pending'
-          })
-        }
-        API.saveTransaction(entriesArr)
+    handleRemove = i => event => {
+        let entries = [...this.state.entries]
+        entries.splice(i,1)
+        this.setState({ entries }) 
+    };
+
+    submitForm = () => {
+      let entriesArr = []
+      let account
+      if (this.state.isNew) {
+        account = this.state.newAccount
+        API.newAccount(account)
+        .catch(err => console.log(err))
+      } else{
+        account = this.state.account
       }
+      for (let i = 0; i < this.state.entries.length; i++) {
+        entriesArr.push({
+          date: this.state.entries[i].date,
+          account: account.number,
+          description: account.name,
+          type: account.type,
+          transaction: this.state.entries[i].description,
+          memo: this.state.entries[i].memo,
+          details: this.state.entries[i].details,
+          amount: this.state.entries[i].amount,
+          //Need to update the praparer to pull from local storage once the user features set up
+          preparer: 'Mearat',
+          prepared_date: new Date(),
+          status: 'Pending',
+          year: this.state.entries[i].date.getFullYear(),
+          month: this.state.entries[i].date.getMonth(),
+          quarter: Math.floor(this.state.entries[i].date.getMonth()/3) + 1
+        })
+      }
+
+      API.saveTransaction(entriesArr)
+      .then(() => API.getAccount())
+      .then((res) => {
+        this.setState({
+          accounts: res.data,
+          account: {},
+          entries: [{date: new Date(), description:'', memo:'', amount:'', details:''}],
+          isNew: false,
+          newAccount: {}
+        })
+      })
+      .catch(err => console.log(err));
+    }
 
     render() {
       const { classes } = this.props;

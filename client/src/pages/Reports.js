@@ -26,7 +26,7 @@ import { entry } from "prop-types";
 import FinancialMenu from "../components/OptionMenu/financials";
 import grey from '@material-ui/core/colors/grey';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   container: {
@@ -69,7 +69,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    paddingBottom: '130px',
+    paddingBottom: '20px',
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {

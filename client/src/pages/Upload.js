@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
     root: {
@@ -32,7 +32,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    paddingBottom: '130px',
+    paddingBottom: '20px',
   }
   });
 

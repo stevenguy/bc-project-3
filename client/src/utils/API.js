@@ -20,6 +20,10 @@ export default {
   saveTransaction: function(transactionData) {
     return axios.post("/api/transactions", transactionData);
   },
+  // Save new account
+  newAccount: function(data) {
+    return axios.post("/api/accounts", data);
+  },
   // Get list of available accounts
   getAccount: function() {
     return axios.get("/api/accounts")
