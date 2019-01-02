@@ -2,16 +2,26 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import Footer from "../components/Footer";
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
+// Table Imports
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+// Paper Imports
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
+// Menu, Table, Expansion Panel Imports
 import { withStyles } from '@material-ui/core/styles';
+// Menu Imports
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+// Expansion Panel Imports
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { entry } from "prop-types";
 import FinancialMenu from "../components/OptionMenu/financials";
 import grey from '@material-ui/core/colors/grey';
@@ -64,6 +74,14 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '100%',
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
   },
 });
 
@@ -189,9 +207,9 @@ const quarter = [
 function ccyFormat(num) {
   var nf = new Intl.NumberFormat();
   if (num < 0 ) {
-  return `${nf.format(num.toFixed(0))}`;
+  return `${nf.format(num.toFixed(2))}`;
   }
-  return `${nf.format(num.toFixed(0))}`;
+  return `${nf.format(num.toFixed(2))}`;
 }
 
 // function dateFormat(date) {
@@ -208,10 +226,12 @@ class Report extends Component {
     acctdetails: [],
     typesum: [],
     financials: 'Select',
+    acctdetailsum: [],
     account: '',
     years: 0,
     quarter: 0,
     month: 0,
+    expanded: null,
   };
 
   handleFinancials = fin => event => {
@@ -241,6 +261,12 @@ class Report extends Component {
   handleAccounts = acct => event => {
     this.setState({
       [acct]: event.target.value,
+    });
+  };
+
+  handleExpand = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
     });
   };
 
@@ -460,6 +486,62 @@ class Report extends Component {
       })
       .catch(err => console.log(err));
     }
+    if (this.state.month === 0 && this.state.quarter === 0 ){
+      API.yearly()
+      // .then(res => console.log(res))
+      .then(res => {
+        let acctdetailsum = []
+        res.data.forEach(element => {
+          acctdetailsum.push({
+            description: element._id.description,
+            type: element._id.type,
+            year: element._id.year,
+            amount: element.amount,
+          })
+        })
+        this.setState({ acctdetailsum: acctdetailsum })
+      })
+      .catch(err => console.log(err));
+    } else if (this.state.month === 0) {
+      API.quarterly()
+      // .then(res => console.log(res))
+      .then(res => {
+        let acctdetailsum = []
+        res.data.forEach(element => {
+          if (element._id.quarter === this.state.quarter) {  
+            acctdetailsum.push({
+              description: element._id.description,
+              type: element._id.type,
+              year: element._id.year,
+              quarter: element._id.quarter,
+              amount: element.amount,
+            })
+          }
+        })
+        this.setState({ acctdetailsum: acctdetailsum })
+      })
+      .catch(err => console.log(err));
+    } else {
+      API.reports()
+      // .then(res => console.log(res))
+      .then(res => {
+        let acctdetailsum = []
+        res.data.forEach(element => {
+          if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {  
+            acctdetailsum.push({
+              description: element._id.description,
+              type: element._id.type,
+              year: element._id.year,
+              quarter: element._id.quarter,
+              month: element._id.month,
+              amount: element.amount,
+            })
+          }
+        })
+        this.setState({ acctdetailsum: acctdetailsum })
+      })
+      .catch(err => console.log(err));
+    }
   };
   
   render() {
@@ -473,200 +555,200 @@ class Report extends Component {
           <div className={classes.toolbar} />
       
       <Paper className="row">
-      <form className={classes.container} noValidate autoComplete="off">
-      
-        <TextField
-          id="financials"
-          select
-          label="Financial Report"
-          className={classes.textField}
-          value={this.state.financials}
-          onChange={this.handleFinancials('financials')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Financial Report Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {financials.map(f => (
-            <option key={f.value} value={f.value}>
-              {f.label}
-            </option>
-          ))}
-        </TextField>
-      </form>
-      {this.state.financials === 3 ?
         <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-          id="accounts"
-          select
-          label="Account"
-          className={classes.textField}
-          value={this.state.account}
-          onChange={this.handleAccounts('account')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Account Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {this.state.accounts.map(i => (
-            <option key={i._id.account} value={i._id.description}>
-              {i._id.description}
-            </option>
-          ))}
-        </TextField>
-        <TextField
-          id="year"
-          select
-          label="Year"
-          className={classes.textField}
-          value={this.state.years}
-          onChange={this.handleYear('years')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Year Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {this.state.year.map(y => (
-            <option key={y._id.year} value={y._id.year}>
-              {y._id.year}
-            </option>
-          ))}
-        </TextField>
-        <TextField
-          id="quarter"
-          select
-          label="Quarter"
-          className={classes.textField}
-          value={this.state.quarter}
-          onChange={this.handleQuarter('quarter')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Quarter Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {quarter.map(q => (
-            <option key={q.value} value={q.value}>
-              {q.label}
-            </option>
-          ))}
-        </TextField>
-        <TextField
-          id="month"
-          select
-          label="Month"
-          className={classes.textField}
-          value={this.state.month}
-          onChange={this.handleMonth('month')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Month Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {/* Populate based on quarters */}
-          {month.map(m => (
-            <option key={m.valueMonth} value={m.valueMonth}>
-              {m.labelMonth}
-            </option>
-          ))}
-        </TextField>
-        <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
-          Run
-        </Button>
-      </form>
-      : 
-      <form className={classes.container} noValidate autoComplete="off">
-        <TextField
-          id="year"
-          select
-          label="Year"
-          className={classes.textField}
-          value={this.state.years}
-          onChange={this.handleYear('years')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Year Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {this.state.year.map(y => (
-            <option key={y._id.year} value={y._id.year}>
-              {y._id.year}
-            </option>
-          ))}
-        </TextField>
-        <TextField
-          id="quarter"
-          select
-          label="Quarter"
-          className={classes.textField}
-          value={this.state.quarter}
-          onChange={this.handleQuarter('quarter')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Quarter Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {quarter.map(q => (
-            <option key={q.value} value={q.value}>
-              {q.label}
-            </option>
-          ))}
-        </TextField>
-        <TextField
-          id="month"
-          select
-          label="Month"
-          className={classes.textField}
-          value={this.state.month}
-          onChange={this.handleMonth('month')}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Month Selection"
-          margin="normal"
-          variant="outlined"
-        >
-          {/* Populate based on quarters */}
-          {month.map(m => (
-            <option key={m.valueMonth} value={m.valueMonth}>
-              {m.labelMonth}
-            </option>
-          ))}
-        </TextField>
-        <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
-          Run
-        </Button>
-      </form>
-      }
+        
+          <TextField
+            id="financials"
+            select
+            label="Financial Report"
+            className={classes.textField}
+            value={this.state.financials}
+            onChange={this.handleFinancials('financials')}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+            helperText="Financial Report Selection"
+            margin="normal"
+            variant="outlined"
+          >
+            {financials.map(f => (
+              <option key={f.value} value={f.value}>
+                {f.label}
+              </option>
+            ))}
+          </TextField>
+        </form>
+        {this.state.financials === 3 ?
+          <form className={classes.container} noValidate autoComplete="off">
+            <TextField
+              id="accounts"
+              select
+              label="Account"
+              className={classes.textField}
+              value={this.state.account}
+              onChange={this.handleAccounts('account')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Account Selection"
+              margin="normal"
+              variant="outlined"
+            >
+              {this.state.accounts.map(i => (
+                <option key={i._id.account} value={i._id.description}>
+                  {i._id.description}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              id="year"
+              select
+              label="Year"
+              className={classes.textField}
+              value={this.state.years}
+              onChange={this.handleYear('years')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Year Selection"
+              margin="normal"
+              variant="outlined"
+            >
+              {this.state.year.map(y => (
+                <option key={y._id.year} value={y._id.year}>
+                  {y._id.year}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              id="quarter"
+              select
+              label="Quarter"
+              className={classes.textField}
+              value={this.state.quarter}
+              onChange={this.handleQuarter('quarter')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Quarter Selection"
+              margin="normal"
+              variant="outlined"
+            >
+              {quarter.map(q => (
+                <option key={q.value} value={q.value}>
+                  {q.label}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              id="month"
+              select
+              label="Month"
+              className={classes.textField}
+              value={this.state.month}
+              onChange={this.handleMonth('month')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Month Selection"
+              margin="normal"
+              variant="outlined"
+            >
+              {/* Populate based on quarters */}
+              {month.map(m => (
+                <option key={m.valueMonth} value={m.valueMonth}>
+                  {m.labelMonth}
+                </option>
+              ))}
+            </TextField>
+            <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
+              Run
+            </Button>
+          </form>
+        : 
+          <form className={classes.container} noValidate autoComplete="off">
+            <TextField
+              id="year"
+              select
+              label="Year"
+              className={classes.textField}
+              value={this.state.years}
+              onChange={this.handleYear('years')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Year Selection"
+              margin="normal"
+              variant="outlined"
+            >
+              {this.state.year.map(y => (
+                <option key={y._id.year} value={y._id.year}>
+                  {y._id.year}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              id="quarter"
+              select
+              label="Quarter"
+              className={classes.textField}
+              value={this.state.quarter}
+              onChange={this.handleQuarter('quarter')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Quarter Selection"
+              margin="normal"
+              variant="outlined"
+            >
+              {quarter.map(q => (
+                <option key={q.value} value={q.value}>
+                  {q.label}
+                </option>
+              ))}
+            </TextField>
+            <TextField
+              id="month"
+              select
+              label="Month"
+              className={classes.textField}
+              value={this.state.month}
+              onChange={this.handleMonth('month')}
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              helperText="Month Selection"
+              margin="normal"
+              variant="outlined"
+            >
+              {/* Populate based on quarters */}
+              {month.map(m => (
+                <option key={m.valueMonth} value={m.valueMonth}>
+                  {m.labelMonth}
+                </option>
+              ))}
+            </TextField>
+            <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
+              Run
+            </Button>
+          </form>
+        }
       </Paper>
       <div style={ { height: 10 } }></div>
       {(() => {
@@ -678,8 +760,8 @@ class Report extends Component {
                 <Table>
                   <TableHead>
                     <TableRow className={classes.head}>
-                      <TableCell>ASSETS</TableCell>
-                      <TableCell align="right">BALANCE</TableCell>
+                      <TableCell><b>ASSETS</b></TableCell>
+                      <TableCell align="right"><b>BALANCE</b></TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -703,8 +785,8 @@ class Report extends Component {
                       ) {
                         return (
                           <TableRow key={i}>
-                            <TableCell>TOTAL</TableCell>
-                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                            <TableCell><b>TOTAL</b></TableCell>
+                            <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
                           </TableRow>
                         );  
                         }
@@ -718,8 +800,8 @@ class Report extends Component {
                 <Table>
                   <TableHead>
                     <TableRow className={classes.head}>
-                      <TableCell>LIABILITIES</TableCell>
-                      <TableCell align="right">BALANCE</TableCell>
+                      <TableCell><b>LIABILITIES</b></TableCell>
+                      <TableCell align="right"><b>BALANCE</b></TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -743,8 +825,8 @@ class Report extends Component {
                       ) {
                         return (
                           <TableRow key={i}>
-                            <TableCell>TOTAL</TableCell>
-                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                            <TableCell><b>TOTAL</b></TableCell>
+                            <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
                           </TableRow>
                         );  
                         }
@@ -758,8 +840,8 @@ class Report extends Component {
                 <Table>
                   <TableHead>
                     <TableRow className={classes.head}>
-                      <TableCell>RETAINED EARNINGS</TableCell>
-                      <TableCell align="right">BALANCE</TableCell>
+                      <TableCell><b>RETAINED EARNINGS</b></TableCell>
+                      <TableCell align="right"><b>BALANCE</b></TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -783,8 +865,8 @@ class Report extends Component {
                       ) {
                         return (
                           <TableRow key={i}>
-                            <TableCell>TOTAL</TableCell>
-                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                            <TableCell><b>TOTAL</b></TableCell>
+                            <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
                           </TableRow>
                         );  
                         }
@@ -800,8 +882,8 @@ class Report extends Component {
                 <Table>
                   <TableHead>
                     <TableRow className={classes.head}>
-                      <TableCell>REVENUE</TableCell>
-                      <TableCell align="right">BALANCE</TableCell>
+                      <TableCell><b>REVENUE</b></TableCell>
+                      <TableCell align="right"><b>BALANCE</b></TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -825,8 +907,8 @@ class Report extends Component {
                       ) {
                         return (
                           <TableRow key={i}>
-                            <TableCell>TOTAL</TableCell>
-                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                            <TableCell><b>TOTAL</b></TableCell>
+                            <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
                           </TableRow>
                         );  
                         }
@@ -840,14 +922,14 @@ class Report extends Component {
                 <Table>
                   <TableHead>
                     <TableRow className={classes.head}>
-                      <TableCell>EXPENSES</TableCell>
-                      <TableCell align="right">BALANCE</TableCell>
+                      <TableCell><b>EXPENSES</b></TableCell>
+                      <TableCell align="right"><b>BALANCE</b></TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>
                 <Table>
                   <TableBody>
-                    {this.state.transactions.map((output, i) => {
+                    {this.state.acctdetailsum.map((output, i) => {
                       if (output.type === 'Expenses'
                       && output.year === this.state.years
                       ) {
@@ -865,8 +947,8 @@ class Report extends Component {
                       ) {
                         return (
                           <TableRow key={i}>
-                            <TableCell>TOTAL</TableCell>
-                            <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                            <TableCell><b>TOTAL</b></TableCell>
+                            <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
                           </TableRow>
                         );  
                         }
@@ -880,49 +962,67 @@ class Report extends Component {
             return (
               <React.Fragment>
                 <Paper>
-                  <Table>
-                    <TableHead>
-                      <TableRow className={classes.head}>
-                        <TableCell>ACCOUNT DETAILS</TableCell>
-                        <TableCell align="right">MONTH</TableCell>
-                        <TableCell align="right">YEAR</TableCell>
-                        <TableCell align="right">AMOUNT</TableCell>
-                      </TableRow>
-                    </TableHead>
-                  </Table>
-                  <Table>
-                    <TableBody>
-                      {this.state.acctdetails.map((output, i) => {
-                        if (output.description === this.state.account 
-                        && output.year === this.state.years
-                        ) {
-                          return (
-                            <TableRow key={i}>
-                              <TableCell>{output.date}</TableCell>
-                              <TableCell>{output.account}</TableCell>
-                              <TableCell>{output.description}</TableCell>
-                              <TableCell>{output.type}</TableCell>
-                              <TableCell>{output.transaction}</TableCell>
-                              <TableCell>{output.memo}</TableCell>
-                              <TableCell>{output.detail}</TableCell>
-                              <TableCell>{output.preparer}</TableCell>
-                              <TableCell>{output.prepared_date}</TableCell>
-                              <TableCell>{output.approver}</TableCell>
-                              <TableCell>{output.approved_date}</TableCell>
-                              <TableCell>{output.year}</TableCell>
-                              <TableCell>{output.quarter}</TableCell>
-                              <TableCell>{output.month}</TableCell>
-                              <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
-                            </TableRow>
-                          );  
-                          }
-                      })}
-                        <TableRow>
-                          <TableCell colSpan={3}>TOTAL</TableCell>
-                          <TableCell align="right">CALCULATE TOTAL</TableCell>
-                        </TableRow>
-                    </TableBody>
-                  </Table>
+                  {this.state.acctdetailsum.map((output, i) => {
+                      if (output.description === this.state.account 
+                      && output.year === this.state.years
+                      ) {
+                        return (
+                          <TableRow>
+                            <TableCell colSpan={3} align="right"><b>BALANCE: {ccyFormat(output.amount)}</b></TableCell>
+                          </TableRow>
+                        );
+                      }
+                  })}
+                  {this.state.acctdetails.map((output, i) => {
+                    if (output.description === this.state.account 
+                    && output.year === this.state.years
+                    ) {
+                      return (
+                        <ExpansionPanel expanded={this.state.expanded === i } onChange={this.handleExpand(i)} key={i} style={ { padding: 10 } }>
+                          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography className={classes.heading}>{output.transaction}</Typography>
+                            <Typography className={classes.secondaryHeading}>{ccyFormat(output.amount)}</Typography>
+                          </ExpansionPanelSummary>
+                          <ExpansionPanelDetails>
+                          <Table>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell><b>Date:</b> {output.date}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Account:</b> {output.account}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Description:</b> {output.description}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Type:</b> {output.type}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Memo:</b> {output.memo}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Detail:</b> {output.detail}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Preparer:</b> {output.preparer}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Prepared Date:</b> {output.prepared_date}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Approver:</b> {output.approver}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell><b>Approved Date:</b> {output.approved_date}</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                          </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                      );  
+                      }
+                  })}
                 </Paper>
               </React.Fragment>
             );
@@ -930,10 +1030,9 @@ class Report extends Component {
             return null;
         }
       })()}
-        
-        </main>
-        <Footer />
-        </React.Fragment>
+      </main>
+      <Footer />
+      </React.Fragment>
     );
   }
 }

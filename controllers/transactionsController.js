@@ -128,7 +128,7 @@ module.exports = {
     .sort({ amount: -1 })
     .then(dbModel => {console.log('REPORT' + JSON.stringify(dbModel[1])); res.json(dbModel)})
     .catch(err => {console.log('REPORT 2 ' + err);res.json(err)});
-  },  
+  }, 
   acctyear: function(req, res) {
     console.log('YEARLY ACCT DETAIL AGGREGATE')
     db.Transaction
@@ -142,7 +142,7 @@ module.exports = {
               type: "$type",
               transaction: "$transaction",
               memo: "$memo",
-              detail: "$detail",
+              detail: "$details",
               preparer: "$preparer",
               prepared_date: "$prepared_date",
               approver: "$approver",
@@ -170,7 +170,7 @@ module.exports = {
               type: "$type",
               transaction: "$transaction",
               memo: "$memo",
-              detail: "$detail",
+              detail: "$details",
               preparer: "$preparer",
               prepared_date: "$prepared_date",
               approver: "$approver",
@@ -201,7 +201,7 @@ module.exports = {
             type: "$type",
             transaction: "$transaction",
             memo: "$memo",
-            detail: "$detail",
+            detail: "$details",
             preparer: "$preparer",
             prepared_date: "$prepared_date",
             approver: "$approver",
