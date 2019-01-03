@@ -47,11 +47,7 @@ class LogoCard extends React.Component {
 
     return (
       <Card className={classes.card}>
-        <CardHeader
-          
-          
-          
-        />
+        <CardHeader/>
         <CardMedia
           className={classes.media}
           image="../images/acctg_blue.png"
