@@ -353,6 +353,7 @@ class Report extends Component {
           let acctdetails = []
           res.data.forEach(element => {
             acctdetails.push({
+              journal_id: element._id.journal_id,
               date: element._id.date,
               account: element._id.account,
               description: element._id.description,
@@ -382,6 +383,7 @@ class Report extends Component {
           res.data.forEach(element => {
             if (element._id.quarter === this.state.quarter) {  
               acctdetails.push({
+                journal_id: element._id.journal_id,
                 date: element._id.date,
                 account: element._id.account,
                 description: element._id.description,
@@ -410,6 +412,7 @@ class Report extends Component {
           res.data.forEach(element => {
             if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {  
               acctdetails.push({
+                journal_id: element._id.journal_id,
                 date: element._id.date,
                 account: element._id.account,
                 description: element._id.description,
@@ -986,6 +989,9 @@ class Report extends Component {
                           <ExpansionPanelDetails>
                           <Table>
                             <TableBody>
+                              <TableRow>
+                                <TableCell><b>Journal ID:</b> {output.journal_id}</TableCell>
+                              </TableRow>
                               <TableRow>
                                 <TableCell><b>Date:</b> {output.date}</TableCell>
                               </TableRow>
