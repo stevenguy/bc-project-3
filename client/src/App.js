@@ -11,14 +11,6 @@ import "./App.css";
 
 function App() {
   return (
-    <div>
-      <h1>Hi Steve</h1>
-      <Nav />
-      <Books />
-    </div>
-    <Router>
-      <div>
-        <Nav />
     <React.Fragment>
 
       <Router>
@@ -37,7 +29,7 @@ function App() {
       </Router>
     </React.Fragment>
 
-  );
+  )
 }
 
 export default App;
