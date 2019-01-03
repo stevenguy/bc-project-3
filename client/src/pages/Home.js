@@ -12,6 +12,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
+import HomeCard from "../components/Cards/home"
+import CardMedia from '@material-ui/core/CardMedia';
+import red from '@material-ui/core/colors/red';
 
 const styles = theme => ({
   //Style goes here
@@ -102,126 +105,75 @@ const styles = theme => ({
   button: {
       color: 'white',
       margin: '10px'
-  }
+  },
+  card: {
+    maxWidth: 400,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  actions: {
+    display: 'flex',
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
 });
 
 class Login extends Component {
-    state = {
-        userName: '',
-        password: '',
-        showPassword: false,
-    }
 
-    handleChange = prop => event => {
-        this.setState({
-          [prop]: event.target.value,
-        });
-      };
-
-    handleFormSubmit = event => {
-    event.preventDefault()
-    console.log('Submit')
-    };
-
-    handleClickShowPassword = () => {
-    this.setState(state => ({ showPassword: !state.showPassword }));
-    };
  
     render() {
       const { classes } = this.props;
 
       return (
         <React.Fragment>
+
         <Grid 
         container
         className={classes.login}
         justify="center"
         alignItems='center'
         >
-            <Grid item className={classes.card} sm={6} md={4}>
+            
+            <Grid item className={classes.card} xs={3}>
+                <CardMedia
+                    className={classes.media}
+                    image="../images/acctg_blue.png"
+                    title="Paella dish"
+                    color='inherit'
+                />
+            </Grid>
+            <Grid item className={classes.card} xs={12} sm={6}>
                 <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
-                    <div className={classes.flex}>
-                    <Typography className={classes.flex} color='inherit' variant="h1" component="h1">
-                    Logo Here
-                    </Typography>
-                    <Typography className={classes.flex} color='inherit' variant='h3' component="h3">
-                    Welcome to <br />
-                    Web Accountant
-                    </Typography>
-                    </div>
+                    
+                    <CardMedia
+                    className={classes.media}
+                    image="../images/acctg_blue.png"
+                    title="Paella dish"
+                    color='inherit'
+                    />
+                    
                 </Paper>
+                <CardMedia
+                    className={classes.media}
+                    image="../images/acctg_blue.png"
+                    title="Paella dish"
+                    color='inherit'
+                />
             </Grid>
-            <Grid item className={classes.card} sm={6} md={4}>
-                <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
-                <div className={classes.flex}>
-                    <Typography color='inherit' variant="h5" component="h5">
-                    Sign In
-                    </Typography>
-                    <form className={classes.container} noValidate autoComplete="off">
-                        <TextField
-                        id="Username-input"
-                        label="Username"
-                        className={classes.textField}
-                        type="Username"
-                        name="username"
-                        margin="normal"
-                        variant="outlined"
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.cssLabel,
-                                focused: classes.cssFocused,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                input: classes.whiteText,
-                                root: classes.cssOutlinedInput,
-                                focused: classes.cssFocused,
-                                notchedOutline: classes.notchedOutline,
-                            }
-                        }}
-                        />
-                        <TextField
-                        id="outlined-adornment-password"
-                        className={classNames(classes.margin, classes.textField)}
-                        variant="outlined"
-                        type={this.state.showPassword ? 'text' : 'password'}
-                        label="Password"
-                        value={this.state.password}
-                        onChange={this.handleChange('password')}
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.cssLabel,
-                                focused: classes.cssFocused,
-                            },
-                        }}
-                        InputProps={{
-                            endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                aria-label="Toggle password visibility"
-                                onClick={this.handleClickShowPassword}
-                                className={classes.whiteText}
-                                >
-                                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                            ),
-                            classes: {
-                                input: classes.whiteText,
-                                root: classes.cssOutlinedInput,
-                                focused: classes.cssFocused,
-                                notchedOutline: classes.notchedOutline,
-                              },
-                        }}
-                        />
-                        <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={classes.button}>
-                            Log In
-                        </Button>
-                    </form>
-                </div>
-                </Paper>
-            </Grid>
+            
         </Grid>
         </React.Fragment>
           );
