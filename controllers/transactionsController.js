@@ -136,6 +136,7 @@ module.exports = {
         [{ $match: {status: 'Approved' }},
         { $group: {
             _id: {
+              journal_id: "$journal_id",
               date: "$date",
               account: "$account",
               description: "$description",
@@ -164,6 +165,7 @@ module.exports = {
         [{ $match: {status: 'Approved' }},
         { $group: {
             _id: {
+              journal_id: "$journal_id",
               date: "$date",
               account: "$account",
               description: "$description",
@@ -195,6 +197,7 @@ module.exports = {
       [{ $match: {status: 'Approved' }},
       { $group: {
           _id: {
+            journal_id: "$journal_id",
             date: "$date",
             account: "$account",
             description: "$description",
