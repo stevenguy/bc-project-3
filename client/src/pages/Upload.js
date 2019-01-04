@@ -220,7 +220,7 @@ class Upload extends Component {
                                 <Grid item xs={6} sm={9}  style={{padding: '10px'}}>
                                     {this.state.uploaded === 0 ? (
                                     <Button variant="contained" color="primary" onClick={ this.UploadButton } style={{width:'100%'}}>
-                                        Upload
+                                        Upload 	&nbsp;
                                         <CloudUploadIcon/>
                                     </Button>) : <h2 color="success">CSV Uploaded!</h2>}
                                 </Grid>
