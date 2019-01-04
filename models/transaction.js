@@ -3,22 +3,23 @@ const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
   
-  date: { type: Date, default: Date.now },
-  transaction: { type: String, required: true },
-  memo: { type: String, required: true },
+  journal_id: { type: String, required: true }, //1
+  date: { type: Date, default: Date.now }, //1
+  transaction: { type: String, required: true }, //1
+  memo: { type: String, required: true }, //1
   details: { type: String, required: true },
-  amount: { type: Number, required: true },
-  type: { type: String, required: true },
-  account: { type: String, required: true },
-  description: { type: String, required: true },
-  preparer: { type: String, required: true },
-  prepared_date: { type: Date, default: Date.now },
-  approver: { type: String, required: true },
-  approved_date: { type: Date, default: Date.now },
-  status: { type: String, required: true },
-  year: { type: Number, required: true },
-  month: { type: Number, required: true },
-  quarter: { type: Number, required: true }
+  amount: { type: Number, required: true }, //1
+  type: { type: String, required: true }, //1
+  account: { type: String, required: true }, //1
+  description: { type: String, required: true }, //1
+  preparer: { type: String, required: true }, // the logged in user
+  prepared_date: { type: Date, default: Date.now }, // now
+  approver: { type: String},
+  approved_date: { type: Date},
+  status: { type: String},
+  year: { type: Number},
+  month: { type: Number},
+  quarter: { type: Number}
 
 });
 

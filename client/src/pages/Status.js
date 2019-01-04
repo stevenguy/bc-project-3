@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-// import API from "../utils/API";
+import Grid from '@material-ui/core/Grid';
+import API from "../utils/API";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -34,7 +35,7 @@ class Dashboard extends Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography paragraph>
-           This is Dashboard Component
+           This is Approved/Unapproved Entry Status Component
           </Typography>
           <Typography paragraph>
             Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla

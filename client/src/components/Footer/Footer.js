@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
     footer: {
@@ -32,7 +32,6 @@ const styles = theme => ({
     return (
       <div className={classes.footer}>
           <Typography variant="h6" color="inherit">
-           <p>This is the footer</p>
            <a className={classes.link} href="https://github.com/stevenguy/bc-project-3">
             <p>Github Repository</p>
            </a> 

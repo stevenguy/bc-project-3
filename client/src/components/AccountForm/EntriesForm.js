@@ -1,11 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Divider from '@material-ui/core/Divider';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const styles = theme => ({
   //Style goes here
@@ -21,126 +31,130 @@ const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
+  margin: {
+    margin: theme.spacing.unit,
+    alignSelf: 'center',
+  }
 });
 
 class EntriesForm extends Component {
     state = {
       //State goes here
-        name: '',
-        number: '',
-        type: '',
-        labelWidth: 0
+        labelWidth: 0,
     }
 
-    handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value })
-    };
-    
-    
     render() {
       const { classes } = this.props;
 
       return (
         <React.Fragment>
-            <div>Entries Form</div>
-            <form className={classes.root} autoComplete="off">
-            {this.props.new ?
-                <React.Fragment>
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        id="name"
-                        name="name"
-                        label="Account Name"
-                        className={classes.textField}
-                        value={this.state.name}
-                        onChange={this.handleChange}
+            <Table className={classes.table}>
+                <TableHead>
+                <TableRow>
+                    <TableCell align='justify'>Account Name</TableCell>
+                    <TableCell align="justify">Account Number</TableCell>
+                    <TableCell align="justify">Account Type</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow> 
+                        <TableCell align='justify'>{this.props.isNew ? this.props.newAccount.name : this.props.account.name}</TableCell>
+                        <TableCell align="justify">{this.props.isNew ? this.props.newAccount.number : this.props.account.number}</TableCell>
+                        <TableCell align="justify">{this.props.isNew ? this.props.newAccount.type : this.props.account.type}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            <div>
+                {this.props.entries.map((entry, index) => (
+                    <React.Fragment key={index}>
+                    <div className={classes.root}>
+                    <FormControl className={classes.formControl}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                        id='date'
                         margin="normal"
-                        >
-                    </TextField>
-                </FormControl>
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        id="number"
-                        name="number"
-                        label="Account Number"
-                        className={classes.textField}
-                        value={this.state.number}
-                        onChange={this.handleChange}
-                        margin="normal"
-                        >
-                    </TextField>
-                </FormControl>
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        id="type"
-                        name="type"
-                        label="Account Type"
-                        className={classes.textField}
-                        value={this.state.type}
-                        onChange={this.handleChange}
-                        margin="normal"
-                        >
-                    </TextField>
-                </FormControl>
-                </React.Fragment>
-                : <React.Fragment>
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        id="name"
-                        name="name"
-                        select
-                        label="Account Name"
-                        className={classes.textField}
-                        value={this.state.name}
-                        onChange={this.handleChange}
-                        SelectProps={{
-                            MenuProps: {
-                            className: classes.formControl,
-                            },
-                        }}
-                        margin="normal"
-                        >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                    </TextField>
-                </FormControl>
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        id="number"
-                        select
-                        name="number"
-                        label="Account Number"
-                        className={classes.textField}
-                        value={this.state.number}
-                        onChange={this.handleChange}
-                        SelectProps={{
-                            MenuProps: {
-                            className: classes.formControl,
-                            },
-                        }}
-                        margin="normal"
-                        >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                    </TextField>
-                </FormControl>
-                <FormControl className={classes.formControl}>
-                    <TextField
-                        id="type"
-                        label="Account Type"
-                        name="type"
-                        value={this.state.type}
-                        className={classes.textField}
-                        margin="normal"
-                        InputProps={{
-                            readOnly: true,
-                        }}
+                        label="Date"
+                        format='MM/dd/yy'
+                        value={this.props.entries[index].date}
+                        onChange={this.props.handleDateChange(index)}
                     />
-                </FormControl>
-                </React.Fragment>}
-            </form>
+                    </MuiPickersUtilsProvider>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <TextField
+                            id="description"
+                            name="description"
+                            label="Description"
+                            required
+                            className={classes.textField}
+                            value={this.props.entries[index].description}
+                            onChange={this.props.handleChange(index)}
+                            margin="normal"
+                            >
+                        </TextField>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <TextField
+                            id="memo"
+                            name="memo"
+                            label="Memo"
+                            className={classes.textField}
+                            value={this.props.entries[index].memo}
+                            onChange={this.props.handleChange(index)}
+                            margin="normal"
+                            >
+                        </TextField>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <TextField
+                            id="details"
+                            select
+                            name="details"
+                            label="Details"
+                            required
+                            className={classes.textField}
+                            value={this.props.entries[index].details}
+                            onChange={this.props.handleChange(index)}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: classes.formControl,
+                                },
+                            }}
+                            margin="normal"
+                            >
+                            <MenuItem value='Debit'>Debit</MenuItem>
+                            <MenuItem value='Credit'>Credit</MenuItem>
+                        </TextField>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <TextField
+                            id="amount"
+                            name="amount"
+                            label="Amount"
+                            type="Number"
+                            required
+                            className={classes.textField}
+                            value={this.props.entries[index].amount}
+                            onChange={this.props.handleChange(index)}
+                            margin="normal"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">$</InputAdornment>
+                                )}}
+                            >
+                        </TextField>
+                    </FormControl>
+                    <Fab size="small" color="secondary" aria-label="Remove" onClick={this.props.handleRemove(index)} className={classes.margin}>
+                        <RemoveIcon />
+                    </Fab>
+                </div>
+                <Divider/>
+                </React.Fragment>
+                ))}
+            <Fab size="small" color="primary" aria-label="Add" onClick={this.props.handleAdd} className={classes.margin}>
+                <AddIcon />
+            </Fab>
+            </div>
         </React.Fragment>
           );
         }
