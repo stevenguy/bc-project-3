@@ -194,17 +194,12 @@ function ccyFormat(num) {
 class Report extends Component {
 
   state = {
-    accounts: [],
     year: [],
     transactions: [],
-    acctdetails: [],
     typesum: [],
-    acctdetailsum: [],
-    account: '',
     years: 0,
     quarter: 0,
     month: 0,
-    expanded: null,
   };
 
   handleFinancials = fin => event => {
@@ -231,32 +226,13 @@ class Report extends Component {
     });
   };
 
-  handleAccounts = acct => event => {
-    this.setState({
-      [acct]: event.target.value,
-    });
-  };
-
-  handleExpand = panel => (event, expanded) => {
-    this.setState({
-      expanded: expanded ? panel : false,
-    });
-  };
-
   componentDidMount() {
-    this.loadAccounts();
     this.loadYear();
   }
 
   loadYear = () => {
     API.year()
     .then(res => this.setState({ year: res.data }))
-    .catch(err => console.log(err));
-  }
-
-  loadAccounts = () => {
-    API.accounts()
-    .then(res => this.setState({ accounts: res.data }))
     .catch(err => console.log(err));
   }
 
@@ -377,11 +353,10 @@ class Report extends Component {
     const { classes } = this.props;
 
     return (
+
       <React.Fragment>
       <ResponsiveDrawer />
-      <main className={classes.content}>
-          <div className={classes.toolbar} />
-      
+      <div style={ { height: 10 } }></div>
       <Paper className="row">
         
         <form className={classes.container} noValidate autoComplete="off">
@@ -456,11 +431,12 @@ class Report extends Component {
             Run
           </Button>
         </form>
-      
-    </Paper>
-    <div style={ { height: 10 } }></div>
+        
+      </Paper>
 
-        <React.Fragment>
+      <div style={ { height: 10 } }></div>
+
+      <React.Fragment>
         <Paper>
           <Table>
             <TableHead>
@@ -499,7 +475,8 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+      
+      <div style={ { height: 10 } }></div>
         {/* Liabilities */}
         <Paper>
           <Table>
@@ -539,7 +516,8 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+
+      <div style={ { height: 10 } }></div>
         {/* Retained Earnings */}
         <Paper>
           <Table>
@@ -579,13 +557,12 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        </React.Fragment>
         
-    </main>
-    <Footer />
-    </React.Fragment>
-  );
-}
+      </React.Fragment>
+      <Footer />
+      </React.Fragment>
+    );
+  }
 }
 
 Report.propTypes = {

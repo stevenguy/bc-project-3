@@ -132,8 +132,8 @@ class Report extends Component {
             ))}
           </TextField>
         </form>
-        <Paper>
-          {(() => {
+        </Paper>
+        {(() => {
             switch(this.state.financials) {
               case 1: 
                 return <BalanceSheet/>;
@@ -144,9 +144,7 @@ class Report extends Component {
               default:
                 return null;
             }
-          })()}
-        </Paper>
-      </Paper>
+        })()}
       </main>
       <Footer />
       </React.Fragment>
