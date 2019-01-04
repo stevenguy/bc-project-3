@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Component } from "react";
+import API from "../../utils/API";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import API from "../../utils/API";
+import grey from '@material-ui/core/colors/grey';
+
+const drawerWidth = 240;
 
 const styles = theme => ({
   container: {
@@ -26,6 +29,32 @@ const styles = theme => ({
   input: {
     display: 'none',
   },
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
+  },
+  head: {
+    backgroundColor: grey[300],
+    color: theme.palette.common.white,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    paddingBottom: '130px',
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
 });
 
 const financials = [
@@ -42,25 +71,6 @@ const financials = [
     label: 'Account Details',
   }
 ];
-
-// const year = [
-//   {
-//     value: 0,
-//     label: '',
-//   },
-//   {
-//     value: 2019,
-//     label: '2019',
-//   },
-//   {
-//     value: 2018,
-//     label: '2018',
-//   },
-//   {
-//     value: 2017,
-//     label: '2017',
-//   }
-// ];
 
 const month = [
   {
@@ -166,13 +176,16 @@ const quarter = [
   }
 ];
 
-export class OutlinedTextFields extends React.Component {
+class FinancialMenu extends Component {
+
   state = {
-    financials: '',
     accounts: [],
     year: [],
-    quarter: '',
-    month: '',
+    financials: 'Select',
+    account: '',
+    years: 0,
+    quarter: 0,
+    month: 0,
   };
 
   handleFinancials = fin => event => {
@@ -206,18 +219,28 @@ export class OutlinedTextFields extends React.Component {
   };
 
   componentDidMount() {
+    this.loadAccounts();
+    this.loadYear();
+  }
+
+  loadYear = () => {
     API.year()
     .then(res => this.setState({ year: res.data }))
     .catch(err => console.log(err));
+  }
+
+  loadAccounts = () => {
     API.accounts()
     .then(res => this.setState({ accounts: res.data }))
     .catch(err => console.log(err));
   }
-
+  
   render() {
+    
     const { classes } = this.props;
 
     return (
+      
       <form className={classes.container} noValidate autoComplete="off">
       
         <TextField
@@ -237,7 +260,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {financials.map(f => (
-            <option ref={this.state.financials} key={f.value} value={f.value}>
+            <option key={f.value} value={f.value}>
               {f.label}
             </option>
           ))}
@@ -247,8 +270,8 @@ export class OutlinedTextFields extends React.Component {
           select
           label="Account"
           className={classes.textField}
-          value={this.state.accounts}
-          onChange={this.handleAccounts('accounts')}
+          value={this.state.account}
+          onChange={this.handleAccounts('account')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -259,7 +282,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {this.state.accounts.map(i => (
-            <option ref={this.state.accounts} key={i._id.account} value={i._id.account}>
+            <option key={i._id.account} value={i._id.description}>
               {i._id.description}
             </option>
           ))}
@@ -269,8 +292,8 @@ export class OutlinedTextFields extends React.Component {
           select
           label="Year"
           className={classes.textField}
-          value={this.state.year}
-          onChange={this.handleYear('year')}
+          value={this.state.years}
+          onChange={this.handleYear('years')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -281,7 +304,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {this.state.year.map(y => (
-            <option ref={this.state.year} key={y._id.year} value={y._id.year}>
+            <option key={y._id.year} value={y._id.year}>
               {y._id.year}
             </option>
           ))}
@@ -303,7 +326,7 @@ export class OutlinedTextFields extends React.Component {
           variant="outlined"
         >
           {quarter.map(q => (
-            <option ref={this.state.quarter} key={q.value} value={q.value}>
+            <option key={q.value} value={q.value}>
               {q.label}
             </option>
           ))}
@@ -324,23 +347,32 @@ export class OutlinedTextFields extends React.Component {
           margin="normal"
           variant="outlined"
         >
-          {/* Populate based on quarters */}
           {month.map(m => (
-            <option ref={this.state.month} key={m.valueMonth} value={m.valueMonth}>
+            <option key={m.valueMonth} value={m.valueMonth}>
               {m.labelMonth}
             </option>
           ))}
+          {/* Populate based on quarters */}
+          {/* {month.map((m, i) => {
+            if (m.value === this.state.quarter) {
+              return (
+                <option key={m.valueMonth} value={m.valueMonth}>
+                {m.valueLabel}
+                </option>
+              );
+            }
+          })} */}
         </TextField>
-        <Button onClick={this.props.loadAggr} variant="contained" color="default" className={classes.button}>
+        <Button onClick={this.props.handleRun} variant="contained" color="grey" className={classes.button}>
           Run
         </Button>
       </form>
-    );
+    )
   }
 }
 
-OutlinedTextFields.propTypes = {
+FinancialMenu.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(OutlinedTextFields);
+export default withStyles(styles)(FinancialMenu);

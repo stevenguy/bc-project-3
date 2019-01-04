@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Grid from '@material-ui/core/Grid';
-import API from "../utils/API";
+// import API from "../utils/API";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   //Style goes here

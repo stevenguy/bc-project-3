@@ -8,6 +8,7 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import StatusIcon from '@material-ui/icons/ThumbsUpDown';
 import CreateIcon from '@material-ui/icons/Create';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -27,12 +28,12 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { NavLink } from 'react-router-dom'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const styles = theme => ({
   root: {
@@ -87,7 +88,7 @@ const styles = theme => ({
 class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
-    menuArr: ['Dashboard', 'Entries', 'Search', 'Upload', 'Reports']
+    menuArr: ['Dashboard', 'Entries', 'Upload', 'Status', 'Search', 'Reports']
   };
 
   handleDrawerToggle = () => {
@@ -100,7 +101,7 @@ class ResponsiveDrawer extends React.Component {
     const drawer = (
       <div>
         <div className={classes.toolbar}>
-        <p className={classes.brand}>Logo and Brand Here</p>
+        <p className={classes.brand}><img src="../images/acctg_blue.png" alt="acctg" style={ { height: 50, width: 100}}/></p>
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
@@ -121,16 +122,18 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>
         {this.state.menuArr.map(text => (
-             <NavLink to={text}>
+             <NavLink key={text} to={text}>
              <ListItem button>
                <ListItemIcon>{text === "Dashboard" 
                ? <DashboardIcon /> 
                : text === "Entries"
                ? <CreateIcon />
-               : text === "Search"
-               ? <SearchIcon />
                : text === "Upload"
                ? <AttachFileIcon />
+               : text === "Status"
+               ? <StatusIcon />
+               : text === "Search"
+               ? <SearchIcon />
                : text === "Reports"
                ? <BarChartIcon />
                : ""
@@ -159,9 +162,7 @@ class ResponsiveDrawer extends React.Component {
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
             {this.state.menuArr.map(text => (
-              text === "Home" 
-              ? <Route path="/" exact render={() => <div>Home</div>}/>
-              : <Route path={'/' + text} exact render={() => <div>{text}</div>}/>
+              <Route key={text} path={'/' + text} exact render={() => <div>{text}</div>}/>
             ))}
             </Typography>
           </Toolbar>
