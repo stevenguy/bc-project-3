@@ -19,7 +19,7 @@ import red from '@material-ui/core/colors/red';
 const styles = theme => ({
   //Style goes here
  login: {
-     height: '100vh',
+     height: 'auto',
      width: '100%',
      background: "linear-gradient(42deg, rgba(4,4,32,1) 0%, rgba(26,26,69,1) 32%, rgba(191,76,95,1) 59%, rgba(186,17,17,1) 100%)"
  },
@@ -28,14 +28,15 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     height: "100%",
     [theme.breakpoints.down('xs')]: {
-        maxHeight: "300px"
+        maxHeight: "auto"
       },
   },
   card: {
-      height: "80%",
-      [theme.breakpoints.down('xs')]: {
+    maxWidth: 400,
+    height: "80%",
+    [theme.breakpoints.down('xs')]: {
         height: "100%"
-      }
+    }
   },
   brand: {
     backgroundColor: "rgb(229, 115, 106)",
@@ -43,19 +44,6 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     alignSelf: 'center',
-  },
-  form: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignSelf: 'center',
-    backgroundColor: "rgb(46, 50, 68)",
-    color: 'rgb(109, 112, 123)',
-    [theme.breakpoints.down('xs')]: {
-        position: 'absolute',
-        top: "45%",
-        left: 0,
-        width: "100%"
-      }
   },
   flex: {
       display: 'flex',
@@ -143,19 +131,31 @@ class Login extends Component {
         <Grid 
         container
         className={classes.login}
-        justify="center"
+        
         alignItems='center'
         >
             
-            <Grid item className={classes.card} xs={3}>
+            
+            <Grid item className={classes.card} xs={6}>
+                <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
+                    
+                    <CardMedia
+                    className={classes.media}
+                    image="../images/acctg_blue.png"
+                    title="Paella dish"
+                    color='inherit'
+                    />
+                    
+                </Paper>
                 <CardMedia
                     className={classes.media}
                     image="../images/acctg_blue.png"
                     title="Paella dish"
                     color='inherit'
                 />
+            
             </Grid>
-            <Grid item className={classes.card} xs={12} sm={6}>
+            <Grid item className={classes.card} xs={6}>
                 <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
                     
                     <CardMedia
