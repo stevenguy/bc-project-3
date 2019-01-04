@@ -190,26 +190,15 @@ function ccyFormat(num) {
   return `${nf.format(num.toFixed(2))}`;
 }
 
-class Report extends Component {
+class IncomeStatement extends Component {
 
   state = {
-    accounts: [],
     year: [],
     transactions: [],
-    acctdetails: [],
     typesum: [],
-    acctdetailsum: [],
-    account: '',
     years: 0,
     quarter: 0,
     month: 0,
-    expanded: null,
-  };
-
-  handleFinancials = fin => event => {
-    this.setState({
-      [fin]: event.target.value,
-    });
   };
 
   handleYear = yr => event => {
@@ -230,32 +219,13 @@ class Report extends Component {
     });
   };
 
-  handleAccounts = acct => event => {
-    this.setState({
-      [acct]: event.target.value,
-    });
-  };
-
-  handleExpand = panel => (event, expanded) => {
-    this.setState({
-      expanded: expanded ? panel : false,
-    });
-  };
-
   componentDidMount() {
-    this.loadAccounts();
     this.loadYear();
   }
 
   loadYear = () => {
     API.year()
     .then(res => this.setState({ year: res.data }))
-    .catch(err => console.log(err));
-  }
-
-  loadAccounts = () => {
-    API.accounts()
-    .then(res => this.setState({ accounts: res.data }))
     .catch(err => console.log(err));
   }
 
@@ -374,10 +344,9 @@ class Report extends Component {
     const { classes } = this.props;
 
     return (
+
       <React.Fragment>
       <ResponsiveDrawer />
-      <main className={classes.content}>
-          <div className={classes.toolbar} />
       
       <Paper className="row">
         
@@ -453,99 +422,99 @@ class Report extends Component {
             Run
           </Button>
         </form>
-      
-    </Paper>
-    <div style={ { height: 10 } }></div>
+
+      </Paper>
+
+      <div style={ { height: 10 } }></div>
     
-        <React.Fragment>
-        <Paper>
-            <Table>
-            <TableHead>
-                <TableRow className={classes.head}>
-                <TableCell><b>REVENUE</b></TableCell>
-                <TableCell align="right"><b>BALANCE</b></TableCell>
-                </TableRow>
-            </TableHead>
-            </Table>
-            <Table>
-            <TableBody>
-                {this.state.transactions.map((output, i) => {
-                if (output.type === 'Revenue'
-                && output.year === this.state.years
-                ) {
-                    return (
-                    <TableRow key={i}>
-                        <TableCell>{output.description}</TableCell>
-                        <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
-                    </TableRow>
-                    );
-                    }
-                })}
-                {this.state.typesum.map((output, i) => {
-                if (output.type === 'Revenue'
-                && output.year === this.state.years
-                ) {
-                    return (
-                    <TableRow key={i}>
-                        <TableCell><b>TOTAL</b></TableCell>
-                        <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
-                    </TableRow>
-                    );  
-                    }
-                })}
-            </TableBody>
-            </Table>
-        </Paper>
-        <div style={ { height: 10 } }></div>
-        {/* EXPENSES */}
-        <Paper>
-            <Table>
-            <TableHead>
-                <TableRow className={classes.head}>
-                <TableCell><b>EXPENSES</b></TableCell>
-                <TableCell align="right"><b>BALANCE</b></TableCell>
-                </TableRow>
-            </TableHead>
-            </Table>
-            <Table>
-            <TableBody>
-                {this.state.transactions.map((output, i) => {
-                if (output.type === 'Expenses'
-                && output.year === this.state.years
-                ) {
-                    return (
-                    <TableRow key={i}>
-                        <TableCell>{output.description}</TableCell>
-                        <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
-                    </TableRow>
-                    );  
-                    }
-                })}
-                {this.state.typesum.map((output, i) => {
-                if (output.type === 'Expenses'
-                && output.year === this.state.years
-                ) {
-                    return (
-                    <TableRow key={i}>
-                        <TableCell><b>TOTAL</b></TableCell>
-                        <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
-                    </TableRow>
-                    );  
-                    }
-                })}
-            </TableBody>
-            </Table>
-        </Paper>
-        </React.Fragment>
-    </main>
+      <React.Fragment>
+      <Paper>
+          <Table>
+          <TableHead>
+              <TableRow className={classes.head}>
+              <TableCell><b>REVENUE</b></TableCell>
+              <TableCell align="right"><b>BALANCE</b></TableCell>
+              </TableRow>
+          </TableHead>
+          </Table>
+          <Table>
+          <TableBody>
+              {this.state.transactions.map((output, i) => {
+              if (output.type === 'Revenue'
+              && output.year === this.state.years
+              ) {
+                  return (
+                  <TableRow key={i}>
+                      <TableCell>{output.description}</TableCell>
+                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  );
+                  }
+              })}
+              {this.state.typesum.map((output, i) => {
+              if (output.type === 'Revenue'
+              && output.year === this.state.years
+              ) {
+                  return (
+                  <TableRow key={i}>
+                      <TableCell><b>TOTAL</b></TableCell>
+                      <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
+                  </TableRow>
+                  );  
+                  }
+              })}
+          </TableBody>
+          </Table>
+      </Paper>
+      <div style={ { height: 10 } }></div>
+      {/* EXPENSES */}
+      <Paper>
+          <Table>
+          <TableHead>
+              <TableRow className={classes.head}>
+              <TableCell><b>EXPENSES</b></TableCell>
+              <TableCell align="right"><b>BALANCE</b></TableCell>
+              </TableRow>
+          </TableHead>
+          </Table>
+          <Table>
+          <TableBody>
+              {this.state.transactions.map((output, i) => {
+              if (output.type === 'Expenses'
+              && output.year === this.state.years
+              ) {
+                  return (
+                  <TableRow key={i}>
+                      <TableCell>{output.description}</TableCell>
+                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                  </TableRow>
+                  );  
+                }
+              })}
+              {this.state.typesum.map((output, i) => {
+              if (output.type === 'Expenses'
+              && output.year === this.state.years
+              ) {
+                  return (
+                  <TableRow key={i}>
+                      <TableCell><b>TOTAL</b></TableCell>
+                      <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
+                  </TableRow>
+                  );  
+                }
+              })}
+          </TableBody>
+          </Table>
+      </Paper>
+      </React.Fragment>
     <Footer />
     </React.Fragment>
-  );
-}
+    );
+  }
 }
 
-Report.propTypes = {
+IncomeStatement.propTypes = {
 classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Report);
+export default withStyles(styles)(IncomeStatement);
