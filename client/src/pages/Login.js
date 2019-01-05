@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Grid from '@material-ui/core/Grid';
-import API from "../utils/API";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +12,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
 import firebase, { auth, provider } from '../utils/firebase.js';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import Auth from "../utils/user";
 
 const styles = theme => ({
     //Style goes here
@@ -134,9 +134,20 @@ class Login extends Component {
     login() {
         auth.signInWithPopup(provider)
             .then((result) => {
-                console.log(result.user);
-                localStorage.setItem('user', result.user);
-                local = localStorage.getItem('user');
+                var temp = {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    photoURL: result.user.photoURL
+                };
+                console.log(temp);
+                Auth.createUser(temp)
+                .then(res => {
+                    console.log(res)
+                    localStorage.setItem('user', res);
+                    local = localStorage.getItem('user');
+                    window.location.reload();
+                })
+                
                 // this.setState(({ user: result.user}))
             });
     }
@@ -196,6 +207,9 @@ Login.propTypes = {
 };
 
 export default withStyles(styles)(Login);
+
+
+//The other login component
 
 
 // <Typography color='inherit' variant="h5" component="h5">
