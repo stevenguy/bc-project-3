@@ -107,6 +107,7 @@ class Login extends Component {
         user: null
     }
 
+
     handleChange = prop => event => {
         this.setState({
             [prop]: event.target.value,
@@ -128,6 +129,7 @@ class Login extends Component {
                 // this.setState(({user: null}))
                 localStorage.removeItem('user');
                 local = null;
+                window.location.reload();
             });
     }
 
@@ -140,14 +142,12 @@ class Login extends Component {
                     photoURL: result.user.photoURL
                 };
                 console.log(temp);
-                Auth.createUser(temp)
+                Auth.authUser(temp)
                 .then(res => {
-                    console.log(res)
-                    localStorage.setItem('user', res);
-                    local = localStorage.getItem('user');
+                    localStorage.setItem('user', JSON.stringify(res.data));
+                    local = JSON.parse(localStorage.getItem('user'));
                     window.location.reload();
-                })
-                
+                })             
                 // this.setState(({ user: result.user}))
             });
     }
