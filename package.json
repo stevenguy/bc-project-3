@@ -32,5 +32,13 @@
     "papaparse": "^4.6.2",
     "react-dropzone": "^8.0.3",
     "react-file-reader": "^1.1.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevenguy/bc-project-3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stevenguy/bc-project-3/issues"
+  },
+  "homepage": "https://github.com/stevenguy/bc-project-3#readme"
 }
