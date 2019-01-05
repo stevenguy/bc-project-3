@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import firebase, { auth, provider } from '../utils/firebase.js';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Auth from "../utils/user";
+import { Redirect } from "react-router";
 
 const styles = theme => ({
     //Style goes here
@@ -191,7 +192,7 @@ class Login extends Component {
                         <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
                             <div className={classes.flex}>
                                 {local ?
-                                    <button onClick={this.logout}>Log Out</button>
+                                    <Redirect to='/'/>
                                     :
                                     <button onClick={this.login}>Log In</button>
                                 }

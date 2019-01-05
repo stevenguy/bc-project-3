@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import HomeCard from "../components/Cards/home"
 import CardMedia from '@material-ui/core/CardMedia';
 import red from '@material-ui/core/colors/red';
+import { Redirect } from "react-router";
 
 const styles = theme => ({
   //Style goes here
@@ -127,6 +128,14 @@ class Login extends Component {
 
       return (
         <React.Fragment>
+
+          {
+            localStorage.getItem('user') ? (
+              <Redirect to='/'/>
+            ) : (
+                <Redirect to="/login" />
+              )
+          }
 
         <Grid 
         container
