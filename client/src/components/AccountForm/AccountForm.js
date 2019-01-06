@@ -17,12 +17,9 @@ const styles = theme => ({
   formControl: {
     margin: 0,
     minWidth: 120,
-    padding: "0 10px"
-  },
-  typeField: {
-    margin: 0,
-    maxWidth: 120,
-    padding: "0 10px"
+    maxWidth: 150,
+    padding: "0 10px",
+    flexGrow: '1',
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
@@ -195,7 +192,7 @@ class AccountForm extends Component {
                         ))}
                     </TextField>
                 </FormControl>
-                <FormControl  className={classes.typeField}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="type"
                         label="Type"
