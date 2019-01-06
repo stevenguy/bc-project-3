@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
   
+  journal_id: { type: String, required: true }, //1
   date: { type: Date, default: Date.now }, //1
   transaction: { type: String, required: true }, //1
   memo: { type: String, required: true }, //1

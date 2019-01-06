@@ -55,5 +55,29 @@ export default {
   // sums data from the database (month)
   reports: function() {
     return axios.get("/api/transactions/reports");
+  },
+  // Pulls data by type and year
+  typeyear: function() {
+    return axios.get("/api/transactions/typeyear");
+  },
+  // Pulls data by type and quarter
+  typequarter: function() {
+    return axios.get("/api/transactions/typequarter");
+  },
+  // Pulls data by type and month
+  typemonth: function() {
+    return axios.get("/api/transactions/typemonth");
+  },
+  // sums data by account details and year
+  acctyear: function() {
+    return axios.get("/api/transactions/acctyear");
+  },
+  // Pulls data by account details and quarter
+  acctquarter: function() {
+    return axios.get("/api/transactions/acctquarter");
+  },
+  // sums data by account details and month
+  acctmonth: function() {
+    return axios.get("/api/transactions/acctmonth");
   }
 };
