@@ -2,26 +2,20 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import Footer from "../Footer";
 import ResponsiveDrawer from "../ResponsiveDrawer";
-// Table Imports
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-// Paper Imports
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-// Menu, Table, Expansion Panel Imports
 import { withStyles } from '@material-ui/core/styles';
-// Menu Imports
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// Expansion Panel Imports
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { entry } from "prop-types";
 import grey from '@material-ui/core/colors/grey';
 
 
