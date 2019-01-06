@@ -18,7 +18,11 @@ const transactionSchema = new Schema({
   status: { type: String},
   year: { type: Number},
   month: { type: Number},
-  quarter: { type: Number}
+  quarter: { type: Number},
+  journal: {
+    type: Schema.Types.ObjectId,
+    ref: "Journal"
+  }
 
 });
 
