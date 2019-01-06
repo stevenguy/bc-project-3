@@ -140,9 +140,11 @@ class AccountForm extends Component {
                         >
                     </TextField>
                 </FormControl>
+                <div className={classes.div}>
                 <Button variant="contained" color="primary" onClick={this.createAccount}>
                     Create
                 </Button>
+                </div>
                 </React.Fragment>
                 : <React.Fragment>
                 <FormControl  className={classes.formControl}>
