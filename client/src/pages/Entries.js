@@ -71,10 +71,8 @@ class Entries extends Component {
     }
 
     createAccount = (account, index) => {
-        console.log(account)
         API.newAccount(account)
         .then((createdAccount) => {
-          console.log(createdAccount.data._id)
           let entries = [...this.state.entries]
           entries[index].account = {
             _id: createdAccount.data._id,
@@ -94,7 +92,6 @@ class Entries extends Component {
       let entriesArr = []
       API.newJournal({createdBy: 'Mearat'})
       .then((journal) => {
-        console.log(journal)
         for (let i = 0; i < this.state.entries.length; i++) {
           entriesArr.push({
             date: this.state.entries[i].date,

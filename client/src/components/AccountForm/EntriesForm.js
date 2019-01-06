@@ -20,8 +20,9 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 250,
+    margin: 0,
+    maxWidth: 150,
+    minWidth: 100,
     padding: "0 10px"
   },
   selectEmpty: {
@@ -44,22 +45,6 @@ class EntriesForm extends Component {
 
       return (
         <React.Fragment>
-            {/* <Table className={classes.table}>
-                <TableHead>
-                <TableRow>
-                    <TableCell align='justify'>Account Name</TableCell>
-                    <TableCell align="justify">Account Number</TableCell>
-                    <TableCell align="justify">Account Type</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                    <TableRow> 
-                        <TableCell align='justify'>{this.props.isNew ? this.props.newAccount.name : this.props.account.name}</TableCell>
-                        <TableCell align="justify">{this.props.isNew ? this.props.newAccount.number : this.props.account.number}</TableCell>
-                        <TableCell align="justify">{this.props.isNew ? this.props.newAccount.type : this.props.account.type}</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table> */}
             <div>
                 {this.props.entries.map((entry, index) => (
                     <React.Fragment key={index}>

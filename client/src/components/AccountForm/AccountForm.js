@@ -15,8 +15,13 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 250,
+    margin: 0,
+    minWidth: 120,
+    padding: "0 10px"
+  },
+  typeField: {
+    margin: 0,
+    maxWidth: 120,
     padding: "0 10px"
   },
   selectEmpty: {
@@ -84,7 +89,6 @@ class AccountForm extends Component {
 
       return (
         <React.Fragment>
-            <div className={classes.root}>
             <Button className={classes.div} onClick={this.createNew} color="primary">
                 {this.state.newBtn}
             </Button>
@@ -94,9 +98,8 @@ class AccountForm extends Component {
                     <TextField
                         id="newName"
                         name="newName"
-                        label="Account Name"
+                        label="Name"
                         required
-                        className={classes.textField}
                         value={this.state.newName}
                         onChange={this.handleNewChange}
                         margin="normal"
@@ -111,9 +114,8 @@ class AccountForm extends Component {
                         id="newNumber"
                         name="newNumber"
                         type="number"
-                        label="Account Number"
+                        label="Number"
                         required
-                        className={classes.textField}
                         value={this.state.newNumber}
                         onChange={this.handleNewChange}
                         margin="normal"
@@ -127,9 +129,8 @@ class AccountForm extends Component {
                     <TextField
                         id="newType"
                         name="newType"
-                        label="Account Type"
+                        label="Type"
                         required
-                        className={classes.textField}
                         value={this.state.newType}
                         onChange={this.handleNewChange}
                         margin="normal"
@@ -149,9 +150,8 @@ class AccountForm extends Component {
                         id="name"
                         name="name"
                         select
-                        label="Account Name"
+                        label="Name"
                         required
-                        className={classes.textField}
                         value={this.props.entries[this.props.entryIndex].account._id}
                         onChange={this.handleChange()}
                         InputProps={{
@@ -174,9 +174,8 @@ class AccountForm extends Component {
                         id="number"
                         select
                         name="number"
-                        label="Account Number"
+                        label="Number"
                         required
-                        className={classes.textField}
                         value={this.props.entries[this.props.entryIndex].account._id}
                         onChange={this.handleChange('accountID')}
                         InputProps={{
@@ -194,23 +193,22 @@ class AccountForm extends Component {
                         ))}
                     </TextField>
                 </FormControl>
-                <FormControl  className={classes.formControl}>
+                <FormControl  className={classes.typeField}>
                     <TextField
                         id="type"
-                        label="Account Type"
+                        label="Type"
                         name="type"
                         required
                         value={this.props.entries[this.props.entryIndex].account.type}
-                        className={classes.textField}
                         margin="normal"
+                        fullWidth
                         InputProps={{
                             form:'form1',
-                            readOnly: true
+                            readOnly: true,
                         }}
                     />
                 </FormControl>
                 </React.Fragment>}
-            </div>
         </React.Fragment>
           );
         }
