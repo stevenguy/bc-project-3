@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
 
+
 const drawerWidth = 180;
 
 const styles = theme => ({
@@ -25,7 +26,15 @@ class Dashboard extends Component {
     state = {
       //State goes here
     }
- 
+    
+    componentDidMount() {
+      API.getJournals()
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => console.log(err));
+    }
+
     render() {
       const { classes } = this.props;
 

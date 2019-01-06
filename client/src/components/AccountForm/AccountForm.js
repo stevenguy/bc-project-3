@@ -15,8 +15,13 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 250,
+    margin: 0,
+    minWidth: 120,
+    padding: "0 10px"
+  },
+  typeField: {
+    margin: 0,
+    maxWidth: 120,
     padding: "0 10px"
   },
   selectEmpty: {
@@ -29,42 +34,54 @@ const styles = theme => ({
 
 class AccountForm extends Component {
     state = {
-        name: '',
-        number: '',
-        newName: this.props.newAccount.name || '',
-        newNumber: this.props.newAccount.number || '',
-        newType: this.props.newAccount.type || '',
-        type: this.props.account.type || '',
+        newName: '',
+        newNumber: '',
+        newType: '',
         labelWidth: 0,
         newBtn: "Create New Account",
-        accountID: this.props.account._id || ''
+        accountID: '',
+        isNew: false,
+    }
+
+    isNew = (data) => {
+        if (data) {
+          this.setState({isNew: true})
+        } else {
+          this.setState({isNew: false})
+        }
+    }
+
+    createAccount = () => {
+        if (this.props.accounts.find(account => account.name === this.state.newName) !== undefined ||
+            this.props.accounts.find(account => account.number === this.state.newNumber) !== undefined) {
+                console.log('Account already exist')
+            } else {
+                let newAccount = {
+                    name: this.state.newName,
+                    number: this.state.newNumber,
+                    type: this.state.newType
+                }
+                this.props.createAccount(newAccount, this.props.entryIndex)
+                this.setState({isNew: false, newBtn: "Create New Account"})
+            }
     }
 
     handleChange = name => event => {
+        console.log('here')
         let account = this.props.accounts.find(account => account._id === event.target.value )
-        this.setState({ 
-            [name]: event.target.value,
-            type: account.type,
-            name: account.name,
-            number: account.number
-        }, () => this.props.storeAccount(account))
+        console.log(account)
+          this.props.handleAccountChange(account, this.props.entryIndex)
     }
 
     handleNewChange = event => {
-        let newAccount = {
-            name: this.state.newName,
-            number: this.state.newNumber,
-            type: this.state.newType
-        }
-        this.setState({[event.target.name]: event.target.value}, 
-            () => this.props.storeAccount(newAccount)
-        )
+        this.setState({[event.target.name]: event.target.value})
     }
     
     createNew = event => {
-      this.props.isNew 
-      ? this.setState({newBtn: 'Create New Account'}, () => this.props.checkNew(false))
-      : this.setState({newBtn: 'Select Existing Account'}, () => this.props.checkNew(true)) 
+    console.log(this.props.entryIndex, this.props.entries)
+      this.state.isNew 
+      ? this.setState({newBtn: 'Create New Account'}, () => this.isNew(false))
+      : this.setState({newBtn: 'Select Existing Account'}, () => this.isNew(true)) 
     }
 
     render() {
@@ -72,19 +89,17 @@ class AccountForm extends Component {
 
       return (
         <React.Fragment>
-            <div className={classes.root}>
             <Button className={classes.div} onClick={this.createNew} color="primary">
                 {this.state.newBtn}
             </Button>
-            {this.props.isNew ?
+            {this.state.isNew ?
                 <React.Fragment>
                 <FormControl  className={classes.formControl}>
                     <TextField
                         id="newName"
                         name="newName"
-                        label="Account Name"
+                        label="Name"
                         required
-                        className={classes.textField}
                         value={this.state.newName}
                         onChange={this.handleNewChange}
                         margin="normal"
@@ -99,9 +114,8 @@ class AccountForm extends Component {
                         id="newNumber"
                         name="newNumber"
                         type="number"
-                        label="Account Number"
+                        label="Number"
                         required
-                        className={classes.textField}
                         value={this.state.newNumber}
                         onChange={this.handleNewChange}
                         margin="normal"
@@ -115,9 +129,8 @@ class AccountForm extends Component {
                     <TextField
                         id="newType"
                         name="newType"
-                        label="Account Type"
+                        label="Type"
                         required
-                        className={classes.textField}
                         value={this.state.newType}
                         onChange={this.handleNewChange}
                         margin="normal"
@@ -127,6 +140,9 @@ class AccountForm extends Component {
                         >
                     </TextField>
                 </FormControl>
+                <Button variant="contained" color="primary" onClick={this.createAccount}>
+                    Create
+                </Button>
                 </React.Fragment>
                 : <React.Fragment>
                 <FormControl  className={classes.formControl}>
@@ -134,11 +150,10 @@ class AccountForm extends Component {
                         id="name"
                         name="name"
                         select
-                        label="Account Name"
+                        label="Name"
                         required
-                        className={classes.textField}
-                        value={this.state.accountID}
-                        onChange={this.handleChange('accountID')}
+                        value={this.props.entries[this.props.entryIndex].account._id}
+                        onChange={this.handleChange()}
                         InputProps={{
                             form:'form1'
                             }}
@@ -159,10 +174,9 @@ class AccountForm extends Component {
                         id="number"
                         select
                         name="number"
-                        label="Account Number"
+                        label="Number"
                         required
-                        className={classes.textField}
-                        value={this.state.accountID}
+                        value={this.props.entries[this.props.entryIndex].account._id}
                         onChange={this.handleChange('accountID')}
                         InputProps={{
                             form:'form1'
@@ -179,23 +193,22 @@ class AccountForm extends Component {
                         ))}
                     </TextField>
                 </FormControl>
-                <FormControl  className={classes.formControl}>
+                <FormControl  className={classes.typeField}>
                     <TextField
                         id="type"
-                        label="Account Type"
+                        label="Type"
                         name="type"
                         required
-                        value={this.state.type}
-                        className={classes.textField}
+                        value={this.props.entries[this.props.entryIndex].account.type}
                         margin="normal"
+                        fullWidth
                         InputProps={{
                             form:'form1',
-                            readOnly: true
+                            readOnly: true,
                         }}
                     />
                 </FormControl>
                 </React.Fragment>}
-            </div>
         </React.Fragment>
           );
         }

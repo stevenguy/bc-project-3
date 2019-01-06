@@ -8,14 +8,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import AccountForm from './AccountForm'
 
 const styles = theme => ({
   //Style goes here
@@ -24,8 +20,9 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 250,
+    margin: 0,
+    maxWidth: 150,
+    minWidth: 100,
     padding: "0 10px"
   },
   selectEmpty: {
@@ -48,26 +45,19 @@ class EntriesForm extends Component {
 
       return (
         <React.Fragment>
-            <Table className={classes.table}>
-                <TableHead>
-                <TableRow>
-                    <TableCell align='justify'>Account Name</TableCell>
-                    <TableCell align="justify">Account Number</TableCell>
-                    <TableCell align="justify">Account Type</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                    <TableRow> 
-                        <TableCell align='justify'>{this.props.isNew ? this.props.newAccount.name : this.props.account.name}</TableCell>
-                        <TableCell align="justify">{this.props.isNew ? this.props.newAccount.number : this.props.account.number}</TableCell>
-                        <TableCell align="justify">{this.props.isNew ? this.props.newAccount.type : this.props.account.type}</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
             <div>
                 {this.props.entries.map((entry, index) => (
                     <React.Fragment key={index}>
                     <div className={classes.root}>
+                    <AccountForm
+                        entries={this.props.entries}
+                        accounts= {this.props.accounts} 
+                        createAccount= {this.props.createAccount}
+                        account={this.props.entries[index].account}
+                        handleChange={this.props.handleChange}
+                        entryIndex={index}
+                        handleAccountChange={this.props.handleAccountChange} 
+                    />
                     <FormControl className={classes.formControl}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <DatePicker

@@ -20,6 +20,10 @@ export default {
   saveTransaction: function(transactionData) {
     return axios.post("/api/transactions", transactionData);
   },
+  //Create new Journal
+  newJournal: function(data) {
+    return axios.post("api/journals", data)
+  },
   // Save new account
   newAccount: function(data) {
     return axios.post("/api/accounts", data);
@@ -27,6 +31,10 @@ export default {
   // Get list of available accounts
   getAccount: function() {
     return axios.get("/api/accounts")
+  },
+  //Get list of journal
+  getJournals: function() {
+    return axios.get('api/journals')
   },
   // sums data from the database (quarterly)
   quarterly: function() {
