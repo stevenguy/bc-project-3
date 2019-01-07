@@ -18,12 +18,14 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'space-between'
   },
   formControl: {
     margin: 0,
     maxWidth: 150,
     minWidth: 100,
-    padding: "0 10px"
+    padding: "0 10px",
+    flexGrow: '1'
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
@@ -31,6 +33,9 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
     alignSelf: 'center',
+    [theme.breakpoints.down('xs')]: {
+        flex: '100%'
+      }
   }
 });
 
@@ -134,9 +139,11 @@ class EntriesForm extends Component {
                             >
                         </TextField>
                     </FormControl>
-                    <Fab size="small" color="secondary" aria-label="Remove" onClick={this.props.handleRemove(index)} className={classes.margin}>
+                    <div className={classes.margin}>
+                    <Fab size="small" color="secondary" aria-label="Remove" onClick={this.props.handleRemove(index)}>
                         <RemoveIcon />
                     </Fab>
+                    </div>
                 </div>
                 <Divider/>
                 </React.Fragment>

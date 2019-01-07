@@ -17,12 +17,9 @@ const styles = theme => ({
   formControl: {
     margin: 0,
     minWidth: 120,
-    padding: "0 10px"
-  },
-  typeField: {
-    margin: 0,
-    maxWidth: 120,
-    padding: "0 10px"
+    maxWidth: 150,
+    padding: "0 10px",
+    flexGrow: '1',
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
@@ -67,9 +64,7 @@ class AccountForm extends Component {
     }
 
     handleChange = name => event => {
-        console.log('here')
         let account = this.props.accounts.find(account => account._id === event.target.value )
-        console.log(account)
           this.props.handleAccountChange(account, this.props.entryIndex)
     }
 
@@ -78,7 +73,6 @@ class AccountForm extends Component {
     }
     
     createNew = event => {
-    console.log(this.props.entryIndex, this.props.entries)
       this.state.isNew 
       ? this.setState({newBtn: 'Create New Account'}, () => this.isNew(false))
       : this.setState({newBtn: 'Select Existing Account'}, () => this.isNew(true)) 
@@ -140,9 +134,11 @@ class AccountForm extends Component {
                         >
                     </TextField>
                 </FormControl>
+                <div className={classes.div}>
                 <Button variant="contained" color="primary" onClick={this.createAccount}>
                     Create
                 </Button>
+                </div>
                 </React.Fragment>
                 : <React.Fragment>
                 <FormControl  className={classes.formControl}>
@@ -193,7 +189,7 @@ class AccountForm extends Component {
                         ))}
                     </TextField>
                 </FormControl>
-                <FormControl  className={classes.typeField}>
+                <FormControl  className={classes.formControl}>
                     <TextField
                         id="type"
                         label="Type"

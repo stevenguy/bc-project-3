@@ -20,7 +20,7 @@ const transactionSchema = new Schema({
   year: { type: Number},
   month: { type: Number},
   quarter: { type: Number},
-  journal: {
+  journal_id: {
     type: Schema.Types.ObjectId,
     ref: "Journal"
   }

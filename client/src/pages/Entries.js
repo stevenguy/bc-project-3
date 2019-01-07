@@ -107,9 +107,9 @@ class Entries extends Component {
             prepared_date: new Date(),
             status: 'Pending',
             year: this.state.entries[i].date.getFullYear(),
-            month: this.state.entries[i].date.getMonth(),
+            month: this.state.entries[i].date.getMonth() + 1,
             quarter: Math.floor(this.state.entries[i].date.getMonth()/3) + 1,
-            journal: journal.data._id
+            journal_id: journal.data._id
           })
         }
         return API.saveTransaction(entriesArr)

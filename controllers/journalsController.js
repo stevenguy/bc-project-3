@@ -8,7 +8,7 @@ module.exports = {
                 {
                 from: 'transactions',
                 localField: '_id',
-                foreignField: 'journal',
+                foreignField: 'journal_id',
                 as: 'transaction_docs'
                 }
             },
