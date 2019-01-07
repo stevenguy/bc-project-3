@@ -283,27 +283,30 @@ module.exports = {
           _id: 0,
           description: "$description",
           type: "$type",
-          year: "$year",
-          quarter: "$quarter",
-          1: {$cond: [{$eq: ['$quarter', 1]}, '$amount', 0]},
-          2: {$cond: [{$eq: ['$quarter', 2]}, '$amount', 0]},
-          3: {$cond: [{$eq: ['$quarter', 3]}, '$amount', 0]},
-          4: {$cond: [{$eq: ['$quarter', 4]}, '$amount', 0]},
+          2017: {$cond: [{$eq: ['$year', 2017]}, '$amount', 0]},
+          2018: {$cond: [{$eq: ['$year', 2018]}, '$amount', 0]},
+          2019: {$cond: [{$eq: ['$year', 2019]}, '$amount', 0]},
+          2020: {$cond: [{$eq: ['$year', 2020]}, '$amount', 0]},
+          2021: {$cond: [{$eq: ['$year', 2021]}, '$amount', 0]},
         }},
         { $group: {
           _id: {
             description: "$description",
             type: "$type",
-            year: "$year",
           },
-          Q1: { $sum: "$1" },
-          Q2: { $sum: "$2" },
-          Q3: { $sum: "$3" },
-          Q4: { $sum: "$4" }
+          yearOne: { $sum: "$2017" },
+          yearTwo: { $sum: "$2018" },
+          yearThree: { $sum: "$2019" },
+          yearFour: { $sum: "$2020" },
+          yearFive: { $sum: "$2021" }
         }
         }]
       )
-      .sort({ amount: -1 })
+      .sort({ yearOne: -1 })
+      .sort({ yearTwo: -1 })
+      .sort({ yearThree: -1 })
+      .sort({ yearFour: -1 })
+      .sort({ yearFive: -1 })
       .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
   },
@@ -408,28 +411,30 @@ module.exports = {
         [{ $match: {status: 'Approved' }},
         { $project: {
           _id: 0,
-          description: "$description",
           type: "$type",
-          year: "$year",
-          1: {$cond: [{$eq: ['$quarter', 1]}, '$amount', 0]},
-          2: {$cond: [{$eq: ['$quarter', 2]}, '$amount', 0]},
-          3: {$cond: [{$eq: ['$quarter', 3]}, '$amount', 0]},
-          4: {$cond: [{$eq: ['$quarter', 4]}, '$amount', 0]},
+          2017: {$cond: [{$eq: ['$year', 2017]}, '$amount', 0]},
+          2018: {$cond: [{$eq: ['$year', 2018]}, '$amount', 0]},
+          2019: {$cond: [{$eq: ['$year', 2019]}, '$amount', 0]},
+          2020: {$cond: [{$eq: ['$year', 2020]}, '$amount', 0]},
+          2021: {$cond: [{$eq: ['$year', 2021]}, '$amount', 0]},
         }},
         { $group: {
           _id: {
-            description: "$description",
             type: "$type",
-            year: "$year",
           },
-          Q1: { $sum: "$1" },
-          Q2: { $sum: "$2" },
-          Q3: { $sum: "$3" },
-          Q4: { $sum: "$4" }
+          yearOne: { $sum: "$2017" },
+          yearTwo: { $sum: "$2018" },
+          yearThree: { $sum: "$2019" },
+          yearFour: { $sum: "$2020" },
+          yearFive: { $sum: "$2021" }
         }
         }]
       )
-      .sort({ amount: -1 })
+      .sort({ yearOne: -1 })
+      .sort({ yearTwo: -1 })
+      .sort({ yearThree: -1 })
+      .sort({ yearFour: -1 })
+      .sort({ yearFive: -1 })
       .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
   },

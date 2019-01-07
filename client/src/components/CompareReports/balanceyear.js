@@ -73,29 +73,6 @@ const styles = theme => ({
   },
 });
 
-const quarter = [
-  {
-    value: 0,
-    label: '',
-  },
-  {
-    value: 1,
-    label: 'Q1',
-  },
-  {
-    value: 2,
-    label: 'Q2',
-  },
-  {
-    value: 3,
-    label: 'Q3',
-  },
-  {
-    value: 4,
-    label: 'Q4',
-  }
-];
-
 function ccyFormat(num) {
   var nf = new Intl.NumberFormat();
   if (num < 0 ) {
@@ -104,25 +81,18 @@ function ccyFormat(num) {
   return `${nf.format(num.toFixed(2))}`;
 }
 
-class BalanceQuarter extends Component {
+class BalanceYear extends Component {
 
   state = {
     year: [],
     transactions: [],
     typesum: [],
     years: 0,
-    quarter: 0,
   };
 
   handleYear = yr => event => {
     this.setState({
       [yr]: event.target.value,
-    });
-  };
-
-  handleQuarter = qtr => event => {
-    this.setState({
-      [qtr]: event.target.value,
     });
   };
 
@@ -138,7 +108,7 @@ class BalanceQuarter extends Component {
 
   handleRun = () => {
 
-    API.comparequarter()
+    API.compareyear()
       .then(res => {
         let transactions = []
         res.data.forEach(element => {
@@ -147,10 +117,11 @@ class BalanceQuarter extends Component {
             description: element._id.description,
             type: element._id.type,
             year: element._id.year,
-            Q1: element.Q1,
-            Q2: element.Q2,
-            Q3: element.Q3,
-            Q4: element.Q4,
+            yearOne: element.yearOne,
+            yearTwo: element.yearTwo,
+            yearThree: element.yearThree,
+            yearFour: element.yearFour,
+            yearFive: element.yearFive,
           })
         })
         this.setState({ transactions: transactions })
@@ -158,17 +129,18 @@ class BalanceQuarter extends Component {
       .catch(err => console.log(err));
       
     
-    API.compareqtrsum()
+    API.compareyrsum()
     .then(res => {
       let typesum = []
       res.data.forEach(element => {
         typesum.push({
           type: element._id.type,
           year: element._id.year,
-          Q1: element.Q1,
-          Q2: element.Q2,
-          Q3: element.Q3,
-          Q4: element.Q4,
+          yearOne: element.yearOne,
+          yearTwo: element.yearTwo,
+          yearThree: element.yearThree,
+          yearFour: element.yearFour,
+          yearFive: element.yearFive,
         })
       })
       this.setState({ typesum: typesum })
@@ -210,30 +182,7 @@ class BalanceQuarter extends Component {
               </option>
             ))}
           </TextField>
-          <TextField
-            id="quarter"
-            select
-            label="Quarter"
-            className={classes.textField}
-            value={this.state.quarter}
-            onChange={this.handleQuarter('quarter')}
-            SelectProps={{
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
-            helperText="Quarter Selection"
-            margin="normal"
-            variant="outlined"
-          >
-            {quarter.map(q => (
-              <option key={q.value} value={q.value}>
-                {q.label}
-              </option>
-            ))}
-          </TextField>
         </form>
-
         <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
           Run
         </Button>
@@ -244,8 +193,8 @@ class BalanceQuarter extends Component {
       <React.Fragment>
         <Table>
             {(() => {
-              switch(this.state.quarter) {
-                case 1: 
+              switch(this.state.years) {
+                case 2017: 
                   return (
                     <React.Fragment>
                       <Paper>
@@ -253,8 +202,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>Q4</b></TableCell>
-                              <TableCell align="right"><b>Q1</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -262,26 +211,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                           {this.state.transactions.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{this.state.years - 1 === output.year ? ccyFormat(output.Q4) : 0}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.Q1)}</TableCell>
+                                  <TableCell align="right">{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
                                 </TableRow>
                               );
                             }
                           })}
                           {this.state.typesum.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{this.state.years - 1 === output.year ? ccyFormat(output.Q4) : 0}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.Q1)}</b></TableCell>
+                                  <TableCell align="right"><b>{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
                                 </TableRow>
                               );  
                               }
@@ -296,8 +243,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>Q4</b></TableCell>
-                              <TableCell align="right"><b>Q1</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -305,26 +252,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{this.state.years - 1 === output.year ? ccyFormat(output.Q4) : 0}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q1)}</TableCell>
+                                    <TableCell align="right">{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
                                   </TableRow>
                                 );
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{this.state.years - 1 === output.year ? ccyFormat(output.Q4) : 0}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q1)}</b></TableCell>
+                                    <TableCell align="right"><b>{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
                                   </TableRow>
                                 );
                                 }
@@ -339,8 +284,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>Q4</b></TableCell>
-                              <TableCell align="right"><b>Q1</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -348,26 +293,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{this.state.years - 1 === output.year ? ccyFormat(output.Q4) : 0}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q1)}</TableCell>
+                                    <TableCell align="right">{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
                                   </TableRow>
                                 );  
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{this.state.years - 1 === output.year ? ccyFormat(output.Q4) : 0}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q1)}</b></TableCell>
+                                    <TableCell align="right"><b>{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
                                   </TableRow>
                                 );  
                                 }
@@ -377,7 +320,7 @@ class BalanceQuarter extends Component {
                       </Paper>
                     </React.Fragment>
                   );
-                case 2: 
+                case 2018: 
                   return (
                     <React.Fragment>
                       <Paper>
@@ -385,8 +328,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>Q1</b></TableCell>
-                              <TableCell align="right"><b>Q2</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -394,26 +337,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                           {this.state.transactions.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.Q1)}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.Q2)}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
                                 </TableRow>
                               );
                             }
                           })}
                           {this.state.typesum.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.Q1)}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.Q2)}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
                                 </TableRow>
                               );  
                               }
@@ -428,8 +369,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>Q1</b></TableCell>
-                              <TableCell align="right"><b>Q2</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -437,26 +378,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q1)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q2)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
                                   </TableRow>
                                 );
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q1)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q2)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
                                   </TableRow>
                                 );
                                 }
@@ -471,8 +410,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>Q1</b></TableCell>
-                              <TableCell align="right"><b>Q2</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -480,26 +419,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q1)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q2)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
                                   </TableRow>
                                 );  
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q1)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q2)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
                                   </TableRow>
                                 );  
                                 }
@@ -509,7 +446,7 @@ class BalanceQuarter extends Component {
                       </Paper>
                     </React.Fragment>
                   );
-                case 3: 
+                case 2019: 
                   return (
                     <React.Fragment>
                       <Paper>
@@ -517,8 +454,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>Q2</b></TableCell>
-                              <TableCell align="right"><b>Q3</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -526,26 +463,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                           {this.state.transactions.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.Q2)}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.Q3)}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
                                 </TableRow>
                               );
                             }
                           })}
                           {this.state.typesum.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.Q2)}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.Q3)}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
                                 </TableRow>
                               );  
                               }
@@ -560,8 +495,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>Q2</b></TableCell>
-                              <TableCell align="right"><b>Q3</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -569,26 +504,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q2)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q3)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
                                   </TableRow>
                                 );
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q2)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q3)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
                                   </TableRow>
                                 );
                                 }
@@ -603,8 +536,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>Q2</b></TableCell>
-                              <TableCell align="right"><b>Q3</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -612,26 +545,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q2)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q3)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
                                   </TableRow>
                                 );  
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q2)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q3)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
                                   </TableRow>
                                 );  
                                 }
@@ -641,7 +572,7 @@ class BalanceQuarter extends Component {
                       </Paper>
                     </React.Fragment>
                   );
-                case 4: 
+                case 2020: 
                   return (
                     <React.Fragment>
                       <Paper>
@@ -649,8 +580,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>Q3</b></TableCell>
-                              <TableCell align="right"><b>Q4</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -658,26 +589,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                           {this.state.transactions.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.Q3)}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.Q4)}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
                                 </TableRow>
                               );
                             }
                           })}
                           {this.state.typesum.map((output, i) => {
                             if (output.type === 'Assets'
-                            && output.year === this.state.years
                             ) {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.Q3)}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.Q4)}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
                                 </TableRow>
                               );  
                               }
@@ -692,8 +621,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>Q3</b></TableCell>
-                              <TableCell align="right"><b>Q4</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -701,26 +630,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q3)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q4)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
                                   </TableRow>
                                 );
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Liability'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q3)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q4)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
                                   </TableRow>
                                 );
                                 }
@@ -735,8 +662,8 @@ class BalanceQuarter extends Component {
                           <TableHead>
                             <TableRow className={classes.head}>
                               <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>Q3</b></TableCell>
-                              <TableCell align="right"><b>Q4</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>
@@ -744,26 +671,24 @@ class BalanceQuarter extends Component {
                           <TableBody>
                             {this.state.transactions.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q3)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.Q4)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
                                   </TableRow>
                                 );  
                                 }
                             })}
                             {this.state.typesum.map((output, i) => {
                               if (output.type === 'Retained Earnings'
-                              && output.year === this.state.years
                               ) {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q3)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.Q4)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
                                   </TableRow>
                                 );  
                                 }
@@ -773,6 +698,132 @@ class BalanceQuarter extends Component {
                       </Paper>
                     </React.Fragment>
                   );
+                  case 2021: 
+                  return (
+                    <React.Fragment>
+                      <Paper>
+                        <Table>
+                          <TableHead>
+                            <TableRow className={classes.head}>
+                              <TableCell><b>ASSET</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
+                            </TableRow>
+                          </TableHead>
+                        </Table>
+                        <Table>
+                          <TableBody>
+                          {this.state.transactions.map((output, i) => {
+                            if (output.type === 'Assets'
+                            ) {
+                              return (
+                                <TableRow key={i}>
+                                  <TableCell>{output.description}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
+                                  <TableCell align="right">{ccyFormat(output.yearFive)}</TableCell>
+                                </TableRow>
+                              );
+                            }
+                          })}
+                          {this.state.typesum.map((output, i) => {
+                            if (output.type === 'Assets'
+                            ) {
+                              return (
+                                <TableRow key={i}>
+                                  <TableCell><b>TOTAL</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
+                                  <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
+                                </TableRow>
+                              );  
+                              }
+                          })}
+                          </TableBody>
+                        </Table>
+                      </Paper>
+                      <div style={ { height: 10 } }></div>
+                      {/* Liabilities */}
+                      <Paper>
+                        <Table>
+                          <TableHead>
+                            <TableRow className={classes.head}>
+                              <TableCell><b>LIABILITIES</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
+                            </TableRow>
+                          </TableHead>
+                        </Table>
+                        <Table>
+                          <TableBody>
+                            {this.state.transactions.map((output, i) => {
+                              if (output.type === 'Liability'
+                              ) {
+                                return (
+                                  <TableRow key={i}>
+                                    <TableCell>{output.description}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearFive)}</TableCell>
+                                  </TableRow>
+                                );
+                                }
+                            })}
+                            {this.state.typesum.map((output, i) => {
+                              if (output.type === 'Liability'
+                              ) {
+                                return (
+                                  <TableRow key={i}>
+                                    <TableCell><b>TOTAL</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
+                                  </TableRow>
+                                );
+                                }
+                            })}
+                          </TableBody>
+                        </Table>
+                      </Paper>
+                      <div style={ { height: 10 } }></div>
+                      {/* Retained Earnings */}
+                      <Paper>
+                        <Table>
+                          <TableHead>
+                            <TableRow className={classes.head}>
+                              <TableCell><b>RETAINED EARNINGS</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
+                            </TableRow>
+                          </TableHead>
+                        </Table>
+                        <Table>
+                          <TableBody>
+                            {this.state.transactions.map((output, i) => {
+                              if (output.type === 'Retained Earnings'
+                              ) {
+                                return (
+                                  <TableRow key={i}>
+                                    <TableCell>{output.description}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(output.yearFive)}</TableCell>
+                                  </TableRow>
+                                );  
+                                }
+                            })}
+                            {this.state.typesum.map((output, i) => {
+                              if (output.type === 'Retained Earnings'
+                              ) {
+                                return (
+                                  <TableRow key={i}>
+                                    <TableCell><b>TOTAL</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
+                                    <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
+                                  </TableRow>
+                                );  
+                                }
+                            })}
+                          </TableBody>
+                        </Table>
+                      </Paper>
+                    </React.Fragment>
+                  );  
                 default:
                   return null;
               }
@@ -787,8 +838,8 @@ class BalanceQuarter extends Component {
   }
 }
 
-BalanceQuarter.propTypes = {
+BalanceYear.propTypes = {
 classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(BalanceQuarter);
+export default withStyles(styles)(BalanceYear);
