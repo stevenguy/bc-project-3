@@ -8,35 +8,7 @@ mongoose.connect(
   "mongodb://localhost/bookkeeping"
 );
 
-const accountSeed = [
-  {
-    name: 'Inventory',
-    number: 12000,
-    type: 'Assets'
-  },
-  {
-    name: 'Supplies',
-    number: 50200,
-    type: 'Expenses'
-  },
-  {
-    name: 'Cash',
-    number: 10000,
-    type: 'Assets'
-  },
-  {
-    name: 'Investment',
-    number: 10500,
-    type: 'Assets'
-  },
-  {
-    name: 'Advertising',
-    number: 50500,
-    type: 'Expenses'
-  }
-]
-
-const transactionSeed = [
+let transactionSeed = [
   {
     journal_id: '2017010100001',
     date: new Date('2017-01-01'),
@@ -28691,9 +28663,20 @@ const transactionSeed = [
   }
 ];
 
-db.Transaction
+db.Journal
   .remove({})
-  .then(() => db.Transaction.collection.insertMany(transactionSeed))
+  .then(() => db.Transaction.remove({}))
+  .then(() => {
+    for (let i = 0; i < (transactionSeed.length); i++) {
+      if (i % 2 !== 0) continue
+     db.Journal.collection.insert({createdBy: transactionSeed[i].preparer, date: transactionSeed[i].date})
+        .then((journal) => {
+          transactionSeed[i].journal_id = journal.insertedIds['0']
+          transactionSeed[i+1].journal_id = journal.insertedIds['0']
+          return db.Transaction.collection.insertMany([transactionSeed[i], transactionSeed[i+1]])
+        })
+  }
+  })
   .then(() => db.Account.remove({}))
   .then(() => db.Transaction.aggregate(
     [
@@ -28720,5 +28703,35 @@ db.Transaction
     console.error(err);
     process.exit(1);
   });
+
+// db.Transaction
+//   .remove({})
+//   .then(() => db.Transaction.collection.insertMany(transactionSeed))
+//   .then(() => db.Account.remove({}))
+//   .then(() => db.Transaction.aggregate(
+//     [
+//       {
+//         $group: {
+//           _id: {
+//             number: {$toInt : '$account'}, 
+//             name: '$description', 
+//             type: '$type'
+//           }
+//         }
+//       }
+//     ]
+//   ))
+//   .then((data) => {
+//     let dataArr =[]
+//     data.forEach(element => {
+//       dataArr.push(element._id)
+//     })
+//     return db.Account.collection.insertMany(dataArr)
+//   })
+//   .then(() => process.exit(0))
+//   .catch(err => {
+//     console.error(err);
+//     process.exit(1);
+//   });
 
   

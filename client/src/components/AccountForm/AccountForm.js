@@ -64,9 +64,7 @@ class AccountForm extends Component {
     }
 
     handleChange = name => event => {
-        console.log('here')
         let account = this.props.accounts.find(account => account._id === event.target.value )
-        console.log(account)
           this.props.handleAccountChange(account, this.props.entryIndex)
     }
 
@@ -75,7 +73,6 @@ class AccountForm extends Component {
     }
     
     createNew = event => {
-    console.log(this.props.entryIndex, this.props.entries)
       this.state.isNew 
       ? this.setState({newBtn: 'Create New Account'}, () => this.isNew(false))
       : this.setState({newBtn: 'Select Existing Account'}, () => this.isNew(true)) 
