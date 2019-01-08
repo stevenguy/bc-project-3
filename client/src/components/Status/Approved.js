@@ -19,7 +19,7 @@ const styles = theme => ({
 
 class Approved extends Component {
   state = {
-    accounts: []
+    journals: []
   }
 
   render() {
@@ -28,7 +28,8 @@ class Approved extends Component {
 
     return (
       <React.Fragment>
-
+        <ResponsiveDrawer />
+          <h1>Hello Approved!</h1>
       </React.Fragment>
     )
   }

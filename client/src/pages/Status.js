@@ -1,6 +1,4 @@
 import React, { Component } from "react"
-import Grid from '@material-ui/core/Grid'
-import API from "../utils/API"
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -10,7 +8,6 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import Approved from '../components/Status/Approved'
 import Unapproved from '../components/Status/Unapproved'
 import Pending from '../components/Status/Pending'
-import Button from '@material-ui/core/Button'
 import grey from '@material-ui/core/colors/grey'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
@@ -74,7 +71,7 @@ const styles = theme => ({
   },
 })
 
-const accounts = [
+const journals = [
   {
     value: 1,
     label: 'Approved'
@@ -91,10 +88,10 @@ const accounts = [
 
 class Dashboard extends Component {
   state = {
-    reports: 'Select'
+    journals: 'Select'
   }
 
-  handleAccounts = fin => event => {
+  handleJournals = fin => event => {
     this.setState({
       [fin]: event.target.value,
     })
@@ -113,12 +110,12 @@ class Dashboard extends Component {
             <form className={classes.container} noValidate autoComplete="off">
 
               <TextField
-                id="accounts"
+                id="journals"
                 select
                 label="Journal Status"
                 className={classes.textField}
-                value={this.state.accounts}
-                onChange={this.handleAccounts('accounts')}
+                value={this.state.journals}
+                onChange={this.handleJournals('journals')}
                 SelectProps={{
                   MenuProps: {
                     className: classes.menu,
@@ -128,16 +125,16 @@ class Dashboard extends Component {
                 margin="normal"
                 variant="outlined"
               >
-                {accounts.map(a => (
-                  <option key={a.value} value={a.value}>
-                    {a.label}
+                {journals.map(j => (
+                  <option key={j.value} value={j.value}>
+                    {j.label}
                   </option>
                 ))}
               </TextField>
             </form>
           </Paper>
           {(() => {
-            switch (this.state.accounts) {
+            switch (this.state.journals) {
               case 1:
                 return <Approved />;
               case 2:
