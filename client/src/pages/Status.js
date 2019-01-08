@@ -12,7 +12,12 @@ import grey from '@material-ui/core/colors/grey'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 
+<<<<<<< HEAD
 const drawerWidth = 180
+=======
+
+const drawerWidth = 180;
+>>>>>>> 2b0beb4a66c5c27d6a621bc0489e2bab859abaa4
 
 const styles = theme => ({
   container: {
@@ -87,6 +92,7 @@ const journals = [
 ]
 
 class Dashboard extends Component {
+<<<<<<< HEAD
   state = {
     journals: 'Select'
   }
@@ -102,6 +108,25 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
+=======
+    state = {
+      //State goes here
+    }
+    
+    componentDidMount() {
+      API.getJournals()
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => console.log(err));
+    }
+
+    render() {
+      const { classes } = this.props;
+
+      return (
+        <React.Fragment>
+>>>>>>> 2b0beb4a66c5c27d6a621bc0489e2bab859abaa4
         <ResponsiveDrawer />
         <main className={classes.content}>
           <div className={classes.toolbar} />

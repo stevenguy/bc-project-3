@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import Footer from "../components/Footer";
-import ResponsiveDrawer from "../components/ResponsiveDrawer";
+import ResponsiveDrawer from "../ResponsiveDrawer";
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import grey from '@material-ui/core/colors/grey';
-import BalanceSheet from '../components/Tables/balancesheet';
-import IncomeStatement from '../components/Tables/incomestatement';
-import AccountDetail from '../components/Tables/accounts';
-import CompareIncome from '../components/Tables/compareincome';
-import CompareBalance from '../components/Tables/comparebalance';
+import IncomeMonth from "../CompareReports/incomemonth";
+import IncomeQuarter from "../CompareReports/incomequarter";
+import IncomeYear from "../CompareReports/incomeyear";
 
 const drawerWidth = 180;
 
@@ -71,38 +68,34 @@ const styles = theme => ({
   },
 });
 
-const financials = [
+const compare = [
+  {
+    value: 0,
+    label: '',
+  },
   {
     value: 1,
-    label: 'Balance Sheet',
+    label: 'Year',
   },
   {
     value: 2,
-    label: 'Income Statement',
+    label: 'Quarter',
   },
   {
     value: 3,
-    label: 'Account Details',
-  },
-  {
-    value: 4,
-    label: 'Compare Balance Sheet',
-  },
-  {
-    value: 5,
-    label: 'Compare Income Statement',
+    label: 'Month',
   }
 ];
 
-class Report extends Component {
+class CompareIncome extends Component {
 
   state = {
-    financials: 'Select',
+    combalance: 0,
   };
 
-  handleFinancials = fin => event => {
+  handleCompare = compare => event => {
     this.setState({
-      [fin]: event.target.value,
+      [compare]: event.target.value,
     });
   };
   
@@ -111,63 +104,56 @@ class Report extends Component {
     const { classes } = this.props;
 
     return (
+
       <React.Fragment>
       <ResponsiveDrawer />
-      <main className={classes.content}>
-          <div className={classes.toolbar} />
-      
+      <div style={ { height: 10 } }></div>
       <Paper className="row">
+
         <form className={classes.container} noValidate autoComplete="off">
-        
           <TextField
-            id="financials"
+            id="combalance"
             select
-            label="Financial Report"
+            label="Compare"
             className={classes.textField}
-            value={this.state.financials}
-            onChange={this.handleFinancials('financials')}
+            value={this.state.combalance}
+            onChange={this.handleCompare('combalance')}
             SelectProps={{
               MenuProps: {
                 className: classes.menu,
               },
             }}
-            helperText="Financial Report Selection"
+            helperText="Compare Selection"
             margin="normal"
             variant="outlined"
           >
-            {financials.map(f => (
-              <option key={f.value} value={f.value}>
-                {f.label}
+            {compare.map(c => (
+              <option key={c.value} value={c.value}>
+                {c.label}
               </option>
             ))}
           </TextField>
         </form>
         </Paper>
         {(() => {
-            switch(this.state.financials) {
+            switch(this.state.combalance) {
               case 1: 
-                return <BalanceSheet/>;
+                return <IncomeYear/>;
               case 2: 
-                return <IncomeStatement/>;
+                return <IncomeQuarter/>;
               case 3: 
-                return <AccountDetail/>;
-              case 4: 
-                return <CompareBalance/>;
-              case 5: 
-                return <CompareIncome/>;  
+                return <IncomeMonth/>;
               default:
                 return null;
             }
-        })}
-      </main>
-      <Footer />
-      </React.Fragment>
+        })()}
+        </React.Fragment>
     );
   }
 }
 
-Report.propTypes = {
-  classes: PropTypes.object.isRequired,
+CompareIncome.propTypes = {
+classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Report);
+export default withStyles(styles)(CompareIncome);
