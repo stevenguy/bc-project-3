@@ -33,7 +33,8 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-dropzone": "^8.0.3",
-    "react-file-reader": "^1.1.4"
+    "react-file-reader": "^1.1.4",
+    "react-select": "^2.2.0"
   },
   "repository": {
     "type": "git",

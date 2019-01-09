@@ -33,7 +33,7 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
-  },  
+  },
   year: function(req, res) {
     console.log('YEAR')
     db.Transaction
@@ -527,5 +527,5 @@ module.exports = {
       .sort({ M12: -1 })
       .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
-  }
+  },
 };
