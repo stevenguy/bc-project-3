@@ -139,6 +139,7 @@ class Upload extends Component {
                     API.buntest({data: this.state.csv[i], name: 'Bunrith Buth'})
                 }
             }
+            this.setState({uploaded: 1})
         }
       }
 
@@ -234,7 +235,7 @@ class Upload extends Component {
                                     <Button variant="contained" color="primary" onClick={ this.UploadButton } style={{width:'100%'}}>
                                         Upload 	&nbsp;
                                         <CloudUploadIcon/>
-                                    </Button>) : <h2 color="success">CSV Uploaded!</h2>}
+                                    </Button>) : <Typography h5 color="success" style={{alignItems: 'center'}}>CSV Uploaded!</Typography>}
                                 </Grid>
                             </Grid>
                         </Paper>

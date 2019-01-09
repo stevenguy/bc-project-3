@@ -16,10 +16,16 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
+    console.log(req.body[0])
     db.Transaction
-      .create(req.body)
+      .create(req.body[0])
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  csv: function(req, res) {
+    console.log(req.body)
+    db.Transaction
+      .insertMany(req.body)
   },
   update: function(req, res) {
     db.Transaction
