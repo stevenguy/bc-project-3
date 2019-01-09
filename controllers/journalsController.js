@@ -13,9 +13,6 @@ module.exports = {
                 }
             },
             {
-                $unwind: '$transaction_docs'
-            },
-            {
                 $match: {'transaction_docs.status': 'Pending'}
             }
           ])

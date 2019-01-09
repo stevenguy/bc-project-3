@@ -25,12 +25,18 @@ const styles = theme => ({
 class Dashboard extends Component {
     state = {
       //State goes here
+      data: []
     }
     
     componentDidMount() {
       API.getJournals()
       .then(res => {
-        console.log(res)
+        res.data.map((data) => {
+          data.transaction_docs.map((data) => {
+           data.date = new Date(data.date)
+          })
+        })
+        this.setState({data: res.data})
       })
       .catch(err => console.log(err));
     }
