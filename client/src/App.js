@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Dashboard from "./pages/Dashboard"
 import Entries from "./pages/Entries"
@@ -7,7 +7,6 @@ import Upload from "./pages/Upload"
 import Reports from "./pages/Reports"
 import Login from "./pages/Login"
 import Status from "./pages/Status"
-import Home from "./pages/Home"
 import "./App.css";
 
 function App() {
@@ -16,8 +15,7 @@ function App() {
       <Router>
       <div className="routerContainer">
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={Login} />
           <Route exact path="/Dashboard" component={Dashboard} />
           <Route exact path="/Entries" component={Entries} />
           <Route exact path="/Upload" component={Upload} />

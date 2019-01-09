@@ -183,6 +183,25 @@ const quarter = [
   }
 ];
 
+const level = [
+  {
+    value: 0,
+    label: '',
+  },
+  {
+    value: 1,
+    label: 'Year',
+  },
+  {
+    value: 2,
+    label: 'Quarter',
+  },
+  {
+    value: 3,
+    label: 'Month',
+  }
+];
+
 function ccyFormat(num) {
   var nf = new Intl.NumberFormat();
   if (num < 0 ) {
@@ -194,22 +213,18 @@ function ccyFormat(num) {
 class Report extends Component {
 
   state = {
-    accounts: [],
     year: [],
     transactions: [],
-    acctdetails: [],
     typesum: [],
-    acctdetailsum: [],
-    account: '',
+    level: 0,
     years: 0,
     quarter: 0,
     month: 0,
-    expanded: null,
   };
 
-  handleFinancials = fin => event => {
+  handleLevel = lvl => event => {
     this.setState({
-      [fin]: event.target.value,
+      [lvl]: event.target.value,
     });
   };
 
@@ -231,20 +246,7 @@ class Report extends Component {
     });
   };
 
-  handleAccounts = acct => event => {
-    this.setState({
-      [acct]: event.target.value,
-    });
-  };
-
-  handleExpand = panel => (event, expanded) => {
-    this.setState({
-      expanded: expanded ? panel : false,
-    });
-  };
-
   componentDidMount() {
-    this.loadAccounts();
     this.loadYear();
   }
 
@@ -254,15 +256,9 @@ class Report extends Component {
     .catch(err => console.log(err));
   }
 
-  loadAccounts = () => {
-    API.accounts()
-    .then(res => this.setState({ accounts: res.data }))
-    .catch(err => console.log(err));
-  }
-
   handleRun = () => {
 
-    if (this.state.month === 0 && this.state.quarter === 0 ){
+    if (this.state.level === 1){
       API.yearly()
       // .then(res => console.log(res))
       .then(res => {
@@ -278,7 +274,7 @@ class Report extends Component {
         this.setState({ transactions: transactions })
       })
       .catch(err => console.log(err));
-    } else if (this.state.month === 0) {
+    } else if (this.state.level === 2) {
       API.quarterly()
       .then(res => {
         let transactions = []
@@ -296,12 +292,12 @@ class Report extends Component {
         this.setState({ transactions: transactions })
       })
       .catch(err => console.log(err));
-    } else {
+    } else if (this.state.level === 3) {
       API.reports()
       .then(res => {
         let transactions = []
         res.data.forEach(element => {
-          if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {  
+          if (element._id.month === this.state.month) {  
             transactions.push({
               description: element._id.description,
               type: element._id.type,
@@ -315,9 +311,11 @@ class Report extends Component {
         this.setState({ transactions: transactions })
       })
       .catch(err => console.log(err));
+    } else {
+      return null
     }
     
-    if (this.state.month === 0 && this.state.quarter === 0 ){
+    if (this.state.level === 1) {
       API.typeyear()
       .then(res => {
         let typesum = []
@@ -329,10 +327,9 @@ class Report extends Component {
           })
         })
         this.setState({ typesum: typesum })
-        console.log(typesum)
       })
       .catch(err => console.log(err));
-    } else if (this.state.month === 0) {
+    } else if (this.state.level === 2) {
       API.typequarter()
       .then(res => {
         let typesum = []
@@ -347,15 +344,14 @@ class Report extends Component {
           }
         })
         this.setState({ typesum: typesum })
-        console.log(typesum)
       })
       .catch(err => console.log(err));
-    } else {
+    } else if (this.state.level === 3) {
       API.typemonth()
       .then(res => {
         let typesum = []
         res.data.forEach(element => {
-          if (element._id.month === this.state.month && element._id.quarter === this.state.quarter) {
+          if (element._id.month === this.state.month) {
             typesum.push({
               type: element._id.type,
               year: element._id.year,
@@ -366,9 +362,10 @@ class Report extends Component {
           }
         })
         this.setState({ typesum: typesum })
-        console.log(typesum)
       })
       .catch(err => console.log(err));
+    } else {
+      return null
     }
   };
   
@@ -377,90 +374,183 @@ class Report extends Component {
     const { classes } = this.props;
 
     return (
+
       <React.Fragment>
       <ResponsiveDrawer />
-      <main className={classes.content}>
-          <div className={classes.toolbar} />
-      
+      <div style={ { height: 10 } }></div>
       <Paper className="row">
-        
         <form className={classes.container} noValidate autoComplete="off">
           <TextField
-            id="year"
+            id="level"
             select
-            label="Year"
+            label="Level"
             className={classes.textField}
-            value={this.state.years}
-            onChange={this.handleYear('years')}
+            value={this.state.level}
+            onChange={this.handleLevel('level')}
             SelectProps={{
               MenuProps: {
                 className: classes.menu,
               },
             }}
-            helperText="Year Selection"
+            helperText="Level Selection"
             margin="normal"
             variant="outlined"
           >
-            {this.state.year.map(y => (
-              <option key={y._id.year} value={y._id.year}>
-                {y._id.year}
+            {level.map(l => (
+              <option key={l.value} value={l.value}>
+                {l.label}
               </option>
             ))}
           </TextField>
-          <TextField
-            id="quarter"
-            select
-            label="Quarter"
-            className={classes.textField}
-            value={this.state.quarter}
-            onChange={this.handleQuarter('quarter')}
-            SelectProps={{
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
-            helperText="Quarter Selection"
-            margin="normal"
-            variant="outlined"
-          >
-            {quarter.map(q => (
-              <option key={q.value} value={q.value}>
-                {q.label}
-              </option>
-            ))}
-          </TextField>
-          <TextField
-            id="month"
-            select
-            label="Month"
-            className={classes.textField}
-            value={this.state.month}
-            onChange={this.handleMonth('month')}
-            SelectProps={{
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
-            helperText="Month Selection"
-            margin="normal"
-            variant="outlined"
-          >
-            {/* Populate based on quarters */}
-            {month.map(m => (
-              <option key={m.valueMonth} value={m.valueMonth}>
-                {m.labelMonth}
-              </option>
-            ))}
-          </TextField>
-          <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
-            Run
-          </Button>
         </form>
-      
-    </Paper>
-    <div style={ { height: 10 } }></div>
+      </Paper>
+      <div style={ { height: 10 } }></div>
+      <Paper className="row">
+        {(() => {
+            switch(this.state.level) {
+              case 1: 
+                return (
+                  <form className={classes.container} noValidate autoComplete="off">
+                    <TextField
+                      id="year"
+                      select
+                      label="Year"
+                      className={classes.textField}
+                      value={this.state.years}
+                      onChange={this.handleYear('years')}
+                      SelectProps={{
+                        MenuProps: {
+                          className: classes.menu,
+                        },
+                      }}
+                      helperText="Year Selection"
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      {this.state.year.map(y => (
+                        <option key={y._id.year} value={y._id.year}>
+                          {y._id.year}
+                        </option>
+                      ))}
+                    </TextField>
+                    <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
+                      Run
+                    </Button>
+                  </form>
+                );
+              case 2: 
+                return (
+                  <form className={classes.container} noValidate autoComplete="off">
+                    <TextField
+                      id="year"
+                      select
+                      label="Year"
+                      className={classes.textField}
+                      value={this.state.years}
+                      onChange={this.handleYear('years')}
+                      SelectProps={{
+                        MenuProps: {
+                          className: classes.menu,
+                        },
+                      }}
+                      helperText="Year Selection"
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      {this.state.year.map(y => (
+                        <option key={y._id.year} value={y._id.year}>
+                          {y._id.year}
+                        </option>
+                      ))}
+                    </TextField>
+                    <TextField
+                      id="quarter"
+                      select
+                      label="Quarter"
+                      className={classes.textField}
+                      value={this.state.quarter}
+                      onChange={this.handleQuarter('quarter')}
+                      SelectProps={{
+                        MenuProps: {
+                          className: classes.menu,
+                        },
+                      }}
+                      helperText="Quarter Selection"
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      {quarter.map(q => (
+                        <option key={q.value} value={q.value}>
+                          {q.label}
+                        </option>
+                      ))}
+                    </TextField>
+                    <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
+                      Run
+                    </Button>
+                  </form>
+                );
+              case 3: 
+                return (
+                  <form className={classes.container} noValidate autoComplete="off">
+                    <TextField
+                      id="year"
+                      select
+                      label="Year"
+                      className={classes.textField}
+                      value={this.state.years}
+                      onChange={this.handleYear('years')}
+                      SelectProps={{
+                        MenuProps: {
+                          className: classes.menu,
+                        },
+                      }}
+                      helperText="Year Selection"
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      {this.state.year.map(y => (
+                        <option key={y._id.year} value={y._id.year}>
+                          {y._id.year}
+                        </option>
+                      ))}
+                    </TextField>
+                    <TextField
+                      id="month"
+                      select
+                      label="Month"
+                      className={classes.textField}
+                      value={this.state.month}
+                      onChange={this.handleMonth('month')}
+                      SelectProps={{
+                        MenuProps: {
+                          className: classes.menu,
+                        },
+                      }}
+                      helperText="Month Selection"
+                      margin="normal"
+                      variant="outlined"
+                    >
+                      {month.map(m => (
+                        <option key={m.valueMonth} value={m.valueMonth}>
+                          {m.labelMonth}
+                        </option>
+                      ))}
+                    </TextField>
+                    <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
+                      Run
+                    </Button>
+                  </form>
+                );
+              default:
+                return null;
+            }
+        })()}
+      </Paper>
 
-        <React.Fragment>
+      <div style={ { height: 10 } }></div>
+
+      <React.Fragment>
         <Paper>
           <Table>
             <TableHead>
@@ -499,7 +589,8 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+      
+      <div style={ { height: 10 } }></div>
         {/* Liabilities */}
         <Paper>
           <Table>
@@ -539,7 +630,8 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <div style={ { height: 10 } }></div>
+
+      <div style={ { height: 10 } }></div>
         {/* Retained Earnings */}
         <Paper>
           <Table>
@@ -579,13 +671,12 @@ class Report extends Component {
             </TableBody>
           </Table>
         </Paper>
-        </React.Fragment>
         
-    </main>
-    <Footer />
-    </React.Fragment>
-  );
-}
+      </React.Fragment>
+      <Footer />
+      </React.Fragment>
+    );
+  }
 }
 
 Report.propTypes = {

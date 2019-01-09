@@ -6,7 +6,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {AccountForm, EntriesForm, SubmitForm} from "../AccountForm";
+import {EntriesForm, SubmitForm} from "../AccountForm";
 
 
 const styles = theme => ({
@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 function getSteps() {
-  return ['Select the account', 'New entries', 'Submit for an approval'];
+  return ['New entries', 'Submit for an approval'];
 }
 
 class Steppers extends React.Component {
@@ -45,29 +45,27 @@ class Steppers extends React.Component {
   handleNext = (event) => {
     event.preventDefault()
 
-    if (this.state.activeStep === 2) {
+    if (this.state.activeStep === 1) {
         this.props.submitForm()
-    }
-
-    if (this.state.activeStep === 0) {
-
-        if (this.props.isNew) {
-            if (this.props.newAccount.name && this.props.newAccount.number && this.props.newAccount.type) {
-                this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
-            }
-            else {
-                this.setState({isError: true, index: this.state.activeStep})
-            } 
-        } else if (this.props.isNew === false) {
-            if (this.props.account.name) {
-                this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
-            }
-            else {
-                this.setState({isError: true, index: this.state.activeStep})
-            } 
-        }
-
+        this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
     } else {
+    //     if (this.props.isNew) {
+    //         if (this.props.newAccount.name && this.props.newAccount.number && this.props.newAccount.type) {
+    //             this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+    //         }
+    //         else {
+    //             this.setState({isError: true, index: this.state.activeStep})
+    //         } 
+    //     } else if (this.props.isNew === false) {
+    //         if (this.props.account.name) {
+    //             this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+    //         }
+    //         else {
+    //             this.setState({isError: true, index: this.state.activeStep})
+    //         } 
+    //     }
+
+    // } else {
         this.props.entries.every(entry => entry.description !== '' && entry.amount !== '' && entry.details !== '')
         ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
         : this.setState({isError: true, index: this.state.activeStep})
@@ -89,27 +87,19 @@ class Steppers extends React.Component {
   getStepContent = (stepIndex) => {  
   switch (stepIndex) {
     case 0:
-      return <AccountForm 
-      newAccount={this.props.newAccount} 
-      checkNew={this.props.checkNew} 
-      isNew={this.props.isNew} 
-      account= {this.props.account} 
-      accounts= {this.props.accounts} 
-      storeAccount= {this.props.storeAccount} />
-    case 1:
       return <EntriesForm 
       entries={this.props.entries} 
       newAccount={this.props.newAccount} 
-      isNew={this.props.isNew} 
-      account= {this.props.account} 
       accounts= {this.props.accounts} 
       handleChange={this.props.handleChange} 
       handleAdd={this.props.handleAdd} 
       handleRemove={this.props.handleRemove}
       selectedDate={this.props.selectedDate}
       handleDateChange={this.props.handleDateChange}
+      createAccount={this.props.createAccount}
+      handleAccountChange={this.props.handleAccountChange}
       />
-    case 2:
+    case 1:
       return <SubmitForm
       entries={this.props.entries} 
       newAccount={this.props.newAccount} 
