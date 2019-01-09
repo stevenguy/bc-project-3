@@ -34,7 +34,7 @@ export default {
   },
   //Get list of journal
   getJournals: function() {
-    return axios.get('api/journals')
+    return axios.get('/api/journals')
   },
   // sums data from the database (quarterly)
   quarterly: function() {

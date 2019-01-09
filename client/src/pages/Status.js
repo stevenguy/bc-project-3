@@ -5,19 +5,21 @@ import Typography from '@material-ui/core/Typography'
 import ResponsiveDrawer from "../components/ResponsiveDrawer"
 import Footer from "../components/Footer"
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import Approved from '../components/Status/Approved'
-import Unapproved from '../components/Status/Unapproved'
-import Pending from '../components/Status/Pending'
 import grey from '@material-ui/core/colors/grey'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
+import API from '../utils/API'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 
-<<<<<<< HEAD
 const drawerWidth = 180
-=======
-
-const drawerWidth = 180;
->>>>>>> 2b0beb4a66c5c27d6a621bc0489e2bab859abaa4
 
 const styles = theme => ({
   container: {
@@ -74,6 +76,20 @@ const styles = theme => ({
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
   },
+  card: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
 })
 
 const journals = [
@@ -91,10 +107,16 @@ const journals = [
   }
 ]
 
-class Dashboard extends Component {
-<<<<<<< HEAD
+class Status extends Component {
   state = {
-    journals: 'Select'
+    journals: 'Select',
+    journalData: []
+  }
+
+  handleExpand = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    })
   }
 
   handleJournals = fin => event => {
@@ -103,37 +125,23 @@ class Dashboard extends Component {
     })
   }
 
+  componentDidMount() {
+    API.getJournals()
+      .then(res => this.setState({ journalData: res.data }))
+      .catch(e => console.log(e))
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
 
     return (
       <React.Fragment>
-=======
-    state = {
-      //State goes here
-    }
-    
-    componentDidMount() {
-      API.getJournals()
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => console.log(err));
-    }
-
-    render() {
-      const { classes } = this.props;
-
-      return (
-        <React.Fragment>
->>>>>>> 2b0beb4a66c5c27d6a621bc0489e2bab859abaa4
         <ResponsiveDrawer />
         <main className={classes.content}>
           <div className={classes.toolbar} />
 
           <Paper className="row">
             <form className={classes.container} noValidate autoComplete="off">
-
               <TextField
                 id="journals"
                 select
@@ -158,14 +166,76 @@ class Dashboard extends Component {
               </TextField>
             </form>
           </Paper>
+          <div style={ { height: 10 } }></div>
           {(() => {
             switch (this.state.journals) {
               case 1:
-                return <Approved />;
+                return (
+              <React.Fragment>
+                <Paper>
+                  {console.log(this.state.journalData)}
+                  {this.state.journalData.map((output, j) => (
+                    <React.Fragment>
+                      <Card>
+                    {output.transaction.map((transactions, i) => (
+                    transactions.status === 'Approved' ?
+                          <CardContent>
+                            <Typography className={classes.heading}>{transactions.transaction}</Typography>
+                            <Table>
+                              <TableBody>
+                                <TableRow>
+                                  <TableCell><b>Journal ID:</b> {transactions.journal_id}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Date:</b> {transactions.date}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Account:</b> {transactions.account}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Description:</b> {transactions.description}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Type:</b> {transactions.type}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Memo:</b> {transactions.memo}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Detail:</b> {transactions.details}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Preparer:</b> {transactions.preparer}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Prepared Date:</b> {transactions.prepared_date}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Approver:</b> {transactions.approver}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell><b>Approved Date:</b> {transactions.approved_date}</TableCell>
+                                </TableRow>
+                              </TableBody>
+                            </Table>
+                          </CardContent> : ''
+                    ))
+                  }
+                  <Button variant="contained" className={classes.button}>
+                      Approve
+                    </Button>
+                    </Card>
+                    <Divider light />
+                    </React.Fragment>
+                  ))
+                  }
+                </Paper>
+              </React.Fragment>
+                )
               case 2:
-                return <Unapproved />;
+                return null;
               case 3:
-                return <Pending />;
+                return null;
               default:
                 return null;
             }
@@ -177,8 +247,8 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
+Status.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Dashboard)
+export default withStyles(styles)(Status)
