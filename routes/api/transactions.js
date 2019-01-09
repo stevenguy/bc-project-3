@@ -42,6 +42,30 @@ router.route("/typequarter")
 router.route("/typeyear")
   .get(transactionsController.typeyear)
 
+// Aggregate Data by Type, Year, and Amount  
+router.route("/compareyear")
+  .get(transactionsController.compareyear)  
+
+// Aggregate Data by Type, Year, and Amount  
+router.route("/comparequarter")
+  .get(transactionsController.comparequarter) 
+
+// Aggregate Data by Type, Year, and Amount  
+router.route("/comparemonth")
+  .get(transactionsController.comparemonth)  
+
+// Aggregate Data by Type, Year, and Amount  
+router.route("/compareyrsum")
+  .get(transactionsController.compareyrsum)  
+
+// Aggregate Data by Type, Year, and Amount  
+router.route("/compareqtrsum")
+  .get(transactionsController.compareqtrsum) 
+
+// Aggregate Data by Type, Year, and Amount  
+router.route("/comparemthsum")
+  .get(transactionsController.comparemthsum)
+  
 // Aggregate Year
 router.route("/year")
   .get(transactionsController.year)  
