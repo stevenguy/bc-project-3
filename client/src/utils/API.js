@@ -20,6 +20,10 @@ export default {
   saveTransaction: function(transactionData) {
     return axios.post("/api/transactions", transactionData);
   },
+  //Create new Journal
+  newJournal: function(data) {
+    return axios.post("api/journals", data)
+  },
   // Save new account
   newAccount: function(data) {
     return axios.post("/api/accounts", data);
@@ -27,6 +31,10 @@ export default {
   // Get list of available accounts
   getAccount: function() {
     return axios.get("/api/accounts")
+  },
+  //Get list of journal
+  getJournals: function() {
+    return axios.get('api/journals')
   },
   // sums data from the database (quarterly)
   quarterly: function() {
@@ -71,5 +79,28 @@ export default {
   // sums data by account details and month
   acctmonth: function() {
     return axios.get("/api/transactions/acctmonth");
-  }
+  },
+  // sums data by account details and month
+  compareyear: function() {
+    return axios.get("/api/transactions/compareyear");
+  },
+  // sums data by account details and month
+  comparequarter: function() {
+    return axios.get("/api/transactions/comparequarter");
+  },
+  // sums data by account details and month
+  comparemonth: function() {
+    return axios.get("/api/transactions/comparemonth");
+  },
+  compareyrsum: function() {
+    return axios.get("/api/transactions/compareyrsum");
+  },
+  // sums data by account details and month
+  compareqtrsum: function() {
+    return axios.get("/api/transactions/compareqtrsum");
+  },
+  // sums data by account details and month
+  comparemthsum: function() {
+    return axios.get("/api/transactions/comparemthsum");
+  },
 };

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema({
   
-  journal_id: { type: String, required: true }, //1
+  journal_id: { type: String }, //1
   date: { type: Date, default: Date.now }, //1
   transaction: { type: String, required: true }, //1
   memo: { type: String, required: true }, //1
@@ -19,7 +19,11 @@ const transactionSchema = new Schema({
   status: { type: String},
   year: { type: Number},
   month: { type: Number},
-  quarter: { type: Number}
+  quarter: { type: Number},
+  journal_id: {
+    type: Schema.Types.ObjectId,
+    ref: "Journal"
+  }
 
 });
 
