@@ -55,6 +55,16 @@ module.exports = {
       .then(dbModel => {console.log('YEAR' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
   },  
+  //JINS CODE ~~~~~~~~~~~~~~~~~~
+  preparer: function(req, res) {
+    console.log('Working?')
+    db.Transaction
+      .distinct('PREPARER')
+      .then(response => {
+        res.json(response)
+        })
+      .catch(err => console.log(err));
+  },  
   accounts: function(req, res) {
     console.log('ACCOUNTS')
     db.Transaction
