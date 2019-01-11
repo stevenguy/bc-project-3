@@ -131,6 +131,10 @@ class Status extends Component {
       .catch(e => console.log(e))
   }
 
+  handleApprove() {
+    
+  }
+
   render() {
     const { classes } = this.props;
 
