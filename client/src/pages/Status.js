@@ -138,8 +138,11 @@ class Status extends Component {
       .catch(e => console.log(e))
   }
 
-  handleApprove() {
-    
+  handleApprove = event => {
+    console.log(this.state)
+    let approvedStatus = {
+    }
+    .catch(e => console.log(e))
   }
 
   render() {
@@ -231,7 +234,7 @@ class Status extends Component {
                           </CardContent> : ''
                     ))
                   }
-                  <Button variant="contained" className={classes.button}>
+                  <Button value={this.state.journalData} onClick={this.handleApprove} variant="contained" className={classes.button}>
                       Approve
                     </Button>
                     </Card>

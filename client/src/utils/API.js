@@ -103,10 +103,8 @@ export default {
   comparemthsum: function() {
     return axios.get("/api/transactions/comparemthsum");
   },
-  {
   // handles approving journals
   approveJournal: function () {
-    return.axios.post('/api/transactions')
-  }
+    return axios.get("/api/transactions");
   }
 };
