@@ -80,4 +80,7 @@ router.route("/:id")
   .put(transactionsController.update)
   .delete(transactionsController.remove);
 
+// Aggregate Preparer
+router.route("/preparer")
+  .get(transactionsController.preparer)    
 module.exports = router;
