@@ -127,7 +127,14 @@ class Status extends Component {
 
   componentDidMount() {
     API.getJournals()
-      .then(res => this.setState({ journalData: res.data }))
+      .then(res => {
+        res.data.map((data) => {
+          data.transaction.map((data) => {
+            data.date = new Date(data.date)
+          })
+        })
+        this.setState({ journalData: res.data })
+      })
       .catch(e => console.log(e))
   }
 
@@ -177,7 +184,6 @@ class Status extends Component {
                 return (
               <React.Fragment>
                 <Paper>
-                  {console.log(this.state.journalData)}
                   {this.state.journalData.map((output, j) => (
                     <React.Fragment>
                       <Card>
@@ -191,7 +197,7 @@ class Status extends Component {
                                   <TableCell><b>Journal ID:</b> {transactions.journal_id}</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                  <TableCell><b>Date:</b> {transactions.date}</TableCell>
+                                  <TableCell><b>Date:</b> {transactions.date.toLocaleDateString('en-US')}</TableCell>
                                 </TableRow>
                                 <TableRow>
                                   <TableCell><b>Account:</b> {transactions.account}</TableCell>
