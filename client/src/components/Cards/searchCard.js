@@ -80,8 +80,7 @@ class SimpleCard extends React.Component {
         /> */}
         <CardContent>
           <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            Expand for more details
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
@@ -106,23 +105,22 @@ class SimpleCard extends React.Component {
           <CardContent>
             <Typography paragraph>Method:</Typography>
             <Typography paragraph>
-            {/* Data will be recieved through this.props.hotdog */}
-                Journal ID: <br></br>
-                Date: <br></br>
-                Transaction Description: <br></br>
-                Memo: <br></br>
-                Details: <br></br>
-                Amount: <br></br>
-                Type of Transaction: <br></br>
-                Account Number: <br></br>
-                Account Description: <br></br>
-                Approved or Unapproved: <br></br>
-                Preparer's Name and ID: <br></br>
-                Prepared Date: <br></br>
-                Approver's Name: <br></br>
-                Approved/Unapproved Date: <br></br>
-
+            
+                Journal ID: {this.props.info.journal_id}<br></br>
+                Date: {this.props.info.date}<br></br>
+                Description: {this.props.info.preparer}<br></br>
+                Account: {this.props.info.account}<br></br>
+                Memo: {this.props.info.memo}<br></br>
+                Details: {this.props.info.details}<br></br>
+                Amount: {this.props.info.amount}<br></br>
+                Type of Transaction: {this.props.info.transaction}<br></br>
+                Status: {this.props.info.status}<br></br>
+                Preparer's Name: {this.props.info.preparer}<br></br>
+                Prepared Date: {this.props.info.prepared_date}<br></br>
+                Approver's Name: {this.props.info.approver}<br></br>
+                Approved/Unapproved Date: {this.props.info.approved_date}<br></br>
             </Typography>
+            {/* <Typography paragraph > Journal ID: {this.props.info.transaction} </Typography> */}
           </CardContent>
         </Collapse>
       </Card>

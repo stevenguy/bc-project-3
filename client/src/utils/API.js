@@ -103,4 +103,7 @@ export default {
   comparemthsum: function() {
     return axios.get("/api/transactions/comparemthsum");
   },
+  preparer: function() {
+    return axios.get("/api/transactions/preparer")
+  }
 };
