@@ -7,7 +7,6 @@ import Upload from "./pages/Upload"
 import Reports from "./pages/Reports"
 import Login from "./pages/Login"
 import Status from "./pages/Status"
-import Home from "./pages/Home"
 import Admin from "./pages/Admin"
 import "./App.css";
 
@@ -17,7 +16,7 @@ function App() {
       <Router>
         <div className="routerContainer">
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/Dashboard" component={Dashboard} />
             <Route exact path="/Entries" component={Entries} />
@@ -31,7 +30,7 @@ function App() {
       </Router>
     </React.Fragment>
 
-  );
+  )
 }
 
 export default App;
