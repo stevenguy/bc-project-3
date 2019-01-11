@@ -66,7 +66,7 @@ class Admin extends Component {
             (this.state.accounts.map(stuff => {
               return (
                 <Userinfo
-                id={stuff._id}
+                  id={stuff._id}
                   image={stuff.photoURL}
                   name={stuff.name}
                   email={stuff.email}

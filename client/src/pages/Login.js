@@ -230,7 +230,7 @@ class Login extends Component {
                                 />
                                 <TextField
                                 id="outlined-adornment-password"
-                                className={classNames(classes.margin, classes.textField)}
+                                className={classNames(styles.margin, styles.textField)}
                                 variant="outlined"
                                 type={this.state.showPassword ? 'text' : 'password'}
                                 label="Password"
