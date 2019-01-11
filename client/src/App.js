@@ -30,7 +30,7 @@ function App() {
       </Router>
     </React.Fragment>
 
-  );
+  )
 }
 
 export default App;

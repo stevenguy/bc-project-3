@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const JournalController = require("../../controllers/journalsController");
+const journalsController = require('../../controllers/journalsController')
 
 router.route('/')
-.get(JournalController.findAll)
-.post(JournalController.create)
+.get(journalsController.findAll)
+// .post(journalsController.create)
 
 module.exports = router;
