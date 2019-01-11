@@ -1,23 +1,24 @@
 const db = require("../models");
 
 module.exports = {
-  getUser: function(req, res) {
-    db.User.findOne({'name': req.body.name}, req.body)
-      .then(dbModel => res.json(dbModel))
+  getUser: function (req, res) {
+    db.User.find() //make is search for users with unassigned roles
+      .then(dbModel => {
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
 
-
-  authUser: function(req, res) {
-    db.User.findOne({'email':req.body.email})
+  authUser: function (req, res) {
+    db.User.findOne({ 'email': req.body.email })
       .then(dbModel => {
-        if(dbModel == null){
+        if (dbModel == null) {
           db.User.create(req.body)
-          .then(dbModel => {
-            res.json(dbModel)
-          })
+            .then(dbModel => {
+              res.json(dbModel)
+            })
         }
-        else{
+        else {
           res.json(dbModel)
         }
       })
@@ -26,8 +27,9 @@ module.exports = {
         res.status(422).json(err)
       });
   },
-  updateUser: function(req, res) {
-      db.User.findOneAndUpdate({'name': req.body.name}, req.body)
+  updateUser: function (req, res) {
+    console.log(req.body);
+    db.User.findOneAndUpdate({ '_id': req.body._id}, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

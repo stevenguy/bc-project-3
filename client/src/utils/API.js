@@ -34,7 +34,7 @@ export default {
   },
   //Get list of journal
   getJournals: function() {
-    return axios.get('api/journals')
+    return axios.get('/api/journals')
   },
   // sums data from the database (quarterly)
   quarterly: function() {
@@ -106,4 +106,8 @@ export default {
   preparer: function() {
     return axios.get("/api/transactions/preparer")
   }
-};
+  //  handles approving journals
+  // approveJournal: function () {
+  //   return axios.get("/api/transactions");
+  // }
+}
