@@ -29,6 +29,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { NavLink } from 'react-router-dom'
 import { Route } from "react-router-dom";
+import firebase, { auth, provider } from '../../utils/firebase.js';
+import { Redirect } from "react-router";
+
 
 
 
@@ -85,6 +88,8 @@ const styles = theme => ({
   }
 });
 
+var local = localStorage.getItem('user')
+
 class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
@@ -94,6 +99,16 @@ class ResponsiveDrawer extends React.Component {
   handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
+
+  logout = () => {
+    auth.signOut()
+        .then(() => {
+            // this.setState(({user: null}))
+            localStorage.removeItem('user');
+            local = null;
+            window.location.href = '/';
+        });
+}
 
   render() {
     const { classes, theme } = this.props;
@@ -110,12 +125,14 @@ class ResponsiveDrawer extends React.Component {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
-          {['Settings', 'Logout'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <SettingsIcon /> : <PowerSettingsNewIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+            <ListItem button>
+              <ListItemIcon><SettingsIcon /></ListItemIcon>
+              <ListItemText primary='Settings' />
             </ListItem>
-          ))}
+            <ListItem button onClick={this.logout}>
+              <ListItemIcon><PowerSettingsNewIcon/></ListItemIcon>
+              <ListItemText primary='Log Out' />
+            </ListItem>
         </List>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -149,6 +166,7 @@ class ResponsiveDrawer extends React.Component {
 
     return (
       <React.Fragment>
+        {local ? '': <Redirect to='/'/>}
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>

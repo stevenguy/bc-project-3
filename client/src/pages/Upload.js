@@ -139,6 +139,7 @@ class Upload extends Component {
                     API.buntest({data: this.state.csv[i], name: 'Bunrith Buth'})
                 }
             }
+            this.setState({uploaded: 1})
         }
       }
 
@@ -149,14 +150,14 @@ class Upload extends Component {
             <ResponsiveDrawer />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-            <div style={{ flexGrow: 1}}>
+            {/* <div style={{ flexGrow: 1}}> */}
                 <paper>
                     <Grid   container 
                             direction="column"
                             justify="center"
                             style={{padding: '10px'}}>
                             <Paper>
-                            <Grid item xs={12} sm={12}> <h2 style={{textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</h2></Grid>
+                            <Grid item xs={12} sm={12}> <Typography style={{fontSize: 24, textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</Typography></Grid>
                                 <Grid item xs={12} sm={12} >
                                     
                                     <Dropzone onDrop={this.onDrop}>
@@ -232,15 +233,15 @@ class Upload extends Component {
                                 <Grid item xs={6} sm={9}  style={{padding: '10px'}}>
                                     {this.state.uploaded === 0 ? (
                                     <Button variant="contained" color="primary" onClick={ this.UploadButton } style={{width:'100%'}}>
-                                        Upload
+                                        Upload 	&nbsp;
                                         <CloudUploadIcon/>
-                                    </Button>) : <h2 color="success">CSV Uploaded!</h2>}
+                                    </Button>) : <Typography h5 color="success" style={{alignItems: 'center'}}>CSV Uploaded!</Typography>}
                                 </Grid>
                             </Grid>
                         </Paper>
                     </Grid>
                 </paper>
-            </div>
+            {/* </div> */}
         </main>
         <Footer /> 
         </React.Fragment>
