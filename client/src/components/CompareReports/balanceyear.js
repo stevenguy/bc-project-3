@@ -112,7 +112,6 @@ class BalanceYear extends Component {
       .then(res => {
         let transactions = []
         res.data.forEach(element => {
-          console.log(element)
           transactions.push({
             description: element._id.description,
             type: element._id.type,
@@ -146,7 +145,6 @@ class BalanceYear extends Component {
       this.setState({ typesum: typesum })
     })
     .catch(err => console.log(err));
-    
   };
   
   render() {

@@ -579,7 +579,7 @@ class BalanceSheet extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell>{output.description}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                      <TableCell align="right">{ccyFormat(output.amount * - 1)}</TableCell>
                     </TableRow>
                   );  
                   }
@@ -591,7 +591,7 @@ class BalanceSheet extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell><b>TOTAL</b></TableCell>
-                      <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
+                      <TableCell align="right"><b>{ccyFormat(output.amount * - 1)}</b></TableCell>
                     </TableRow>
                   );  
                   }
@@ -620,7 +620,7 @@ class BalanceSheet extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell>{output.description}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                      <TableCell align="right">{ccyFormat(output.amount * - 1)}</TableCell>
                     </TableRow>
                   );  
                   }
@@ -632,7 +632,7 @@ class BalanceSheet extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell><b>TOTAL</b></TableCell>
-                      <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
+                      <TableCell align="right"><b>{ccyFormat(output.amount * - 1)}</b></TableCell>
                     </TableRow>
                   );  
                   }
