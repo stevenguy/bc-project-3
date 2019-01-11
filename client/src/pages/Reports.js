@@ -158,7 +158,7 @@ class Report extends Component {
               default:
                 return null;
             }
-        })()}
+        })}
       </main>
       <Footer />
       </React.Fragment>
