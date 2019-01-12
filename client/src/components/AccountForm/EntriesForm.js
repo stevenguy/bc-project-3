@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import AccountForm from './AccountForm'
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   //Style goes here
@@ -52,7 +53,7 @@ class EntriesForm extends Component {
         <React.Fragment>
             <div>
                 {this.props.entries.map((entry, index) => (
-                    <React.Fragment key={index}>
+                    <Paper key={index}>
                     <div className={classes.root}>
                     <AccountForm
                         entries={this.props.entries}
@@ -146,7 +147,7 @@ class EntriesForm extends Component {
                     </div>
                 </div>
                 <Divider/>
-                </React.Fragment>
+                </Paper>
                 ))}
             <Fab size="small" color="primary" aria-label="Add" onClick={this.props.handleAdd} className={classes.margin}>
                 <AddIcon />
