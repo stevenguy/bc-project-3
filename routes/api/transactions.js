@@ -72,7 +72,7 @@ router.route("/year")
 
 // Aggregate Account
 router.route("/accounts")
-  .get(transactionsController.accounts)    
+  .get(transactionsController.accounts) 
   
 // Matches with "/api/transactions/:id"
 router.route("/:id")
@@ -80,4 +80,7 @@ router.route("/:id")
   .put(transactionsController.update)
   .delete(transactionsController.remove);
 
+// Aggregate Preparer
+router.route("/preparer")
+  .get(transactionsController.preparer)    
 module.exports = router;
