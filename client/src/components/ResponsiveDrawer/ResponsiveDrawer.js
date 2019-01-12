@@ -116,7 +116,7 @@ class ResponsiveDrawer extends React.Component {
     const drawer = (
       <div>
         <div className={classes.toolbar}>
-        <p className={classes.brand}><img src="../images/acctg_blue.png" alt="acctg" style={ { height: 50, width: 100}}/></p>
+        <p className={classes.brand}><img src="../../images/acctg_blue.png" alt="acctg" style={ { height: 50, width: 100}}/></p>
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
