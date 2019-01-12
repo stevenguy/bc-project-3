@@ -108,25 +108,45 @@ class BalanceYear extends Component {
 
   handleRun = () => {
 
-    API.compareyear()
+    API.yearly()
       .then(res => {
-        let transactions = []
+        let description = []
+        let prevAmt = []
+        let currAmt = []
+        let trans = []
+        let type = []
         res.data.forEach(element => {
-          transactions.push({
-            description: element._id.description,
-            type: element._id.type,
-            year: element._id.year,
-            yearOne: element.yearOne,
-            yearTwo: element.yearTwo,
-            yearThree: element.yearThree,
-            yearFour: element.yearFour,
-            yearFive: element.yearFive,
-          })
+          if (description.indexOf(element._id.description) > - 1) {
+            let a
+          } else {
+            description.push(element._id.description)
+            type.push(element._id.type)
+          }
         })
-        this.setState({ transactions: transactions })
+        for (let i = 0; i < description.length; i++) {
+          prevAmt.push(0)
+          currAmt.push(0)
+        }
+        res.data.forEach(element => {
+          let year = this.state.years
+          let index = description.indexOf(element._id.description)
+          if(element._id.year === year) {
+            currAmt[index] += element.amount 
+          } else {
+            prevAmt[index] += element.amount 
+          }
+        })
+        for (let i = 0; i < description.length; i++) {
+          trans.push({
+            description: description[i],
+            type: type[i],
+            prevAmt: prevAmt[i],
+            currAmt: currAmt[i]
+          })
+        }
+        this.setState({ transactions: trans })
       })
       .catch(err => console.log(err));
-      
     
     API.compareyrsum()
     .then(res => {
@@ -152,7 +172,7 @@ class BalanceYear extends Component {
     const { classes } = this.props;
 
     return (
-
+      
       <React.Fragment>
       <ResponsiveDrawer />
       <div style={ { height: 10 } }></div>
@@ -188,6 +208,7 @@ class BalanceYear extends Component {
       <div style={ { height: 10 } }></div>
       <React.Fragment>
         <Table>
+            
             {(() => {
               switch(this.state.years) {
                 case 2017: 
