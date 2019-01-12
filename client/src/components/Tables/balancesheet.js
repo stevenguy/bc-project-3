@@ -2,21 +2,16 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import Footer from "../Footer";
 import ResponsiveDrawer from "../ResponsiveDrawer";
-// Table Imports
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// Paper Imports
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-// Menu, Table, Expansion Panel Imports
 import { withStyles } from '@material-ui/core/styles';
-// Menu Imports
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// Expansion Panel Imports
 import grey from '@material-ui/core/colors/grey';
 
 const drawerWidth = 180;
@@ -83,80 +78,54 @@ const month = [
   {
     valueMonth: 0,
     labelMonth: '',
-    value: 0,
-    label: '',
   },
   {
     valueMonth: 1,
     labelMonth: 'January',
-    value: 1,
-    label: 'Q1',
   },
   {
     valueMonth: 2,
     labelMonth: 'February',
-    value: 1,
-    label: 'Q1',
   },
   {
     valueMonth: 3,
     labelMonth: 'March',
-    value: 1,
-    label: 'Q1',
   },
   {
     valueMonth: 4,
     labelMonth: 'April',
-    value: 2,
-    label: 'Q2',
   },
   {
     valueMonth: 5,
     labelMonth: 'May',
-    value: 2,
-    label: 'Q2',
   },
   {
     valueMonth: 6,
     labelMonth: 'June',
-    value: 2,
-    label: 'Q2',
   },
   {
     valueMonth: 7,
     labelMonth: 'July',
-    value: 3,
-    label: 'Q3',
   },
   {
     valueMonth: 8,
     labelMonth: 'August',
-    value: 3,
-    label: 'Q3',
   },
   {
     valueMonth: 9,
     labelMonth: 'September',
-    value: 3,
-    label: 'Q3',
   },
   {
     valueMonth: 10,
     labelMonth: 'October',
-    value: 4,
-    label: 'Q4',
   },
   {
     valueMonth: 11,
     labelMonth: 'November',
-    value: 4,
-    label: 'Q4',
   },
   {
     valueMonth: 12,
     labelMonth: 'December',
-    value: 4,
-    label: 'Q4',
   },
 ];
 
@@ -210,7 +179,7 @@ function ccyFormat(num) {
   return `${nf.format(num.toFixed(2))}`;
 }
 
-class Report extends Component {
+class BalanceSheet extends Component {
 
   state = {
     year: [],
@@ -610,7 +579,7 @@ class Report extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell>{output.description}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                      <TableCell align="right">{ccyFormat(output.amount * - 1)}</TableCell>
                     </TableRow>
                   );  
                   }
@@ -622,7 +591,7 @@ class Report extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell><b>TOTAL</b></TableCell>
-                      <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
+                      <TableCell align="right"><b>{ccyFormat(output.amount * - 1)}</b></TableCell>
                     </TableRow>
                   );  
                   }
@@ -651,7 +620,7 @@ class Report extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell>{output.description}</TableCell>
-                      <TableCell align="right">{ccyFormat(output.amount)}</TableCell>
+                      <TableCell align="right">{ccyFormat(output.amount * - 1)}</TableCell>
                     </TableRow>
                   );  
                   }
@@ -663,7 +632,7 @@ class Report extends Component {
                   return (
                     <TableRow key={i}>
                       <TableCell><b>TOTAL</b></TableCell>
-                      <TableCell align="right"><b>{ccyFormat(output.amount)}</b></TableCell>
+                      <TableCell align="right"><b>{ccyFormat(output.amount * - 1)}</b></TableCell>
                     </TableRow>
                   );  
                   }
@@ -679,8 +648,8 @@ class Report extends Component {
   }
 }
 
-Report.propTypes = {
+BalanceSheet.propTypes = {
 classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Report);
+export default withStyles(styles)(BalanceSheet);

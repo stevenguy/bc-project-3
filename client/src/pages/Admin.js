@@ -6,10 +6,13 @@ import Footer from "../components/Footer"
 import Userinfo from "../components/UserInfo"
 import API from "../utils/API";
 import Auth from "../utils/user";
+import { Redirect } from "react-router";
 
 const pStyle = {
-  textAlign : 'center'
+  textAlign: 'center'
 };
+
+var local = JSON.parse(localStorage.getItem('user'));
 
 class Admin extends Component {
   state = {
@@ -20,17 +23,17 @@ class Admin extends Component {
     var roleInfo = this.findAccount(id);
     roleInfo.role = role;
     Auth.updateUser(roleInfo)
-    .then(res => {
-      console.log(res.data)
-      this.forceUpdate()
-    })
-    .catch(err => console.log(err));
-    
+      .then(res => {
+        console.log(res.data)
+        this.forceUpdate()
+      })
+      .catch(err => console.log(err));
+
   }
 
   findAccount = id => {
-    for (var i = 0; i < this.state.accounts.length; i++){
-      if(this.state.accounts[i]._id == id){
+    for (var i = 0; i < this.state.accounts.length; i++) {
+      if (this.state.accounts[i]._id == id) {
         return this.state.accounts[i]
       }
     }
@@ -59,25 +62,30 @@ class Admin extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className='list' style={pStyle}>
 
-          {!this.state.accounts.length ? (<h1>No new pending users</h1>)
-            :
-            (this.state.accounts.map(stuff => {
-              return (
-                <Userinfo
-                id={stuff._id}
+        {(local == null || local.role != 'admin') ? <Redirect to='/' /> : <h3>AdminPage</h3>}
+
+          <div className='list' style={pStyle}>
+
+            {!this.state.accounts.length ? (<h1>No new pending users</h1>)
+              :
+              (this.state.accounts.map(stuff => {
+                return (
+                  <Userinfo
+                  id={stuff._id}
                   image={stuff.photoURL}
-                  name={stuff.name}
-                  email={stuff.email}
-                  role={stuff.role}
-                  clicked={this.assignRole}
-                  />
-                  );
-                })
-                )
-              }
-        </div>
+                    name={stuff.name}
+                    email={stuff.email}
+                    role={stuff.role}
+                    clicked={this.assignRole}
+                    />
+                );
+              })
+              )
+            }
+          </div>
+
+
       </React.Fragment>
     );
   }

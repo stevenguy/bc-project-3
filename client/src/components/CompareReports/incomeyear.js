@@ -209,9 +209,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                          {this.state.transactions.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          {this.state.transactions
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
@@ -220,10 +220,10 @@ class IncomeYear extends Component {
                                 </TableRow>
                               );
                             }
-                          })}
-                          {this.state.typesum.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          )}
+                          {this.state.typesum
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
@@ -231,8 +231,8 @@ class IncomeYear extends Component {
                                   <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
                                 </TableRow>
                               );  
-                              }
-                          })}
+                            }
+                          )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -250,9 +250,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                            {this.state.transactions.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                            {this.state.transactions
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
@@ -260,11 +260,11 @@ class IncomeYear extends Component {
                                     <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
-                            {this.state.typesum.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                              }
+                            )}
+                            {this.state.typesum
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
@@ -272,8 +272,8 @@ class IncomeYear extends Component {
                                     <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
+                              }
+                            )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -297,9 +297,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                          {this.state.transactions.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          {this.state.transactions
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
@@ -308,10 +308,10 @@ class IncomeYear extends Component {
                                 </TableRow>
                               );
                             }
-                          })}
-                          {this.state.typesum.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          )}
+                          {this.state.typesum
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
@@ -319,8 +319,8 @@ class IncomeYear extends Component {
                                   <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
                                 </TableRow>
                               );  
-                              }
-                          })}
+                            }
+                          )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -338,9 +338,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                            {this.state.transactions.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                            {this.state.transactions
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
@@ -348,11 +348,11 @@ class IncomeYear extends Component {
                                     <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
-                            {this.state.typesum.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                              }
+                            )}
+                            {this.state.typesum
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
@@ -360,8 +360,8 @@ class IncomeYear extends Component {
                                     <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
+                              }
+                            )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -384,9 +384,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                          {this.state.transactions.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          {this.state.transactions
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
@@ -395,10 +395,10 @@ class IncomeYear extends Component {
                                 </TableRow>
                               );
                             }
-                          })}
-                          {this.state.typesum.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          )}
+                          {this.state.typesum
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
@@ -406,8 +406,8 @@ class IncomeYear extends Component {
                                   <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
                                 </TableRow>
                               );  
-                              }
-                          })}
+                            }
+                          )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -425,9 +425,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                            {this.state.transactions.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                            {this.state.transactions
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
@@ -435,11 +435,11 @@ class IncomeYear extends Component {
                                     <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
-                            {this.state.typesum.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                              }
+                            )}
+                            {this.state.typesum
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
@@ -447,8 +447,8 @@ class IncomeYear extends Component {
                                     <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
+                              }
+                            )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -471,9 +471,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                          {this.state.transactions.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          {this.state.transactions
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
@@ -482,10 +482,10 @@ class IncomeYear extends Component {
                                 </TableRow>
                               );
                             }
-                          })}
-                          {this.state.typesum.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          )}
+                          {this.state.typesum
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
@@ -493,8 +493,8 @@ class IncomeYear extends Component {
                                   <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
                                 </TableRow>
                               );  
-                              }
-                          })}
+                            }
+                          )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -512,9 +512,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                            {this.state.transactions.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                            {this.state.transactions
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
@@ -522,11 +522,11 @@ class IncomeYear extends Component {
                                     <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
-                            {this.state.typesum.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                              }
+                            )}
+                            {this.state.typesum
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
@@ -534,8 +534,8 @@ class IncomeYear extends Component {
                                     <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
+                              }
+                            )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -558,9 +558,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                          {this.state.transactions.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          {this.state.transactions
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell>{output.description}</TableCell>
@@ -569,10 +569,10 @@ class IncomeYear extends Component {
                                 </TableRow>
                               );
                             }
-                          })}
-                          {this.state.typesum.map((output, i) => {
-                            if (output.type === 'Revenue'
-                            ) {
+                          )}
+                          {this.state.typesum
+                            .filter(output => output.type === 'Revenue')
+                            .map((output, i) => {
                               return (
                                 <TableRow key={i}>
                                   <TableCell><b>TOTAL</b></TableCell>
@@ -580,8 +580,8 @@ class IncomeYear extends Component {
                                   <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
                                 </TableRow>
                               );  
-                              }
-                          })}
+                            }
+                          )}
                           </TableBody>
                         </Table>
                       </Paper>
@@ -599,9 +599,9 @@ class IncomeYear extends Component {
                         </Table>
                         <Table>
                           <TableBody>
-                            {this.state.transactions.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                            {this.state.transactions
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell>{output.description}</TableCell>
@@ -609,11 +609,11 @@ class IncomeYear extends Component {
                                     <TableCell align="right">{ccyFormat(output.yearFive)}</TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
-                            {this.state.typesum.map((output, i) => {
-                              if (output.type === 'Expenses'
-                              ) {
+                              }
+                            )}
+                            {this.state.typesum
+                              .filter(output => output.type === 'Expenses')
+                              .map((output, i) => {
                                 return (
                                   <TableRow key={i}>
                                     <TableCell><b>TOTAL</b></TableCell>
@@ -621,8 +621,8 @@ class IncomeYear extends Component {
                                     <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
                                   </TableRow>
                                 );
-                                }
-                            })}
+                              }
+                            )}
                           </TableBody>
                         </Table>
                       </Paper>
