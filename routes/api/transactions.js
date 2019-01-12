@@ -6,6 +6,13 @@ router.route("/")
   .get(transactionsController.findAll)
   .post(transactionsController.create)
 
+router.route("/preparer/:name")
+  .get(transactionsController.fuckMe)
+
+router.route("/preparer")
+  .get(transactionsController.getPreparer)
+  .post(transactionsController.create)
+
 // Aggregate Data by Description, Type, Year, Quarter, Month, and Amount  
 router.route("/reports")
   .get(transactionsController.reports)  
@@ -78,9 +85,6 @@ router.route("/accounts")
 router.route("/:id")
   .get(transactionsController.findById)
   .put(transactionsController.update)
-  .delete(transactionsController.remove);
-
-// Aggregate Preparer
-router.route("/preparer")
-  .get(transactionsController.preparer)    
+  .delete(transactionsController.remove)
+  
 module.exports = router;

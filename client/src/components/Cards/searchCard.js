@@ -83,13 +83,13 @@ class SimpleCard extends React.Component {
             Expand for more details
           </Typography>
         </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-          {/* <IconButton aria-label="Add to favorites">
+        {/* <CardActions className={classes.actions} disableActionSpacing>
+          <IconButton aria-label="Add to favorites">
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="Share">
             <ShareIcon />
-          </IconButton> */}
+          </IconButton>
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
@@ -100,8 +100,8 @@ class SimpleCard extends React.Component {
           >
             <ExpandMoreIcon />
           </IconButton>
-        </CardActions>
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+        </CardActions> */}
+        {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit> */}
           <CardContent>
             <Typography paragraph>Method:</Typography>
             <Typography paragraph>
@@ -122,7 +122,7 @@ class SimpleCard extends React.Component {
             </Typography>
             {/* <Typography paragraph > Journal ID: {this.props.info.transaction} </Typography> */}
           </CardContent>
-        </Collapse>
+        {/* </Collapse> */}
       </Card>
     );
   }

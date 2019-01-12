@@ -10,6 +10,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
+    console.log(req)
     db.Transaction
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
@@ -55,16 +56,32 @@ module.exports = {
       .then(dbModel => {console.log('YEAR' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
   },  
-  //JINS CODE ~~~~~~~~~~~~~~~~~~
-  preparer: function(req, res) {
-    console.log('Working?')
+  
+  getPreparer: function(req, res) {
+    console.log('preparer')
     db.Transaction
-      .distinct('PREPARER')
-      .then(response => {
-        res.json(response)
-        })
-      .catch(err => console.log(err));
-  },  
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+              label: "$preparer"
+            }
+          }
+        }]
+      )
+      .then(dbModel => {res.json(dbModel)})
+      .catch(err => {console.log('YEAR2' + err);res.json(err)});
+  },    
+
+  fuckMe: function(req, res) {
+    // console.log('hit!')
+    db.Transaction
+      .find({preparer: req.params.name})
+      .sort({ date: -1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+
   accounts: function(req, res) {
     console.log('ACCOUNTS')
     db.Transaction

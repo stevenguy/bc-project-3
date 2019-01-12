@@ -71,46 +71,8 @@ const styles = theme => ({
 
 });
 
-// let suggestions = [
-//   { label: 'Afghanistan' },
-//   { label: 'Aland Islands' },
-//   { label: 'Albania' },
-//   { label: 'Algeria' },
-//   { label: 'American Samoa' },
-//   { label: 'Andorra' },
-//   { label: 'Angola' },
-//   { label: 'Anguilla' },
-//   { label: 'Antarctica' },
-//   { label: 'Antigua and Barbuda' },
-//   { label: 'Argentina' },
-//   { label: 'Armenia' },
-//   { label: 'Aruba' },
-//   { label: 'Australia' },
-//   { label: 'Austria' },
-//   { label: 'Azerbaijan' },
-//   { label: 'Bahamas' },
-//   { label: 'Bahrain' },
-//   { label: 'Bangladesh' },
-//   { label: 'Barbados' },
-//   { label: 'Belarus' },
-//   { label: 'Belgium' },
-//   { label: 'Belize' },
-//   { label: 'Benin' },
-//   { label: 'Bermuda' },
-//   { label: 'Bhutan' },
-//   { label: 'Bolivia, Plurinational State of' },
-//   { label: 'Bonaire, Sint Eustatius and Saba' },
-//   { label: 'Bosnia and Herzegovina' },
-//   { label: 'Botswana' },
-//   { label: 'Bouvet Island' },
-//   { label: 'Brazil' },
-//   { label: 'British Indian Ocean Territory' },
-//   { label: 'Brunei Darussalam' },
-//   { label: 'Zimbabwe'},
-// ];
-
 let suggestions = ''
-// let names = ''
+// let cardData = ''
 
 
 function renderInputComponent(inputProps) {
@@ -134,15 +96,15 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.preparer, query);
-  const parts = parse(suggestion.preparer, matches);
+  const matches = match(suggestion._id.label, query);
+  const parts = parse(suggestion._id.label, matches);
 
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
         {parts.map((part, index) => {
           return part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
+            <span key={String(index)} style={{ fontWeight: 600 }}>
               {part.text}
             </span>
           ) : (
@@ -165,7 +127,7 @@ function getSuggestions(value) {
     ? []
     : suggestions.filter(suggestion => {
         const keep =
-          count < 5 && suggestion.preparer.slice(0, inputLength).toLowerCase() === inputValue;
+          count < 5 && suggestion._id.label.slice(0, inputLength).toLowerCase() === inputValue;
 
         if (keep) {
           count += 1;
@@ -176,7 +138,7 @@ function getSuggestions(value) {
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.preparer;
+  return suggestion._id.label;
 }
 
 
@@ -191,16 +153,18 @@ class Search extends Component {
     }
     
     componentWillMount = () => {
-      console.log('hey its working')
-      API.getTransactions()
-        .then(r => {
-          suggestions = r.data
-        })
-        .then(r => console.log(suggestions))
-      // API.preparer()
+      // API.getTransactions()
       //   .then(r => {
-      //     console.log(r.data)
-      //   })
+      //       suggestions = r.data
+      //     })
+      //     .then(r => console.log(suggestions))
+        API.getPreparer()
+          .then(r => {
+            console.log('hey its working')
+            suggestions = r.data
+            console.log(r.data)
+          })
+        // .then (r => console.log(r.data))
     }
     
     
@@ -224,17 +188,32 @@ class Search extends Component {
     };
 
     searchItem = () => {
-      API.getTransaction(this.state.single)
-        // .then (r => console.log(r.data))
-        // .then (r => JSON.stringify(r))
-        .then (r => {
-          this.setState({searchData: r.data})
-        })
-        
+      // API.getTransaction(this.state.single)
+      //   // .then (r => console.log(r.data))
+      //   // .then (r => JSON.stringify(r))
+      //   .then (r => {
+      //     this.setState({searchData: r.data})
+      //   })
+      console.log(this.state.single)
+      API.fuckMe(this.state.single)
+        .then (r => console.log(r.data))
       // Above code recieves request data and sends to state as an object
       this.setState({viewCard: true})
       // console.log(this.state.viewCard)
     }
+
+    // searchItem = () => {                                                   <---- Saving this for 'find by id'
+    //   API.getTransaction(this.state.single)
+    //     // .then (r => console.log(r.data))
+    //     // .then (r => JSON.stringify(r))
+    //     .then (r => {
+    //       this.setState({searchData: r.data})
+    //     })
+        
+    //   // Above code recieves request data and sends to state as an object
+    //   this.setState({viewCard: true})
+    //   // console.log(this.state.viewCard)
+    // }
 
     render() {
       const { classes } = this.props;
@@ -248,6 +227,7 @@ class Search extends Component {
         renderSuggestion,
       };
 
+      //Renders Card when submit is clicked 
       let isShowing = this.state.viewCard
       let button 
       if (isShowing) {
@@ -259,13 +239,15 @@ class Search extends Component {
       return (
         <React.Fragment>
         <ResponsiveDrawer />
+        <main className = {classes.content}>
+        <div className={classes.toolbar} />
         {/* <h1>This is the search feature</h1> */}
         <div className={classes.root}>
         <Autosuggest
           {...autosuggestProps}
           inputProps={{
             classes,
-            placeholder: 'Search a country (start with a)',
+            placeholder: 'Type your search input here!',
             value: this.state.single,
             onChange: this.handleChange('single'),
           }}
@@ -287,7 +269,7 @@ class Search extends Component {
         </div>
 
       </div>
-
+      </main>
         <Footer />
         </React.Fragment>
           );
