@@ -195,7 +195,7 @@ class Register extends Component {
 
         return (
             <React.Fragment>
-                {this.state.registered ? <Redirect to={{ pathname: '/login' }} /> :
+                {this.state.registered ? <Redirect to={{ pathname: '/' }} /> :
                     <Grid
                         container
                         justify="center"
@@ -206,7 +206,7 @@ class Register extends Component {
 
                             <TextField
                                 id="Username-input"
-                                label="Username"
+                                label="Email"
                                 className={styles.textField}
                                 type="Username"
                                 name="username"

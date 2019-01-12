@@ -21,7 +21,7 @@ const styles = theme => ({
   }
 });
 
-var local = localStorage.getItem('user')
+var local = JSON.parse(localStorage.getItem('user'));
 
 class Dashboard extends Component {
   state = {
@@ -33,7 +33,8 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-      {!local.password ? <Redirect to={{pathname: '/register'}} /> :
+      {!local.password ? <Redirect to={{pathname: '/register'
+    }} /> :
       <React.Fragment>
           <ResponsiveDrawer />
           <main className={classes.content}>
