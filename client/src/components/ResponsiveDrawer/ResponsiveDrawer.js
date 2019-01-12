@@ -11,7 +11,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import StatusIcon from '@material-ui/icons/ThumbsUpDown';
 import CreateIcon from '@material-ui/icons/Create';
 import SettingsIcon from '@material-ui/icons/Settings';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -147,7 +147,7 @@ class ResponsiveDrawer extends React.Component {
                : text === "Entries"
                ? <CreateIcon />
                : text === "Upload"
-               ? <AttachFileIcon />
+               ? <CloudUploadIcon />
                : text === "Status"
                ? <StatusIcon />
                : text === "Search"
