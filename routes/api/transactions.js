@@ -72,7 +72,7 @@ router.route("/year")
 
 // Aggregate Account
 router.route("/accounts")
-  .get(transactionsController.accounts)    
+  .get(transactionsController.accounts) 
   
 // Matches with "/api/transactions/:id"
 router.route("/:id")
