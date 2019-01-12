@@ -16,11 +16,15 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   card: {
-    // maxWidth: 400,
+    flex: 1,
     marginBottom: '0px',
+    marginTop: '20px',
+    maxWidth: '820px',
+    left: 0
   },
   media: {
     height: 0,
@@ -67,22 +71,11 @@ class SimpleCard extends React.Component {
               <MoreVertIcon />
             </IconButton>
           }
-        //   title={this.props.greeting}
           title={
               <Typography className={classes.card} paragraph variant= 'h4'>{this.props.info.preparer}</Typography>
           }
           subheader="September 14, 2016"
         />
-        {/* <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
-        /> */}
-        <CardContent>
-          <Typography component="p">
-            Expand for more details
-          </Typography>
-        </CardContent>
         {/* <CardActions className={classes.actions} disableActionSpacing>
           <IconButton aria-label="Add to favorites">
             <FavoriteIcon />
@@ -103,9 +96,9 @@ class SimpleCard extends React.Component {
         </CardActions> */}
         {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit> */}
           <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-            
+            <Grid container spacing= {32}>
+              <Grid item>
+                <Typography paragraph>
                 Journal ID: {this.props.info.journal_id}<br></br>
                 Date: {this.props.info.date}<br></br>
                 Description: {this.props.info.preparer}<br></br>
@@ -113,13 +106,19 @@ class SimpleCard extends React.Component {
                 Memo: {this.props.info.memo}<br></br>
                 Details: {this.props.info.details}<br></br>
                 Amount: {this.props.info.amount}<br></br>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography paragraph>
                 Type of Transaction: {this.props.info.transaction}<br></br>
                 Status: {this.props.info.status}<br></br>
                 Preparer's Name: {this.props.info.preparer}<br></br>
                 Prepared Date: {this.props.info.prepared_date}<br></br>
                 Approver's Name: {this.props.info.approver}<br></br>
                 Approved/Unapproved Date: {this.props.info.approved_date}<br></br>
-            </Typography>
+                </Typography>
+              </Grid>
+            </Grid>
             {/* <Typography paragraph > Journal ID: {this.props.info.transaction} </Typography> */}
           </CardContent>
         {/* </Collapse> */}

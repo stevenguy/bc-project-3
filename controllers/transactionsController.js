@@ -56,7 +56,6 @@ module.exports = {
       .then(dbModel => {console.log('YEAR' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
   },  
-  
   getPreparer: function(req, res) {
     console.log('preparer')
     db.Transaction
@@ -71,12 +70,49 @@ module.exports = {
       )
       .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
+  }, 
+  getApprover: function(req, res) {
+    console.log('approver')
+    db.Transaction
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+              label: "$approver"
+            }
+          }
+        }]
+      )
+      .then(dbModel => {res.json(dbModel)})
+      .catch(err => {console.log('YEAR2' + err);res.json(err)});
+  }, 
+  getJournalId: function(req, res) {
+    console.log('journal ID')
+    db.Transaction
+      .aggregate(
+        [{ $match: {status: 'Approved' }},
+        { $group: {
+            _id: {
+              label: "$_id"
+            }
+          }
+        }]
+      )
+      .then(dbModel => {res.json(dbModel)})
+      .catch(err => {console.log('YEAR2' + err);res.json(err)});
   },    
-
-  fuckMe: function(req, res) {
+  transByPreparer: function(req, res) {
     // console.log('hit!')
     db.Transaction
       .find({preparer: req.params.name})
+      .sort({ date: -1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  transByApprover: function(req, res) {
+    // console.log('hit!')
+    db.Transaction
+      .find({approver: req.params.name})
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

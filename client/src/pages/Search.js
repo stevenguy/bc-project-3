@@ -20,6 +20,18 @@ import { withStyles } from '@material-ui/core/styles';
 import SimpleCard from '../components/Cards/searchCard'
 import { red } from "@material-ui/core/colors";
 
+
+import ReactDOM from 'react-dom';
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FilledInput from '@material-ui/core/FilledInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button'
+
 const drawerWidth = 180;
 
 const styles = theme => ({
@@ -37,21 +49,25 @@ const styles = theme => ({
   root: {
     height: 250,
     flexGrow: 1,
-    // marginTop: '300px',
-    marginLeft: '200px',
-    marginRight: '200px',
+    marginLeft: '100px',
+    marginRight: '100px',
     position: 'relative',
     top: '200px',
   },
   container: {
-    position: 'relative',
+    // position: 'relative',
+    // flexGrow: 2
+    // width: '100%'
+    flex: 1
   },
   suggestionsContainerOpen: {
     position: 'absolute',
     zIndex: 1,
     marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0,
+    width: '50%'
+    // left: 0,
+    // right: 0,
+    
   },
   suggestion: {
     display: 'block',
@@ -67,12 +83,24 @@ const styles = theme => ({
   carduh: {
     display: 'flex',
     justifyContent: 'center'
-  }
+  },
+
+  boot: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+  },
+  formControl: {
+    // margin: theme.spacing.unit,
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2,
+  },
 
 });
 
 let suggestions = ''
-// let cardData = ''
 
 
 function renderInputComponent(inputProps) {
@@ -142,6 +170,7 @@ function getSuggestionValue(suggestion) {
 }
 
 
+
 class Search extends Component {
     state = {
       //State goes here
@@ -149,24 +178,23 @@ class Search extends Component {
     popper: '',
     suggestions: [],
     viewCard: false,
-    searchData: {}
+    searchData: {},
+    category: 30,
+    labelWidth: 0,
     }
-    
-    componentWillMount = () => {
-      // API.getTransactions()
-      //   .then(r => {
-      //       suggestions = r.data
-      //     })
-      //     .then(r => console.log(suggestions))
-        API.getPreparer()
-          .then(r => {
-            console.log('hey its working')
+    componentWillMount() {
+      API.journalIdAutofill()
+        .then(r => {
             suggestions = r.data
-            console.log(r.data)
           })
-        // .then (r => console.log(r.data))
+          .then(r => console.log(suggestions))
     }
-    
+
+    componentDidMount() {
+      this.setState({
+        labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+      });
+    }
     
     handleSuggestionsFetchRequested = ({ value }) => {
       this.setState({
@@ -180,40 +208,71 @@ class Search extends Component {
       });
     };
   
-    handleChange = name => (event, { newValue }) => {
+    handleAutoChange = name => (event, { newValue }) => {
       this.setState({
         [name]: newValue,
       });
-      console.log('hello')
+    };
+
+    selectChanger = () => {
+      if(this.state.category === 20){
+        API.preparerAutofill()
+          .then(r => {
+            console.log('hey its working')
+            suggestions = r.data
+            console.log(r.data)
+          })
+      }
+      else if(this.state.category === 30) {
+        API.journalIdAutofill()
+        .then(r => {
+            suggestions = r.data
+          })
+          .then(r => console.log(suggestions))
+      }
+      else if(this.state.category === 10){
+        API.approverAutofill()
+        .then(r => {
+            suggestions = r.data
+          })
+          .then(r => console.log(suggestions))
+      }
+    }
+
+    handleSelectChange = event => {
+      this.setState({ [event.target.name]: event.target.value })
+      console.log('ran!')
+      this.setState({viewCard: false})
+      this.setState({single: ""})
     };
 
     searchItem = () => {
-      // API.getTransaction(this.state.single)
-      //   // .then (r => console.log(r.data))
-      //   // .then (r => JSON.stringify(r))
-      //   .then (r => {
-      //     this.setState({searchData: r.data})
-      //   })
-      console.log(this.state.single)
-      API.fuckMe(this.state.single)
-        .then (r => console.log(r.data))
-      // Above code recieves request data and sends to state as an object
-      this.setState({viewCard: true})
-      // console.log(this.state.viewCard)
+      switch (this.state.category){
+        case 10: {
+          // console.log('Approver')
+          // console.log(this.state.single)
+          API.transByApprover(this.state.single)
+            .then (r => console.log(r.data))
+        }
+        break
+        case 20: {
+          // console.log('Preparer')
+          // console.log(this.state.single)
+          API.transByPreparer(this.state.single)
+            .then (r => console.log(r.data))
+        }
+        break 
+        case 30: {
+          // console.log('Database ID')
+          API.getTransaction(this.state.single)
+            .then (r => {
+              this.setState({searchData: r.data})
+              this.setState({viewCard: true})
+            })
+        }
+        default: console.log('please select a category!')
+      }
     }
-
-    // searchItem = () => {                                                   <---- Saving this for 'find by id'
-    //   API.getTransaction(this.state.single)
-    //     // .then (r => console.log(r.data))
-    //     // .then (r => JSON.stringify(r))
-    //     .then (r => {
-    //       this.setState({searchData: r.data})
-    //     })
-        
-    //   // Above code recieves request data and sends to state as an object
-    //   this.setState({viewCard: true})
-    //   // console.log(this.state.viewCard)
-    // }
 
     render() {
       const { classes } = this.props;
@@ -236,45 +295,80 @@ class Search extends Component {
         button = ""
       }
 
+      // Calling selectChanger function here because view re-renders immediately after state.category is changed 
+      this.selectChanger()
+
       return (
         <React.Fragment>
         <ResponsiveDrawer />
-        <main className = {classes.content}>
-        <div className={classes.toolbar} />
-        {/* <h1>This is the search feature</h1> */}
-        <div className={classes.root}>
-        <Autosuggest
-          {...autosuggestProps}
-          inputProps={{
-            classes,
-            placeholder: 'Type your search input here!',
-            value: this.state.single,
-            onChange: this.handleChange('single'),
-          }}
-          theme={{
-            container: classes.container,
-            suggestionsContainerOpen: classes.suggestionsContainerOpen,
-            suggestionsList: classes.suggestionsList,
-            suggestion: classes.suggestion,
-          }}
-          renderSuggestionsContainer={options => (
-            <Paper {...options.containerProps} square>
-              {options.children}
-            </Paper>
-          )}
-        />
-        <button onClick = {this.searchItem} >Submit</button>
-        <div className={classes.carduh}>
-          {button}
-        </div>
 
-      </div>
-      </main>
-        <Footer />
-        </React.Fragment>
+        {/* <main className = {classes.content}> */}
+          {/* <div className={classes.toolbar} /> */}
+            <div className={classes.root}>
+            <Grid container spacing={8} alignItems= 'flex-end'>
+{/* SELECT CODE  */}
+            <Grid item lg ={3} >
+            <form className={classes.boot} autoComplete="off">
+              <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel
+                    ref={ref => {this.InputLabelRef = ref}}
+                    htmlFor="outlined-category-simple"
+                  >
+                  Search By:
+                  </InputLabel>
+                  <Select
+                    defaultValue = {30}
+                    value={this.state.category}
+                    onChange={this.handleSelectChange}
+                    input={
+                      <OutlinedInput
+                      labelWidth={this.state.labelWidth}
+                      name="category"
+                      id="outlined-category-simple"
+                      />
+                      }
+                    >
+                    <MenuItem value={10}>Approver</MenuItem>
+                    <MenuItem value={20}>Preparer</MenuItem>
+                    <MenuItem value={30}>Journal ID</MenuItem>
+                  </Select>
+                </FormControl>
+              </form>
+              </Grid>
+{/* AUTOSUGGEST CODE  */}
+              <Grid item lg ={6}>  
+              <Autosuggest
+                {...autosuggestProps}
+                inputProps={{
+                  classes,
+                  placeholder: 'Type your search input here!',
+                  value: this.state.single,
+                  onChange: this.handleAutoChange('single'),
+                }}
+                theme={{
+                  container: classes.container,
+                  suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                  suggestionsList: classes.suggestionsList,
+                  suggestion: classes.suggestion,
+                }}
+                renderSuggestionsContainer={options => (
+                  <Paper {...options.containerProps} square> {options.children} </Paper>
+                )}
+              />
+              </Grid>
+              <Grid item lg ={3}>  
+              <Button variant= 'contained' color= 'primary' onClick = {this.searchItem} >Submit</Button>
+              </Grid>
+          </Grid>
+              <div className={classes.carduh}> {button} </div>
+          </div>
+      {/* </main> */}
+      <Footer />
+      </React.Fragment>
           );
         }
       }
+
 Search.propTypes = {
   classes: PropTypes.object.isRequired,
 };

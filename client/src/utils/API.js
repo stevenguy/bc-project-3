@@ -5,9 +5,6 @@ export default {
   getTransactions: function() {
     return axios.get("/api/transactions");
   },
-  fuckMe: function(name) {
-    return axios.get("/api/transactions/preparer/" + name );
-  },
   // Gets the transaction with the given id
   getTransaction: function(id) {
     return axios.get("/api/transactions/" + id);
@@ -106,11 +103,20 @@ export default {
   comparemthsum: function() {
     return axios.get("/api/transactions/comparemthsum");
   },
-  getPreparer: function() {
+  preparerAutofill: function() {
     return axios.get("/api/transactions/preparer");
   },
-  //  handles approving journals
-  // approveJournal: function () {
-  //   return axios.get("/api/transactions");
-  // }
+  approverAutofill: function() {
+    return axios.get("/api/transactions/approver");
+  },
+  transByPreparer: function(name) {
+    return axios.get("/api/transactions/preparer/" + name );
+  },
+  transByApprover: function(name) {
+    return axios.get("/api/transactions/approver/" + name );
+  },
+  journalIdAutofill: function(name) {
+    return axios.get("/api/transactions/journal");
+  },
+  
 }

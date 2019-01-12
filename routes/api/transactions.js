@@ -6,12 +6,25 @@ router.route("/")
   .get(transactionsController.findAll)
   .post(transactionsController.create)
 
+// Finds Transaction by Preparer's name
 router.route("/preparer/:name")
-  .get(transactionsController.fuckMe)
+  .get(transactionsController.transByPreparer)
 
+// Finds Transaction by Approver's name
+router.route("/approver/:name")
+  .get(transactionsController.transByApprover)
+
+// Aggregate Preparer Data for Autofill Feature
 router.route("/preparer")
   .get(transactionsController.getPreparer)
-  .post(transactionsController.create)
+
+// Aggregate Approver Data for Autofill Feature
+router.route("/approver")
+  .get(transactionsController.getApprover)
+
+// Aggregate MongoId Data for Autofill feature
+router.route("/journal")
+  .get(transactionsController.getJournalId)
 
 // Aggregate Data by Description, Type, Year, Quarter, Month, and Amount  
 router.route("/reports")
