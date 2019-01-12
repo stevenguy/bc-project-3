@@ -260,7 +260,7 @@ class Acct extends Component {
         res.data.forEach(element => {
           acctdetails.push({
             journal_id: element._id.journal_id,
-            date: element._id.date,
+            date: new Date(element._id.date),
             account: element._id.account,
             description: element._id.description,
             type: element._id.type,
@@ -268,9 +268,9 @@ class Acct extends Component {
             memo: element._id.memo,
             detail: element._id.detail,
             preparer: element._id.preparer,
-            prepared_date: element._id.prepared_date,
+            prepared_date: new Date(element._id.prepared_date),
             approver: element._id.approver,
-            approved_date: element._id.approved_date,
+            approved_date: new Date(element._id.approved_date),
             year: element._id.year,
             quarter: element._id.quarter,
             amount: element.amount,
@@ -287,7 +287,7 @@ class Acct extends Component {
           if (element._id.quarter === this.state.quarter) {  
             acctdetails.push({
               journal_id: element._id.journal_id,
-              date: element._id.date,
+              date: new Date(element._id.date),
               account: element._id.account,
               description: element._id.description,
               type: element._id.type,
@@ -295,9 +295,9 @@ class Acct extends Component {
               memo: element._id.memo,
               detail: element._id.detail,
               preparer: element._id.preparer,
-              prepared_date: element._id.prepared_date,
+              prepared_date: new Date(element._id.prepared_date),
               approver: element._id.approver,
-              approved_date: element._id.approved_date,
+              approved_date: new Date(element._id.approved_date),
               year: element._id.year,
               quarter: element._id.quarter,
               amount: element.amount,
@@ -315,7 +315,7 @@ class Acct extends Component {
           if (element._id.month === this.state.month) {  
             acctdetails.push({
               journal_id: element._id.journal_id,
-              date: element._id.date,
+              date: new Date(element._id.date),
               account: element._id.account,
               description: element._id.description,
               type: element._id.type,
@@ -323,9 +323,9 @@ class Acct extends Component {
               memo: element._id.memo,
               detail: element._id.detail,
               preparer: element._id.preparer,
-              prepared_date: element._id.prepared_date,
+              prepared_date: new Date(element._id.prepared_date),
               approver: element._id.approver,
-              approved_date: element._id.approved_date,
+              approved_date: new Date(element._id.approved_date),
               year: element._id.year,
               quarter: element._id.quarter,
               month: element._id.month,
@@ -657,6 +657,7 @@ class Acct extends Component {
                 );
               }
           })}
+          {console.log(this.state.acctdetails)}
           {this.state.acctdetails.map((output, i) => {
             if (output.description === this.state.account 
             && output.year === this.state.years
@@ -674,7 +675,7 @@ class Acct extends Component {
                         <TableCell><b>Journal ID:</b> {output.journal_id}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell><b>Date:</b> {output.date}</TableCell>
+                        <TableCell><b>Date:</b> {output.date.toLocaleDateString('en-US')}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell><b>Account:</b> {output.account}</TableCell>
@@ -695,13 +696,13 @@ class Acct extends Component {
                         <TableCell><b>Preparer:</b> {output.preparer}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell><b>Prepared Date:</b> {output.prepared_date}</TableCell>
+                        <TableCell><b>Prepared Date:</b> {output.prepared_date.toLocaleDateString('en-US')}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell><b>Approver:</b> {output.approver}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell><b>Approved Date:</b> {output.approved_date}</TableCell>
+                        <TableCell><b>Approved Date:</b> {output.approved_date.toLocaleDateString('en-US')}</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
