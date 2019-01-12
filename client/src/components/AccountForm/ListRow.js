@@ -76,7 +76,6 @@ class ListRow extends Component {
                     />
                     {this.state.open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-                <Divider />
             </Paper>
         )
       }

@@ -89,6 +89,7 @@ const styles = theme => ({
 });
 
 var local = localStorage.getItem('user')
+let user = JSON.parse(local)
 
 class ResponsiveDrawer extends React.Component {
   state = {
@@ -120,8 +121,8 @@ class ResponsiveDrawer extends React.Component {
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
-          <Avatar alt="Login User" src="./images/1.png" className={classes.avatar} />
-          <Typography>user@email.com</Typography>
+          <Avatar alt="Login User" src={user.photoURL} className={classes.avatar} />
+          <Typography>{user.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>

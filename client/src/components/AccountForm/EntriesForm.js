@@ -53,7 +53,7 @@ class EntriesForm extends Component {
         <React.Fragment>
             <div>
                 {this.props.entries.map((entry, index) => (
-                    <Paper key={index}>
+                    <React.Fragment key={index}>
                     <div className={classes.root}>
                     <AccountForm
                         entries={this.props.entries}
@@ -147,7 +147,7 @@ class EntriesForm extends Component {
                     </div>
                 </div>
                 <Divider/>
-                </Paper>
+                </React.Fragment>
                 ))}
             <Fab size="small" color="primary" aria-label="Add" onClick={this.props.handleAdd} className={classes.margin}>
                 <AddIcon />

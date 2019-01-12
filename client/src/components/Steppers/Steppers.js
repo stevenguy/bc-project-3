@@ -22,7 +22,8 @@ const styles = theme => ({
   },
   space: {
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      marginTop: theme.spacing.unit
   }
 });
 
@@ -49,23 +50,6 @@ class Steppers extends React.Component {
         this.props.submitForm()
         this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
     } else {
-    //     if (this.props.isNew) {
-    //         if (this.props.newAccount.name && this.props.newAccount.number && this.props.newAccount.type) {
-    //             this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
-    //         }
-    //         else {
-    //             this.setState({isError: true, index: this.state.activeStep})
-    //         } 
-    //     } else if (this.props.isNew === false) {
-    //         if (this.props.account.name) {
-    //             this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
-    //         }
-    //         else {
-    //             this.setState({isError: true, index: this.state.activeStep})
-    //         } 
-    //     }
-
-    // } else {
         this.props.entries.every(entry => entry.description !== '' && entry.amount !== '' && entry.details !== '')
         ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
         : this.setState({isError: true, index: this.state.activeStep})
@@ -135,11 +119,11 @@ class Steppers extends React.Component {
         <React.Fragment>
           {this.state.activeStep === steps.length ? (
             <div>
-              <Typography className={classes.instructions}>Submitted!</Typography>
-              <Button className={classes.root} onClick={this.handleReset}>Input another entry</Button>
+              <Typography className={classes.instructions}>Journal has been submitted!</Typography>
+              <Button className={classes.root} onClick={this.handleReset}>Input another journal</Button>
             </div>
           ) : (
-            <form id='form1' onSubmit={this.handleNext}>
+            <form className={classes.instructions} id='form1' onSubmit={this.handleNext}>
               {this.getStepContent(activeStep)}
               <div className={classes.space}>
                 <Button
