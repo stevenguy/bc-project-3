@@ -96,14 +96,6 @@ const quarter = [
   }
 ];
 
-function ccyFormat(num) {
-  var nf = new Intl.NumberFormat();
-  if (num < 0 ) {
-  return `${nf.format(num.toFixed(2))}`;
-  }
-  return `${nf.format(num.toFixed(2))}`;
-}
-
 class IncomeQuarter extends Component {
 
   state = {
