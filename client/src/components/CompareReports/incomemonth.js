@@ -129,11 +129,6 @@ const month = [
   },
 ];
 
-function ccyFormat(num) {
-  var nf = new Intl.NumberFormat();
-  return `${nf.format(num.toFixed(2) * - 1)}`;
-}
-
 class IncomeMonth extends Component {
 
   state = {
@@ -168,6 +163,11 @@ class IncomeMonth extends Component {
 
   handleRun = () => {
 
+    function ccyFormat(num) {
+      var nf = new Intl.NumberFormat();
+      return `${nf.format(num.toFixed(2) * - 1)}`;
+    }
+
     if (this.state.month === 1 ) {
       API.monthly()
         .then(res => {
@@ -193,8 +193,6 @@ class IncomeMonth extends Component {
           res.data.forEach(element => {
             let currMonth = this.state.month
             let prevMonth = 12
-            console.log(currMonth)
-            console.log(prevMonth)
             let index = description.indexOf(element._id.description)
             if (element._id.month === currMonth && element._id.year === this.state.years) {
               currAmt[index] += element.amount 
@@ -208,9 +206,9 @@ class IncomeMonth extends Component {
             transactions.push({
               description: description[i],
               type: type[i],
-              month: [i],
-              prevAmt: prevAmt[i].toFixed(2),
-              currAmt: currAmt[i].toFixed(2),
+              month: month[i],
+              prevAmt: ccyFormat(prevAmt[i]),
+              currAmt: ccyFormat(currAmt[i]),
             })
           }
           this.setState({ transactions: transactions })
@@ -251,9 +249,9 @@ class IncomeMonth extends Component {
         for (let i = 0; i < type.length; i++) {
           typesum.push({
             type: type[i],
-            month: [i],
-            prevTotal: prevTotal[i].toFixed(2),
-            currTotal: currTotal[i].toFixed(2)
+            month: month[i],
+            prevTotal: ccyFormat(prevTotal[i]),
+            currTotal: ccyFormat(currTotal[i])
           })
         }
         this.setState({ typesum: typesum })
@@ -302,10 +300,10 @@ class IncomeMonth extends Component {
             transactions.push({
               description: description[i],
               type: type[i],
-              prevAmt: prevAmt[i].toFixed(2),
-              currAmt: currAmt[i].toFixed(2),
               year: year[i],
-              month: [i]
+              month: [i],
+              prevAmt: ccyFormat(prevAmt[i]),
+              currAmt: ccyFormat(currAmt[i]),
             })
           }
           this.setState({ transactions: transactions })
@@ -350,8 +348,8 @@ class IncomeMonth extends Component {
             type: type[i],
             year: year[i],
             month: [i],
-            prevTotal: prevTotal[i].toFixed(2),
-            currTotal: currTotal[i].toFixed(2)
+            prevTotal: ccyFormat(prevTotal[i]),
+            currTotal: ccyFormat(currTotal[i])
           })
         }
         this.setState({ typesum: typesum })

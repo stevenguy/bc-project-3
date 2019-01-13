@@ -108,6 +108,11 @@ class IncomeYear extends Component {
 
   handleRun = () => {
 
+    function ccyFormat(num) {
+      var nf = new Intl.NumberFormat();
+      return `${nf.format(num.toFixed(2))}`;
+    }
+
     API.yearly()
       .then(res => {
         let description = []
@@ -143,8 +148,8 @@ class IncomeYear extends Component {
           transactions.push({
             description: description[i],
             type: type[i],
-            prevAmt: prevAmt[i],
-            currAmt: currAmt[i]
+            prevAmt: ccyFormat(prevAmt[i] * - 1),
+            currAmt: ccyFormat(currAmt[i] * - 1),
           })
         }
         this.setState({ transactions: transactions })
@@ -183,8 +188,8 @@ class IncomeYear extends Component {
       for (let i = 0; i < type.length; i++) {
         typesum.push({
           type: type[i],
-          prevTotal: prevTotal[i],
-          currTotal: currTotal[i]
+          prevTotal: ccyFormat(prevTotal[i] * - 1),
+          currTotal: ccyFormat(currTotal[i] * - 1)
         })
       }
       this.setState({ typesum: typesum })
@@ -254,8 +259,8 @@ class IncomeYear extends Component {
                     return (
                       <TableRow key={i}>
                         <TableCell>{output.description}</TableCell>
-                        <TableCell align="right">{ccyFormat(output.prevAmt * - 1)}</TableCell>
-                        <TableCell align="right">{ccyFormat(output.currAmt * - 1)}</TableCell>
+                        <TableCell align="right">{output.prevAmt}</TableCell>
+                        <TableCell align="right">{output.currAmt}</TableCell>
                       </TableRow>
                     );
                   }
@@ -266,8 +271,8 @@ class IncomeYear extends Component {
                     return (
                       <TableRow key={i}>
                         <TableCell><b>TOTAL</b></TableCell>
-                        <TableCell align="right"><b>{ccyFormat(output.prevTotal * - 1)}</b></TableCell>
-                        <TableCell align="right"><b>{ccyFormat(output.currTotal * - 1)}</b></TableCell>
+                        <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                        <TableCell align="right"><b>{output.currTotal}</b></TableCell>
                       </TableRow>
                     );  
                   }
@@ -295,8 +300,8 @@ class IncomeYear extends Component {
                       return (
                         <TableRow key={i}>
                           <TableCell>{output.description}</TableCell>
-                          <TableCell align="right">{ccyFormat(output.prevAmt * - 1)}</TableCell>
-                          <TableCell align="right">{ccyFormat(output.currAmt * - 1)}</TableCell>
+                          <TableCell align="right">{output.prevAmt}</TableCell>
+                          <TableCell align="right">{output.currAmt}</TableCell>
                         </TableRow>
                       );
                     }
@@ -307,8 +312,8 @@ class IncomeYear extends Component {
                       return (
                         <TableRow key={i}>
                           <TableCell><b>TOTAL</b></TableCell>
-                          <TableCell align="right"><b>{ccyFormat(output.prevTotal * - 1)}</b></TableCell>
-                          <TableCell align="right"><b>{ccyFormat(output.currTotal * - 1)}</b></TableCell>
+                          <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                          <TableCell align="right"><b>{output.currTotal}</b></TableCell>
                         </TableRow>
                       );
                     }

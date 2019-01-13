@@ -129,14 +129,6 @@ const month = [
   },
 ];
 
-function ccyFormat(num) {
-  var nf = new Intl.NumberFormat();
-  if (num < 0 ) {
-  return `${nf.format(num.toFixed(2))}`;
-  }
-  return `${nf.format(num.toFixed(2))}`;
-}
-
 class BalanceMonth extends Component {
 
   state = {
@@ -168,8 +160,15 @@ class BalanceMonth extends Component {
     .then(res => this.setState({ year: res.data }))
     .catch(err => console.log(err));
   }
+  
+  
 
   handleRun = () => {
+    
+    function ccyFormat(num) {
+      var nf = new Intl.NumberFormat();
+      return `${nf.format(num.toFixed(2))}`;
+    }
 
     if (this.state.month === 1 ) {
       API.monthly()
@@ -209,9 +208,9 @@ class BalanceMonth extends Component {
             transactions.push({
               description: description[i],
               type: type[i],
-              month: [i],
-              prevAmt: prevAmt[i].toFixed(2),
-              currAmt: currAmt[i].toFixed(2),
+              month: month[i],
+              prevAmt: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(prevAmt[i] * - 1) : ccyFormat(prevAmt[i]),
+              currAmt: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(currAmt[i] * - 1) : ccyFormat(currAmt[i])
             })
           }
           this.setState({ transactions: transactions })
@@ -252,9 +251,9 @@ class BalanceMonth extends Component {
         for (let i = 0; i < type.length; i++) {
           typesum.push({
             type: type[i],
-            month: [i],
-            prevTotal: prevTotal[i].toFixed(2),
-            currTotal: currTotal[i].toFixed(2)
+            month: month[i],
+            prevTotal: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(prevTotal[i] * - 1) : ccyFormat(prevTotal[i]),
+            currTotal: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(currTotal[i] * - 1) : ccyFormat(currTotal[i])
           })
         }
         this.setState({ typesum: typesum })
@@ -288,8 +287,6 @@ class BalanceMonth extends Component {
           res.data.forEach(element => {
             let currMonth = this.state.month
             let prevMonth = this.state.month - 1
-            console.log(currMonth)
-            console.log(prevMonth)
             let index = description.indexOf(element._id.description)
             if (element._id.month === currMonth && element._id.year === this.state.years) {
               currAmt[index] += element.amount 
@@ -303,10 +300,10 @@ class BalanceMonth extends Component {
             transactions.push({
               description: description[i],
               type: type[i],
-              prevAmt: prevAmt[i].toFixed(2),
-              currAmt: currAmt[i].toFixed(2),
               year: year[i],
-              month: [i]
+              month: month[i],
+              prevAmt: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(prevAmt[i] * - 1) : ccyFormat(prevAmt[i]),
+              currAmt: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(currAmt[i] * - 1) : ccyFormat(currAmt[i])
             })
           }
           this.setState({ transactions: transactions })
@@ -350,9 +347,9 @@ class BalanceMonth extends Component {
           typesum.push({
             type: type[i],
             year: year[i],
-            month: [i],
-            prevTotal: prevTotal[i].toFixed(2),
-            currTotal: currTotal[i].toFixed(2)
+            month: month[i],
+            prevTotal: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(prevTotal[i] * - 1) : ccyFormat(prevTotal[i]),
+            currTotal: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(currTotal[i] * - 1) : ccyFormat(currTotal[i])
           })
         }
         this.setState({ typesum: typesum })
@@ -459,8 +456,8 @@ class BalanceMonth extends Component {
                     return (
                       <TableRow key={i}>
                         <TableCell><b>TOTAL</b></TableCell>
-                        <TableCell align="right">{output.prevTotal}</TableCell>
-                        <TableCell align="right">{output.currTotal}</TableCell>
+                        <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                        <TableCell align="right"><b>{output.currTotal}</b></TableCell>
                       </TableRow>
                     );  
                   }
@@ -500,8 +497,8 @@ class BalanceMonth extends Component {
                       return (
                         <TableRow key={i}>
                           <TableCell><b>TOTAL</b></TableCell>
-                          <TableCell align="right">{output.prevTotal}</TableCell>
-                          <TableCell align="right">{output.currTotal}</TableCell>
+                          <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                          <TableCell align="right"><b>{output.currTotal}</b></TableCell>
                         </TableRow>
                       );
                     }
@@ -541,8 +538,8 @@ class BalanceMonth extends Component {
                       return (
                         <TableRow key={i}>
                           <TableCell><b>TOTAL</b></TableCell>
-                          <TableCell align="right">{output.prevTotal}</TableCell>
-                          <TableCell align="right">{output.currTotal}</TableCell>
+                          <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                          <TableCell align="right"><b>{output.currTotal}</b></TableCell>
                         </TableRow>
                       );  
                     }
