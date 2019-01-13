@@ -6,5 +6,7 @@ router.route('/').get(usersController.getUser)
 .post(usersController.authUser)
 .put(usersController.updateUser);
 
+router.route('/login').post(usersController.authPassword)
+
 
 module.exports = router;

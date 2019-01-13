@@ -22,6 +22,8 @@ const styles = theme => ({
   }
 });
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 class Entries extends Component {
     state = {
       //State goes here
@@ -32,6 +34,7 @@ class Entries extends Component {
     }
 
     componentDidMount() {
+      console.log(user)
       API.getAccount()
       .then(res => {
         this.setState({ accounts: res.data })

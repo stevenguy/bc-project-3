@@ -11,7 +11,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import StatusIcon from '@material-ui/icons/ThumbsUpDown';
 import CreateIcon from '@material-ui/icons/Create';
 import SettingsIcon from '@material-ui/icons/Settings';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -89,6 +89,7 @@ const styles = theme => ({
 });
 
 var local = localStorage.getItem('user')
+let user = JSON.parse(local)
 
 class ResponsiveDrawer extends React.Component {
   state = {
@@ -120,8 +121,8 @@ class ResponsiveDrawer extends React.Component {
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
-          <Avatar alt="Login User" src="./images/1.png" className={classes.avatar} />
-          <Typography>user@email.com</Typography>
+          <Avatar alt="Login User" src={user.photoURL} className={classes.avatar} />
+          <Typography>{user.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
@@ -146,7 +147,7 @@ class ResponsiveDrawer extends React.Component {
                : text === "Entries"
                ? <CreateIcon />
                : text === "Upload"
-               ? <AttachFileIcon />
+               ? <CloudUploadIcon />
                : text === "Status"
                ? <StatusIcon />
                : text === "Search"
