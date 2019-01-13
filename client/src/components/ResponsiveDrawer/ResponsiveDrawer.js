@@ -33,9 +33,6 @@ import firebase, { auth, provider } from '../../utils/firebase.js';
 import { Redirect } from "react-router";
 
 
-
-
-
 const drawerWidth = 180;
 
 const styles = theme => ({
@@ -85,6 +82,9 @@ const styles = theme => ({
   brand: {
     margin: "0",
     textAlign: 'center'
+  },
+  userName: {
+    alignSelf: 'center'
   }
 });
 
@@ -122,7 +122,7 @@ class ResponsiveDrawer extends React.Component {
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
           <Avatar alt="Login User" src={user.photoURL} className={classes.avatar} />
-          <Typography>{user.name}</Typography>
+          <Typography className={classes.userName}>{user.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
@@ -222,10 +222,6 @@ class ResponsiveDrawer extends React.Component {
 
 ResponsiveDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  // Injected by the documentation to work in an iframe.
-  // You won't need it on your project.
-  container: PropTypes.object,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);

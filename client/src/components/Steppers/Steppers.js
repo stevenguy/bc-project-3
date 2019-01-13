@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {EntriesForm, SubmitForm} from "../AccountForm";
 import Chip from '@material-ui/core/Chip';
-
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   root: {
@@ -69,7 +69,7 @@ class Steppers extends React.Component {
         this.props.entries.length >1 &&
         this.props.entries.every(entry => entry.description !== '' && entry.amount !== '' && entry.details !== '')
         ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null, errorMsg: ""})
-        : this.setState({isError: true, index: this.state.activeStep, errorMsg: 'Please fill out required fields.'})
+        : this.setState({isError: true, index: this.state.activeStep, errorMsg: 'Please fill out all required fields.'})
     }
   };
 
@@ -120,19 +120,21 @@ class Steppers extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Stepper activeStep={activeStep} alternativeLabel>
-          {steps.map((label, index) => {
-            const labelProps = {};
-            if (this.isStepFailed(index)) {
-                labelProps.error = true;
-              }
-            return (
-              <Step key={label}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
+        <Paper>
+          <Stepper activeStep={activeStep} alternativeLabel>
+            {steps.map((label, index) => {
+              const labelProps = {};
+              if (this.isStepFailed(index)) {
+                  labelProps.error = true;
+                }
+              return (
+                <Step key={label}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+        </Paper>
         <React.Fragment>
           {this.state.activeStep === steps.length ? (
             <div>
