@@ -120,6 +120,7 @@ class Entries extends Component {
       })
       .then(() => API.getAccount())
       .then((res) => {
+        API.notification("New Journal Added!")
         this.setState({
           accounts: res.data,
           entries: [{date: new Date(), description:'', memo:'', amount:'', details:'', account:{_id:'', name:'', number:'', type:''}}],
