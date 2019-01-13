@@ -5,7 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -52,7 +51,7 @@ class ListRow extends Component {
                     <Avatar>{this.props.entry.details === "Debit" ? 'DR' : 'CR'}</Avatar>
                     </ListItemAvatar>
                     <ListItemText
-                    primary={"Amount: $" + this.props.entry.amount}
+                    primary={"Amount: $ " + parseFloat(this.props.entry.amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
                     secondary={
                         <React.Fragment>
                         <Typography component="span" className={classes.inline} color="textPrimary">

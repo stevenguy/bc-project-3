@@ -7,6 +7,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {EntriesForm, SubmitForm} from "../AccountForm";
+import Chip from '@material-ui/core/Chip';
 
 
 const styles = theme => ({
@@ -24,6 +25,11 @@ const styles = theme => ({
       display: 'flex',
       justifyContent: 'space-between',
       marginTop: theme.spacing.unit
+  },
+  chip: {
+    margin: theme.spacing.unit,
+    display: 'flex',
+    justifyContent: 'center'
   }
 });
 
@@ -36,6 +42,7 @@ class Steppers extends React.Component {
     activeStep: 0,
     isError: false,
     index: null,
+    errorMsg: ''
   };
 
     isStepFailed = (step) => {
@@ -47,18 +54,28 @@ class Steppers extends React.Component {
     event.preventDefault()
 
     if (this.state.activeStep === 1) {
-        this.props.submitForm()
-        this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+        let total = 0
+        this.props.entries.map((entry) => {
+          entry.details === "Debit" ? total += parseFloat(entry.amount) : total -= parseFloat(entry.amount)
+        })
+        console.log(total)
+        if (total === 0) {
+          this.props.submitForm()
+          this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
+        } else {
+          this.setState({isError: true, index: this.state.activeStep, errorMsg: "Unbalanced Journal, Please review."})
+        }
     } else {
+        this.props.entries.length >1 &&
         this.props.entries.every(entry => entry.description !== '' && entry.amount !== '' && entry.details !== '')
-        ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})
-        : this.setState({isError: true, index: this.state.activeStep})
+        ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null, errorMsg: ""})
+        : this.setState({isError: true, index: this.state.activeStep, errorMsg: 'Please fill out required fields.'})
     }
   };
 
   handleBack = () => {
     this.setState(state => ({
-      activeStep: state.activeStep - 1,
+      activeStep: state.activeStep - 1, errorMsg: "", isError: false, index: null
     }));
   };
 
@@ -125,6 +142,26 @@ class Steppers extends React.Component {
           ) : (
             <form className={classes.instructions} id='form1' onSubmit={this.handleNext}>
               {this.getStepContent(activeStep)}
+              <div className={classes.root}>
+              {this.props.entries.length < 2 
+              ? <Chip
+              label="Minimum of 2 entries"
+              className={classes.chip}
+              color="secondary"
+              variant="outlined"
+              /> 
+              : null
+              }
+              {this.state.errorMsg 
+                ? <Chip
+                label={this.state.errorMsg}
+                className={classes.chip}
+                color="secondary"
+                variant="outlined"
+                /> 
+                : null
+                }
+              </div>
               <div className={classes.space}>
                 <Button
                   disabled={activeStep === 0}
@@ -133,6 +170,7 @@ class Steppers extends React.Component {
                 >
                   Back
                 </Button>
+                
                 <Button variant="contained" type='submit' form='form1' color="primary" onClick={this.handleNext}>
                   {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                 </Button>

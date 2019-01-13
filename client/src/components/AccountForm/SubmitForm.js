@@ -49,7 +49,7 @@ class SubmitForm extends Component {
             matches ? (
               <List className={classes.root}>
                 {this.props.entries.map((entry, index) => (
-                  <React.Fragment>
+                  <React.Fragment key={index}>
                     <ListRow entry={entry} index={index} />
                     <Divider />
                   </React.Fragment>
@@ -81,7 +81,7 @@ class SubmitForm extends Component {
                           <TableCell align="justify">{entry.description}</TableCell>
                           <TableCell align="justify">{entry.memo}</TableCell>
                           <TableCell align="justify">{entry.details}</TableCell>
-                          <TableCell align="justify">{entry.amount}</TableCell>
+                          <TableCell align="justify">{'$ ' + parseFloat(entry.amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</TableCell>
                       </TableRow>
                       )
                   )}
