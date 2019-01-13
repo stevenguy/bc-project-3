@@ -73,14 +73,6 @@ const styles = theme => ({
   },
 });
 
-function ccyFormat(num) {
-  var nf = new Intl.NumberFormat();
-  if (num < 0 ) {
-  return `${nf.format(num.toFixed(2))}`;
-  }
-  return `${nf.format(num.toFixed(2))}`;
-}
-
 class BalanceYear extends Component {
 
   state = {
@@ -108,40 +100,90 @@ class BalanceYear extends Component {
 
   handleRun = () => {
 
-    API.compareyear()
+    function ccyFormat(num) {
+      var nf = new Intl.NumberFormat();
+      return `${nf.format(num.toFixed(2))}`;
+    }
+
+    API.yearly()
       .then(res => {
+        let description = []
+        let prevAmt = []
+        let currAmt = []
         let transactions = []
+        let type = []
         res.data.forEach(element => {
-          transactions.push({
-            description: element._id.description,
-            type: element._id.type,
-            year: element._id.year,
-            yearOne: element.yearOne,
-            yearTwo: element.yearTwo,
-            yearThree: element.yearThree,
-            yearFour: element.yearFour,
-            yearFive: element.yearFive,
-          })
+          if (description.indexOf(element._id.description) > - 1) {
+            let a
+          } else {
+            description.push(element._id.description)
+            type.push(element._id.type)
+          }
         })
+        for (let i = 0; i < description.length; i++) {
+          prevAmt.push(0)
+          currAmt.push(0)
+        }
+        res.data.forEach(element => {
+          let currYear = this.state.years
+          let prevYear = this.state.years - 1
+          let index = description.indexOf(element._id.description)
+          if (element._id.year === currYear) {
+            currAmt[index] += element.amount 
+          } else if (element._id.year === prevYear) {
+            prevAmt[index] += element.amount 
+          } else {
+            return null
+          }
+        })
+        for (let i = 0; i < description.length; i++) {
+          transactions.push({
+            description: description[i],
+            type: type[i],
+            prevAmt: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(prevAmt[i] * - 1) : ccyFormat(prevAmt[i]),
+            currAmt: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(currAmt[i] * - 1) : ccyFormat(currAmt[i])
+          })
+        }
         this.setState({ transactions: transactions })
       })
       .catch(err => console.log(err));
-      
     
-    API.compareyrsum()
+    API.typeyear()
     .then(res => {
+      let prevTotal = []
+      let currTotal = []
       let typesum = []
+      let type = []
       res.data.forEach(element => {
-        typesum.push({
-          type: element._id.type,
-          year: element._id.year,
-          yearOne: element.yearOne,
-          yearTwo: element.yearTwo,
-          yearThree: element.yearThree,
-          yearFour: element.yearFour,
-          yearFive: element.yearFive,
-        })
+        if (type.indexOf(element._id.type) > - 1) {
+          let a
+        } else {
+          type.push(element._id.type)
+        }
       })
+      for (let i = 0; i < type.length; i++) {
+        prevTotal.push(0)
+        currTotal.push(0)
+      }
+      res.data.forEach(element => {
+        let currYear = this.state.years
+        let prevYear = this.state.years - 1
+        let index = type.indexOf(element._id.type)
+        if (element._id.year === currYear) {
+          currTotal[index] += element.amount 
+        } else if (element._id.year === prevYear) {
+          prevTotal[index] += element.amount 
+        } else {
+          return null
+        }
+      })
+      for (let i = 0; i < type.length; i++) {
+        typesum.push({
+          type: type[i],
+          prevTotal: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(prevTotal[i] * - 1) : ccyFormat(prevTotal[i]),
+          currTotal: type[i] === "Liability" || type[i] === "Retained Earnings" ? ccyFormat(currTotal[i] * - 1) : ccyFormat(currTotal[i])
+        })
+      }
       this.setState({ typesum: typesum })
     })
     .catch(err => console.log(err));
@@ -152,7 +194,7 @@ class BalanceYear extends Component {
     const { classes } = this.props;
 
     return (
-
+      
       <React.Fragment>
       <ResponsiveDrawer />
       <div style={ { height: 10 } }></div>
@@ -188,644 +230,128 @@ class BalanceYear extends Component {
       <div style={ { height: 10 } }></div>
       <React.Fragment>
         <Table>
-            {(() => {
-              switch(this.state.years) {
-                case 2017: 
+          <Paper>
+            <Table>
+              <TableHead>
+                <TableRow className={classes.head}>
+                  <TableCell><b>ASSET</b></TableCell>
+                  <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                  <TableCell align="right"><b>{this.state.years}</b></TableCell>
+                </TableRow>
+              </TableHead>
+            </Table>
+            <Table>
+              <TableBody>
+              {this.state.transactions
+                .filter(output => output.type === 'Assets')
+                .map((output, i) => {
                   return (
-                    <React.Fragment>
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                          {this.state.transactions
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
-                                </TableRow>
-                              );
-                            }
-                          )}
-                          {this.state.typesum
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
-                                </TableRow>
-                              );  
-                              }
-                          )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Liabilities */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
-                                  </TableRow>
-                                );
-                                }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
-                                  </TableRow>
-                                );
-                                }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Retained Earnings */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
-                                  </TableRow>
-                                );  
-                                }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{this.state.years - 1 === output.yearOne ? ccyFormat(output.yearOne) : 0}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
-                                  </TableRow>
-                                );  
-                                }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                    </React.Fragment>
+                    <TableRow key={i}>
+                      <TableCell>{output.description}</TableCell>
+                      <TableCell align="right">{output.prevAmt}</TableCell>
+                      <TableCell align="right">{output.currAmt}</TableCell>
+                    </TableRow>
                   );
-                case 2018: 
+                }
+              )}
+              {this.state.typesum
+                .filter(output => output.type === 'Assets')
+                .map((output, i) => {
                   return (
-                    <React.Fragment>
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                          {this.state.transactions
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
-                                </TableRow>
-                              );
-                            }
-                          )}
-                          {this.state.typesum
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
-                                </TableRow>
-                              );  
-                              }
-                          )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Liabilities */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
-                                  </TableRow>
-                                );
-                                }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
-                                  </TableRow>
-                                );
-                                }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Retained Earnings */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearOne)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
-                                  </TableRow>
-                                );  
-                                }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearOne)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
-                                  </TableRow>
-                                );  
-                                }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                    </React.Fragment>
-                  );
-                case 2019: 
-                  return (
-                    <React.Fragment>
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                          {this.state.transactions
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
-                                </TableRow>
-                              );
-                            }
-                          )}
-                          {this.state.typesum
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
-                                </TableRow>
-                              );  
-                            }
-                          )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Liabilities */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
-                                  </TableRow>
-                                );
-                              }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
-                                  </TableRow>
-                                );
-                              }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Retained Earnings */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearTwo)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
-                                  </TableRow>
-                                );  
-                                }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearTwo)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
-                                  </TableRow>
-                                );  
-                                }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                    </React.Fragment>
-                  );
-                case 2020: 
-                  return (
-                    <React.Fragment>
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                          {this.state.transactions
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
-                                </TableRow>
-                              );
-                            }
-                          )}
-                          {this.state.typesum
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
-                                </TableRow>
-                              );  
-                            }
-                          )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Liabilities */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
-                                  </TableRow>
-                                );
-                              }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
-                                  </TableRow>
-                                );
-                              }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Retained Earnings */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearThree)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
-                                  </TableRow>
-                                );  
-                              }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearThree)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
-                                  </TableRow>
-                                );  
-                              }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                    </React.Fragment>
-                  );
-                  case 2021: 
-                  return (
-                    <React.Fragment>
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>ASSET</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                          {this.state.transactions
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell>{output.description}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
-                                  <TableCell align="right">{ccyFormat(output.yearFive)}</TableCell>
-                                </TableRow>
-                              );
-                            }
-                          )}
-                          {this.state.typesum
-                            .filter(output => output.type === 'Assets')
-                            .map((output, i) => {
-                              return (
-                                <TableRow key={i}>
-                                  <TableCell><b>TOTAL</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
-                                  <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
-                                </TableRow>
-                              );  
-                            }
-                          )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Liabilities */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>LIABILITIES</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearFive)}</TableCell>
-                                  </TableRow>
-                                );
-                              }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Liability')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
-                                  </TableRow>
-                                );
-                              }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                      <div style={ { height: 10 } }></div>
-                      {/* Retained Earnings */}
-                      <Paper>
-                        <Table>
-                          <TableHead>
-                            <TableRow className={classes.head}>
-                              <TableCell><b>RETAINED EARNINGS</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
-                              <TableCell align="right"><b>{this.state.years}</b></TableCell>
-                            </TableRow>
-                          </TableHead>
-                        </Table>
-                        <Table>
-                          <TableBody>
-                            {this.state.transactions
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell>{output.description}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearFour)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(output.yearFive)}</TableCell>
-                                  </TableRow>
-                                );  
-                              }
-                            )}
-                            {this.state.typesum
-                              .filter(output => output.type === 'Retained Earnings')
-                              .map((output, i) => {
-                                return (
-                                  <TableRow key={i}>
-                                    <TableCell><b>TOTAL</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearFour)}</b></TableCell>
-                                    <TableCell align="right"><b>{ccyFormat(output.yearFive)}</b></TableCell>
-                                  </TableRow>
-                                );  
-                              }
-                            )}
-                          </TableBody>
-                        </Table>
-                      </Paper>
-                    </React.Fragment>
+                    <TableRow key={i}>
+                      <TableCell><b>TOTAL</b></TableCell>
+                      <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                      <TableCell align="right"><b>{output.currTotal}</b></TableCell>
+                    </TableRow>
                   );  
-                default:
-                  return null;
-              }
-            })()}  
+                  }
+              )}
+              </TableBody>
+            </Table>
+          </Paper>
+          <div style={ { height: 10 } }></div>
+          {/* Liabilities */}
+          <Paper>
+            <Table>
+              <TableHead>
+                <TableRow className={classes.head}>
+                  <TableCell><b>LIABILITIES</b></TableCell>
+                  <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                  <TableCell align="right"><b>{this.state.years}</b></TableCell>
+                </TableRow>
+              </TableHead>
+            </Table>
+            <Table>
+              <TableBody>
+                {this.state.transactions
+                  .filter(output => output.type === 'Liability')
+                  .map((output, i) => {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>{output.description}</TableCell>
+                        <TableCell align="right">{output.prevAmt}</TableCell>
+                        <TableCell align="right">{output.currAmt}</TableCell>
+                      </TableRow>
+                    );
+                    }
+                )}
+                {this.state.typesum
+                  .filter(output => output.type === 'Liability')
+                  .map((output, i) => {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell><b>TOTAL</b></TableCell>
+                        <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                        <TableCell align="right"><b>{output.currTotal}</b></TableCell>
+                      </TableRow>
+                    );
+                    }
+                )}
+              </TableBody>
+            </Table>
+          </Paper>
+          <div style={ { height: 10 } }></div>
+          {/* Retained Earnings */}
+          <Paper>
+            <Table>
+              <TableHead>
+                <TableRow className={classes.head}>
+                  <TableCell><b>RETAINED EARNINGS</b></TableCell>
+                  <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
+                  <TableCell align="right"><b>{this.state.years}</b></TableCell>
+                </TableRow>
+              </TableHead>
+            </Table>
+            <Table>
+              <TableBody>
+                {this.state.transactions
+                  .filter(output => output.type === 'Retained Earnings')
+                  .map((output, i) => {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>{output.description}</TableCell>
+                        <TableCell align="right">{output.prevAmt}</TableCell>
+                        <TableCell align="right">{output.currAmt}</TableCell>
+                      </TableRow>
+                    );  
+                    }
+                )}
+                {this.state.typesum
+                  .filter(output => output.type === 'Retained Earnings')
+                  .map((output, i) => {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell><b>TOTAL</b></TableCell>
+                        <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                        <TableCell align="right"><b>{output.currTotal}</b></TableCell>
+                      </TableRow>
+                    );  
+                    }
+                )}
+              </TableBody>
+            </Table>
+          </Paper>
         </Table>
-        
       </React.Fragment>
       <Footer />
       </React.Fragment>

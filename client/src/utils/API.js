@@ -36,6 +36,10 @@ export default {
   getJournals: function() {
     return axios.get('/api/journals')
   },
+  // sums data from the database (month)
+  monthly: function() {
+    return axios.get("/api/transactions/monthly");
+  },
   // sums data from the database (quarterly)
   quarterly: function() {
     return axios.get("/api/transactions/quarterly");
@@ -51,10 +55,6 @@ export default {
   // Pulls all the accounts from the database
   accounts: function() {
     return axios.get("/api/transactions/accounts");
-  },
-  // sums data from the database (month)
-  reports: function() {
-    return axios.get("/api/transactions/reports");
   },
   // Pulls data by type and year
   typeyear: function() {
@@ -80,29 +80,29 @@ export default {
   acctmonth: function() {
     return axios.get("/api/transactions/acctmonth");
   },
-  // sums data by account details and month
-  compareyear: function() {
-    return axios.get("/api/transactions/compareyear");
-  },
-  // sums data by account details and month
-  comparequarter: function() {
-    return axios.get("/api/transactions/comparequarter");
-  },
-  // sums data by account details and month
-  comparemonth: function() {
-    return axios.get("/api/transactions/comparemonth");
-  },
-  compareyrsum: function() {
-    return axios.get("/api/transactions/compareyrsum");
-  },
-  // sums data by account details and month
-  compareqtrsum: function() {
-    return axios.get("/api/transactions/compareqtrsum");
-  },
-  // sums data by account details and month
-  comparemthsum: function() {
-    return axios.get("/api/transactions/comparemthsum");
-  },
+  // // sums data by account details and month
+  // compareyear: function() {
+  //   return axios.get("/api/transactions/compareyear");
+  // },
+  // // sums data by account details and month
+  // comparequarter: function() {
+  //   return axios.get("/api/transactions/comparequarter");
+  // },
+  // // sums data by account details and month
+  // comparemonth: function() {
+  //   return axios.get("/api/transactions/comparemonth");
+  // },
+  // compareyrsum: function() {
+  //   return axios.get("/api/transactions/compareyrsum");
+  // },
+  // // sums data by account details and month
+  // compareqtrsum: function() {
+  //   return axios.get("/api/transactions/compareqtrsum");
+  // },
+  // // sums data by account details and month
+  // comparemthsum: function() {
+  //   return axios.get("/api/transactions/comparemthsum");
+  // },
   preparer: function() {
     return axios.get("/api/transactions/preparer")
   }
