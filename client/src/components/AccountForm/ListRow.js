@@ -48,7 +48,9 @@ class ListRow extends Component {
             <Paper>
                 <ListItem button onClick={this.handleClick} key={this.props.index} alignItems="flex-start">
                     <ListItemAvatar>
-                    <Avatar>{this.props.entry.details === "Debit" ? 'DR' : 'CR'}</Avatar>
+                    {this.props.entry.details === "Debit" 
+                    ? <Avatar style={{ backgroundColor: 'green' }}>DR</Avatar>
+                    : <Avatar style={{ backgroundColor: 'red' }}>CR</Avatar>}
                     </ListItemAvatar>
                     <ListItemText
                     primary={"Amount: $ " + parseFloat(this.props.entry.amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}
