@@ -116,7 +116,8 @@ const styles = theme => ({
      lineText: { 
          color: 'white',
          padding: '0 10px',
-         backgroundColor: "rgb(46, 50, 68)"
+         backgroundColor: "rgb(46, 50, 68)",
+         fontFamily: "Roboto, Helvetica, Arial, sans-serif"
      },
     breakPoints: {
         [theme.breakpoints.down('sm')]: {
