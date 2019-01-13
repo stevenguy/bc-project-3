@@ -140,8 +140,9 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>
         {this.state.menuArr.map(text => (
-             <NavLink key={text} to={text}>
-             <ListItem button>
+             <NavLink exact={true} style={{ textDecoration: 'none' }} key={text} to={text}>
+             <ListItem
+              button>
                <ListItemIcon>{text === "Dashboard" 
                ? <DashboardIcon /> 
                : text === "Entries"
