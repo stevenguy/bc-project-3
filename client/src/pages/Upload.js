@@ -150,8 +150,6 @@ class Upload extends Component {
             <ResponsiveDrawer />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-            {/* <div style={{ flexGrow: 1}}> */}
-                <paper>
                     <Grid   container 
                             direction="column"
                             justify="center"
@@ -240,8 +238,6 @@ class Upload extends Component {
                             </Grid>
                         </Paper>
                     </Grid>
-                </paper>
-            {/* </div> */}
         </main>
         <Footer /> 
         </React.Fragment>

@@ -36,6 +36,10 @@ export default {
   getJournals: function() {
     return axios.get('/api/journals')
   },
+  // sums data from the database (month)
+  monthly: function() {
+    return axios.get("/api/transactions/monthly");
+  },
   // sums data from the database (quarterly)
   quarterly: function() {
     return axios.get("/api/transactions/quarterly");
@@ -51,10 +55,6 @@ export default {
   // Pulls all the accounts from the database
   accounts: function() {
     return axios.get("/api/transactions/accounts");
-  },
-  // sums data from the database (month)
-  reports: function() {
-    return axios.get("/api/transactions/reports");
   },
   // Pulls data by type and year
   typeyear: function() {
@@ -117,6 +117,5 @@ export default {
   },
   journalIdAutofill: function(name) {
     return axios.get("/api/transactions/journal");
-  },
-  
+  }
 }

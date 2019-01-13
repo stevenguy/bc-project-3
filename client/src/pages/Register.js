@@ -36,6 +36,9 @@ const styles = theme => ({
     },
     card: {
         height: "80%",
+        [theme.breakpoints.down('sm')]: {
+            height: '100%',
+          },
     },
     brand: {
         backgroundColor: "rgb(229, 115, 106)",
@@ -63,8 +66,8 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        //flexWrap: 'wrap',
-        display: 'block',
+        flexWrap: 'wrap',
+        display: 'flex',
         width: '100%',
         color: 'white'
     },
@@ -106,6 +109,30 @@ const styles = theme => ({
         margin: "8px 8px 8px 8px",
         width: "18px",
         height: "18px",
+    },
+    line: {
+        width: '100%', 
+        textAlign: 'center', 
+        borderBottom: '1px solid white', 
+        lineHeight: '0.1em',
+        margin: '10px 0 20px'
+     },
+     lineText: { 
+         color: 'white',
+         padding: '0 10px',
+         backgroundColor: "rgb(46, 50, 68)",
+         fontFamily: "Roboto, Helvetica, Arial, sans-serif"
+     },
+    breakPoints: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+          },
+    },
+    mobileLogo: {
+        display: 'none',
+        [theme.breakpoints.down('sm')]: {
+            display: 'block',
+          },
     }
 
 });
@@ -198,129 +225,152 @@ class Register extends Component {
                 {this.state.registered ? <Redirect to={{ pathname: '/' }} /> :
                     <Grid
                         container
+                        className={classes.login}
                         justify="center"
                         alignItems='center'
                     >
-
-                        <form className={styles.container}>
-
-                            <TextField
-                                id="Username-input"
-                                label="Email"
-                                className={styles.textField}
-                                type="Username"
-                                name="username"
-                                margin="normal"
-                                variant="outlined"
-                                value={this.state.currentAccount ? this.state.currentAccount.email : this.state.email}
-                                onChange={this.handleChange('email')}
-                                InputLabelProps={{
-                                    classes: {
-                                        root: styles.cssLabel,
-                                        focused: styles.cssFocused,
-                                    },
-                                }}
-                                InputProps={{
-                                    classes: {
-                                        input: styles.whiteText,
-                                        root: styles.cssOutlinedInput,
-                                        focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
-                                    }
-                                }}
-                            />
-                            <TextField
-                                id="outlined-adornment-password"
-                                className={classNames(styles.margin, styles.textField)}
-                                variant="outlined"
-                                type={this.state.showPassword ? 'text' : 'password'}
-                                label="Password"
-                                value={this.state.password}
-                                onChange={this.handleChange('password')}
-                                InputLabelProps={{
-                                    classes: {
-                                        root: styles.cssLabel,
-                                        focused: styles.cssFocused,
-                                    },
-                                }}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="Toggle password visibility"
-                                                onClick={this.handleClickShowPassword}
-                                                className={styles.whiteText}
-                                            >
-                                                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                    classes: {
-                                        input: styles.whiteText,
-                                        root: styles.cssOutlinedInput,
-                                        focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
-                                    },
-                                }}
-                            />
-
-
-                            <TextField
-                                id="Name-input"
-                                label="Full Name"
-                                className={styles.textField}
-                                type="Name"
-                                name="name"
-                                margin="normal"
-                                variant="outlined"
-                                value={this.state.currentAccount ? this.state.currentAccount.name : this.state.name}
-                                onChange={this.handleChange('name')}
-                                InputLabelProps={{
-                                    classes: {
-                                        root: styles.cssLabel,
-                                        focused: styles.cssFocused,
-                                    },
-                                }}
-                                InputProps={{
-                                    classes: {
-                                        input: styles.whiteText,
-                                        root: styles.cssOutlinedInput,
-                                        focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
-                                    }
-                                }}
-                            />
-
-                            <TextField
-                                id="photo-input"
-                                label="Photo URL"
-                                className={styles.textField}
-                                type="Text"
-                                name="url"
-                                margin="normal"
-                                variant="outlined"
-                                value={this.state.newURL}
-                                onChange={this.handleChange('newURL')}
-                                InputLabelProps={{
-                                    classes: {
-                                        root: styles.cssLabel,
-                                        focused: styles.cssFocused,
-                                    },
-                                }}
-                                InputProps={{
-                                    classes: {
-                                        input: styles.whiteText,
-                                        root: styles.cssOutlinedInput,
-                                        focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
-                                    }
-                                }}
-                            />
-
-                            <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={styles.button}>
-                                Register
-                </Button>
-                        </form>
+                        <Grid item className={classes.card + " " + classes.breakPoints} md={4}>
+                            <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
+                                <div className={classes.flex}>
+                                    <Typography color='inherit' variant="h1" component="h1">
+                                        Logo Here
+                                    </Typography>
+                                    <Typography color='inherit' variant='h3' component="h3">
+                                        Web Accountant
+                                    </Typography>
+                                </div>
+                            </Paper>
+                        </Grid>
+                        <Grid item className={classes.card} md={4}>
+                        <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
+                            <div className={classes.flex}>
+                                <div className={classes.mobileLogo}>
+                                    <Typography color='inherit' variant="h5" component="h5">
+                                        Logo Here
+                                    </Typography>
+                                    <Typography color='inherit' variant='h6' component="h6">
+                                        Web Accountant
+                                    </Typography>
+                                </div>
+                            <Typography className={classes.textField} color='inherit' variant="h5" component="h5">Register</Typography>
+                            <form className={classes.container}>
+                                <TextField
+                                    id="Name-input"
+                                    label="Full Name"
+                                    className={classes.textField}
+                                    type="Name"
+                                    name="name"
+                                    margin="normal"
+                                    variant="outlined"
+                                    value={this.state.currentAccount ? this.state.currentAccount.name : this.state.name}
+                                    onChange={this.handleChange('name')}
+                                    InputLabelProps={{
+                                        classes: {
+                                            root: classes.cssLabel,
+                                            focused: classes.cssFocused,
+                                        },
+                                    }}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.whiteText,
+                                            root: classes.cssOutlinedInput,
+                                            focused: classes.cssFocused,
+                                            notchedOutline: classes.notchedOutline,
+                                        }
+                                    }}
+                                />
+                                <TextField
+                                    id="Username-input"
+                                    label="Email"
+                                    className={classes.textField}
+                                    type="Username"
+                                    name="username"
+                                    margin="normal"
+                                    variant="outlined"
+                                    value={this.state.currentAccount ? this.state.currentAccount.email : this.state.email}
+                                    onChange={this.handleChange('email')}
+                                    InputLabelProps={{
+                                        classes: {
+                                            root: classes.cssLabel,
+                                            focused: classes.cssFocused,
+                                        },
+                                    }}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.whiteText,
+                                            root: classes.cssOutlinedInput,
+                                            focused: classes.cssFocused,
+                                            notchedOutline: classes.notchedOutline,
+                                        }
+                                    }}
+                                />
+                                <TextField
+                                    id="outlined-adornment-password"
+                                    className={classes.textField}
+                                    variant="outlined"
+                                    type={this.state.showPassword ? 'text' : 'password'}
+                                    label="Password"
+                                    margin="normal"
+                                    value={this.state.password}
+                                    onChange={this.handleChange('password')}
+                                    InputLabelProps={{
+                                        classes: {
+                                            root: classes.cssLabel,
+                                            focused: classes.cssFocused,
+                                        },
+                                    }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="Toggle password visibility"
+                                                    onClick={this.handleClickShowPassword}
+                                                    className={classes.whiteText}
+                                                >
+                                                    {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                        classes: {
+                                            input: classes.whiteText,
+                                            root: classes.cssOutlinedInput,
+                                            focused: classes.cssFocused,
+                                            notchedOutline: classes.notchedOutline,
+                                        },
+                                    }}
+                                />
+                                <TextField
+                                    id="photo-input"
+                                    label="Photo URL"
+                                    className={classes.textField}
+                                    type="Text"
+                                    name="url"
+                                    margin="normal"
+                                    variant="outlined"
+                                    value={this.state.newURL}
+                                    onChange={this.handleChange('newURL')}
+                                    InputLabelProps={{
+                                        classes: {
+                                            root: classes.cssLabel,
+                                            focused: classes.cssFocused,
+                                        },
+                                    }}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.whiteText,
+                                            root: classes.cssOutlinedInput,
+                                            focused: classes.cssFocused,
+                                            notchedOutline: classes.notchedOutline,
+                                        }
+                                    }}
+                                />
+                                <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={classes.button}>
+                                    Register
+                                </Button>
+                            </form>
+                            </div>
+                        </Paper>
+                    </Grid> 
                     </Grid>
                 }
 

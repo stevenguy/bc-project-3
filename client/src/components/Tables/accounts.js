@@ -374,7 +374,7 @@ class Acct extends Component {
       })
       .catch(err => console.log(err));
     } else if (this.state.level === 3) {
-      API.reports()
+      API.monthly()
       .then(res => {
         let acctdetailsum = []
         res.data.forEach(element => {
@@ -646,22 +646,19 @@ class Acct extends Component {
 
       <React.Fragment>
         <Paper>
-          {this.state.acctdetailsum.map((output, i) => {
-              if (output.description === this.state.account 
-              && output.year === this.state.years
-              ) {
-                return (
-                  <TableRow>
-                    <TableCell colSpan={3} align="right"><b>BALANCE: {ccyFormat(output.amount)}</b></TableCell>
-                  </TableRow>
-                );
-              }
-          })}
-          {console.log(this.state.acctdetails)}
-          {this.state.acctdetails.map((output, i) => {
-            if (output.description === this.state.account 
-            && output.year === this.state.years
-            ) {
+          {this.state.acctdetailsum
+            .filter(output => output.description === this.state.account && output.year === this.state.years)
+            .map((output, i) => {
+              return (
+                <TableRow>
+                  <TableCell colSpan={3} align="right"><b>BALANCE: {ccyFormat(output.amount)}</b></TableCell>
+                </TableRow>
+              );
+            }
+          )}
+          {this.state.acctdetails
+            .filter(output => output.description === this.state.account && output.year === this.state.years)
+            .map((output, i) => {
               return (
                 <ExpansionPanel expanded={this.state.expanded === i } onChange={this.handleExpand(i)} key={i}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -709,8 +706,8 @@ class Acct extends Component {
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               );  
-              }
-          })}
+            }
+          )}
         </Paper>
       </React.Fragment>
     <Footer />
