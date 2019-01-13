@@ -121,7 +121,7 @@ module.exports = {
       .then(dbModel => {console.log('QTRLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('QTRLY AGGREGATE2' + err);res.json(err)});
   },
-  reports: function(req, res) {
+  monthly: function(req, res) {
     console.log('REPORT DATA')
     db.Transaction
     .aggregate(
@@ -131,7 +131,6 @@ module.exports = {
             description: "$description",
             type: "$type",
             year: "$year",
-            quarter: "$quarter",
             month: "$month",
           },
             amount: { $sum: "$amount" }
@@ -278,7 +277,6 @@ module.exports = {
           _id: {
             type: "$type",
             year: "$year",
-            quarter: "$quarter",
             month: "$month",
           },
             amount: { $sum: "$amount" }

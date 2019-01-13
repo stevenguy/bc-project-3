@@ -262,7 +262,7 @@ class BalanceSheet extends Component {
       })
       .catch(err => console.log(err));
     } else if (this.state.level === 3) {
-      API.reports()
+      API.monthly()
       .then(res => {
         let transactions = []
         res.data.forEach(element => {

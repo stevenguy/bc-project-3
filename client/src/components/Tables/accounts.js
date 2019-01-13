@@ -374,7 +374,7 @@ class Acct extends Component {
       })
       .catch(err => console.log(err));
     } else if (this.state.level === 3) {
-      API.reports()
+      API.monthly()
       .then(res => {
         let acctdetailsum = []
         res.data.forEach(element => {

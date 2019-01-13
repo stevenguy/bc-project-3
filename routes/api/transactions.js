@@ -7,8 +7,8 @@ router.route("/")
   .post(transactionsController.create)
 
 // Aggregate Data by Description, Type, Year, Quarter, Month, and Amount  
-router.route("/reports")
-  .get(transactionsController.reports)  
+router.route("/monthly")
+  .get(transactionsController.monthly)  
 
 // Aggregate Data by Description, Type, Year, and Amount
 router.route("/yearly")
