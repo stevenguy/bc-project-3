@@ -44,7 +44,7 @@ class SubmitForm extends Component {
 
       return (
         <React.Fragment>
-          <Media query="(max-width: 599px)">
+          <Media query="(max-width: 1024px)">
           {matches =>
             matches ? (
               <List className={classes.root}>

@@ -33,9 +33,6 @@ import firebase, { auth, provider } from '../../utils/firebase.js';
 import { Redirect } from "react-router";
 
 
-
-
-
 const drawerWidth = 180;
 
 const styles = theme => ({
@@ -43,7 +40,7 @@ const styles = theme => ({
     display: 'flex',
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       width: drawerWidth,
       flexShrink: 0,
     },
@@ -51,13 +48,13 @@ const styles = theme => ({
   appBar: {
     backgroundColor: '#000000b0',
     marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
   menuButton: {
     marginRight: 20,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'none',
     },
   },
@@ -85,6 +82,9 @@ const styles = theme => ({
   brand: {
     margin: "0",
     textAlign: 'center'
+  },
+  userName: {
+    alignSelf: 'center'
   }
 });
 
@@ -122,7 +122,7 @@ class ResponsiveDrawer extends React.Component {
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
           <Avatar alt="Login User" src={user.photoURL} className={classes.avatar} />
-          <Typography>{user.name}</Typography>
+          <Typography className={classes.userName}>{user.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
@@ -140,8 +140,9 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>
         {this.state.menuArr.map(text => (
-             <NavLink key={text} to={text}>
-             <ListItem button>
+             <NavLink exact={true} style={{ textDecoration: 'none' }} key={text} to={text}>
+             <ListItem
+              button>
                <ListItemIcon>{text === "Dashboard" 
                ? <DashboardIcon /> 
                : text === "Entries"
@@ -188,7 +189,7 @@ class ResponsiveDrawer extends React.Component {
         </AppBar>
         <nav className={classes.drawer}>
           {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Hidden smUp implementation="css">
+          <Hidden mdUp implementation="css">
             <Drawer
               container={this.props.container}
               variant="temporary"
@@ -202,7 +203,7 @@ class ResponsiveDrawer extends React.Component {
               {drawer}
             </Drawer>
           </Hidden>
-          <Hidden xsDown implementation="css">
+          <Hidden mdDown implementation="css">
             <Drawer
               classes={{
                 paper: classes.drawerPaper,
@@ -221,10 +222,6 @@ class ResponsiveDrawer extends React.Component {
 
 ResponsiveDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  // Injected by the documentation to work in an iframe.
-  // You won't need it on your project.
-  container: PropTypes.object,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);

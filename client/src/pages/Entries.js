@@ -27,9 +27,10 @@ const user = JSON.parse(localStorage.getItem('user'))
 class Entries extends Component {
     state = {
       //State goes here
-      entries: [{date: new Date(), description:'', memo:'', amount:'', details:'', account:{
-        _id:'', name:'', number:'', type:''
-      }}],
+      entries: [
+        {date: new Date(), description:'', memo:'', amount:'', details:'', account:{_id:'', name:'', number:'', type:''}},
+        {date: new Date(), description:'', memo:'', amount:'', details:'', account:{_id:'', name:'', number:'', type:''}}
+      ],
       accounts: []
     }
 
