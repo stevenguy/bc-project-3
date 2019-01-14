@@ -123,7 +123,10 @@ class Entries extends Component {
         API.notification(user.name + " Added New Journal!")
         this.setState({
           accounts: res.data,
-          entries: [{date: new Date(), description:'', memo:'', amount:'', details:'', account:{_id:'', name:'', number:'', type:''}}],
+          entries: [
+            {date: new Date(), description:'', memo:'', amount:'', details:'', account:{_id:'', name:'', number:'', type:''}},
+            {date: new Date(), description:'', memo:'', amount:'', details:'', account:{_id:'', name:'', number:'', type:''}}
+          ]
         })
       })
       .catch(err => console.log(err));

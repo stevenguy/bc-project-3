@@ -170,7 +170,9 @@ class ResponsiveDrawer extends React.Component {
              <ListItem
               button>
               {text === 'Status' && this.state.pendingCount > 0 
-              ? <Badge color="secondary" badgeContent={this.state.pendingCount}><ListItemIcon><StatusIcon /></ListItemIcon><ListItemText primary={text} /></Badge>: ""}
+              ? <Badge color="secondary" badgeContent={this.state.pendingCount}><ListItemIcon><StatusIcon /></ListItemIcon><ListItemText primary={text} /></Badge>
+              : text === 'Status' && this.state.pendingCount === 0
+              ? <React.Fragment><ListItemIcon><StatusIcon /></ListItemIcon><ListItemText primary={text} /></React.Fragment> : "" }
                <ListItemIcon>{text === "Dashboard" 
                ? <DashboardIcon /> 
                : text === "Entries"
