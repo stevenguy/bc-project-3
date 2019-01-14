@@ -11,6 +11,7 @@ import IncomeStatement from '../components/Tables/incomestatement';
 import AccountDetail from '../components/Tables/accounts';
 import CompareIncome from '../components/Tables/compareincome';
 import CompareBalance from '../components/Tables/comparebalance';
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -112,6 +113,7 @@ class Report extends Component {
 
     return (
       <React.Fragment>
+      <Notifications />
       <ResponsiveDrawer />
       <main className={classes.content}>
           <div className={classes.toolbar} />

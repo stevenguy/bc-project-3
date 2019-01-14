@@ -8,7 +8,6 @@ import Reports from "./pages/Reports"
 import Login from "./pages/Login"
 import Status from "./pages/Status"
 import Admin from "./pages/Admin"
-import Notifications from "./components/Notifications"
 import Register from './pages/Register'
 import "./App.css";
 
@@ -17,7 +16,6 @@ function App() {
     <React.Fragment>
       <Router>
         <div className="routerContainer">
-          <Notifications />
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />

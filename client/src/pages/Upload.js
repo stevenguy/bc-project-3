@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -147,6 +148,7 @@ class Upload extends Component {
         const { classes } = this.props;
         return (
             <React.Fragment>
+            <Notifications />
             <ResponsiveDrawer />
             <main className={classes.content}>
                 <div className={classes.toolbar} />

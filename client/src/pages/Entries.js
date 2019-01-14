@@ -5,7 +5,7 @@ import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
 import Steppers from '../components/Steppers'
 import API from "../utils/API";
-
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -134,6 +134,7 @@ class Entries extends Component {
 
       return (
         <React.Fragment>
+        <Notifications />
         <ResponsiveDrawer />
         <main className={classes.content}>
           <div className={classes.toolbar} />

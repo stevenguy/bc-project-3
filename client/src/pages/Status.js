@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import ResponsiveDrawer from "../components/ResponsiveDrawer"
 import Footer from "../components/Footer"
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import grey from '@material-ui/core/colors/grey'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
@@ -15,9 +14,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180
 
@@ -150,6 +149,7 @@ class Status extends Component {
 
     return (
       <React.Fragment>
+        <Notifications />
         <ResponsiveDrawer />
         <main className={classes.content}>
           <div className={classes.toolbar} />

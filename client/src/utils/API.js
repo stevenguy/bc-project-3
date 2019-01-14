@@ -5,7 +5,7 @@ const socket = openSocket()
 
 
 export default {
-  // Socket emitting when user saved a book
+  // Socket emitting notification
   notification: function(message) {
     socket.emit('notification', message)
   },
