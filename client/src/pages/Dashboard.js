@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer";
 import { Redirect } from "react-router";
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -36,6 +37,7 @@ class Dashboard extends Component {
       {!local.password ? <Redirect to={{pathname: '/register'
     }} /> :
       <React.Fragment>
+          <Notifications />
           <ResponsiveDrawer />
           <main className={classes.content}>
             <div className={classes.toolbar} />

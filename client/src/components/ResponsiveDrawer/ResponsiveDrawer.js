@@ -92,7 +92,9 @@ var local = localStorage.getItem('user')
 let user = JSON.parse(local)
 
 class ResponsiveDrawer extends React.Component {
+
   state = {
+    invisible: true,
     mobileOpen: false,
     menuArr: ['Dashboard', 'Entries', 'Upload', 'Status', 'Search', 'Reports']
   };
@@ -111,6 +113,7 @@ class ResponsiveDrawer extends React.Component {
         });
 }
 
+  
   render() {
     const { classes, theme } = this.props;
 
@@ -140,7 +143,7 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>
         {this.state.menuArr.map(text => (
-             <NavLink exact={true} style={{ textDecoration: 'none' }} key={text} to={text}>
+             <NavLink  exact={true} style={{ textDecoration: 'none' }} key={text} to={text}>
              <ListItem
               button>
                <ListItemIcon>{text === "Dashboard" 

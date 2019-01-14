@@ -19,6 +19,7 @@ import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 import SimpleCard from '../components/Cards/searchCard'
 import { red } from "@material-ui/core/colors";
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -258,6 +259,7 @@ class Search extends Component {
 
       return (
         <React.Fragment>
+        <Notifications />
         <ResponsiveDrawer />
         {/* <h1>This is the search feature</h1> */}
         <div className={classes.root}>

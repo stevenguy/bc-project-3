@@ -5,7 +5,7 @@ import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
 import Steppers from '../components/Steppers'
 import API from "../utils/API";
-
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -120,6 +120,7 @@ class Entries extends Component {
       })
       .then(() => API.getAccount())
       .then((res) => {
+        API.notification(user.name + " Added New Journal!")
         this.setState({
           accounts: res.data,
           entries: [{date: new Date(), description:'', memo:'', amount:'', details:'', account:{_id:'', name:'', number:'', type:''}}],
@@ -133,6 +134,7 @@ class Entries extends Component {
 
       return (
         <React.Fragment>
+        <Notifications />
         <ResponsiveDrawer />
         <main className={classes.content}>
           <div className={classes.toolbar} />
