@@ -99,12 +99,6 @@ class ResponsiveDrawer extends React.Component {
 
   constructor(props) {
     super(props)
-
-    API.getJournals()
-      .then((res) => {
-        this.setState({pendingCount: res.data})
-      })
-
    // Socket listening to notification
     socket.on('notification', msg => {
       API.getJournals()
@@ -112,7 +106,13 @@ class ResponsiveDrawer extends React.Component {
         this.setState({pendingCount: res.data})
       })
     })
-  
+  }
+
+  componentDidMount() {
+    API.getJournals()
+      .then((res) => {
+        this.setState({pendingCount: res.data})
+      })
   }
 
   state = {
