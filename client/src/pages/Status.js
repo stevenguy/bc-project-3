@@ -125,16 +125,16 @@ class Status extends Component {
   }
 
   componentDidMount() {
-    API.getJournals()
-      .then(res => {
-        res.data.map((data) => {
-          data.transaction.map((data) => {
-            data.date = new Date(data.date)
-          })
-        })
-        this.setState({ journalData: res.data })
-      })
-      .catch(e => console.log(e))
+    // API.getJournals()
+    //   .then(res => {
+    //     res.data.map((data) => {
+    //       data.transaction.map((data) => {
+    //         data.date = new Date(data.date)
+    //       })
+    //     })
+    //     this.setState({ journalData: res.data })
+    //   })
+    //   .catch(e => console.log(e))
   }
 
   handleApprove = event => {
