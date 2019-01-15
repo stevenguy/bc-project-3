@@ -189,7 +189,7 @@ class Search extends Component {
           })
           .then(r => console.log(suggestions))
     }
-
+    
     componentDidMount() {
       this.setState({
         labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
@@ -317,7 +317,7 @@ class Search extends Component {
                   Search By:
                   </InputLabel>
                   <Select
-                    defaultValue = {30}
+                    // defaultValue = {30}
                     value={this.state.category}
                     onChange={this.handleSelectChange}
                     input={
