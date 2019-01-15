@@ -330,7 +330,6 @@ class IncomeQuarter extends Component {
     return (
 
       <React.Fragment>
-      <ResponsiveDrawer />
       <div style={ { height: 10 } }></div>
       <Paper className="row">
         <form className={classes.container} noValidate autoComplete="off">
