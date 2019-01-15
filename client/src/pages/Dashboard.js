@@ -6,6 +6,12 @@ import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer";
 import { Redirect } from "react-router";
+import DashboardCard from "../components/Cards/dashboardCard"
+import Grid from '@material-ui/core/Grid';
+import SearchIcon from '@material-ui/icons/Search'
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import DoneAllIcon from '@material-ui/icons/DoneAll'
 import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
@@ -19,7 +25,12 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-  }
+  },
+  icon: {
+    width: '100px',
+    height: '100px',
+    marginTop: '30px'
+  },
 });
 
 var local = JSON.parse(localStorage.getItem('user'));
@@ -34,28 +45,47 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-      {!local.password ? <Redirect to={{pathname: '/register'
-    }} /> :
+      {/* {!local.password ? <Redirect to={{pathname: '/register'
+    }} /> : */}
       <React.Fragment>
           <Notifications />
           <ResponsiveDrawer />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <Typography paragraph>
-              This is Dashboard Component
-          </Typography>
-            <Typography paragraph>
-              Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-              facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-              tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-              consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus
-              sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-              In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-              et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique
-              sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
-              viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-              ultrices sagittis orci a.
-          </Typography>
+          <Grid container spacing={8}>
+            <Grid item lg={3} sm={6} xs={12}>
+              <DashboardCard 
+                  title='Approved/Unapproved Journal Entries' 
+                  path='Entries' 
+                  icon={<DoneAllIcon className={classes.icon}/>}
+                  text= 'Create a new Journal Entry or check to see if existing entries are Approved/Unapproved'
+              />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <DashboardCard 
+                  title='Search Journal Entries' 
+                  path='Search' 
+                  icon={<SearchIcon className={classes.icon}/>}
+                  text='Search for a journal entry by ID number, Preparer, or Approver'
+              />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <DashboardCard 
+                  title='Run Reports' 
+                  path='Reports' 
+                  icon={<DirectionsRunIcon className={classes.icon}/>}
+                  text='Run dem Reports'
+              />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <DashboardCard 
+                  title='Upload Transactions' 
+                  path='Upload' 
+                  icon={<CloudUploadIcon className={classes.icon}/>}
+                  text='Upload new transactions via CSV file'
+              />
+            </Grid>
+          </Grid>
           </main>
           <Footer />
           </React.Fragment>
