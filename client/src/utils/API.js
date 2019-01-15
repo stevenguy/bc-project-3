@@ -1,6 +1,14 @@
 import axios from "axios";
+import openSocket from 'socket.io-client'
+
+const socket = openSocket()
+
 
 export default {
+  // Socket emitting notification
+  notification: function(message) {
+    socket.emit('notification', message)
+  },
   // Gets all transactions
   getTransactions: function() {
     return axios.get("/api/transactions");

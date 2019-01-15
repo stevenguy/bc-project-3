@@ -14,11 +14,11 @@ module.exports = {
           }
         },
         {
-          $match: { 'transaction.status': 'Approved' }
+          $match: { 'transaction.status': 'Pending' }
         }
-        ]).limit(10)
+        ])
       .then(accounts => {
-        res.json(accounts)
+        res.json(accounts.length)
       })
       .catch(err => res.status(422).json(err))
     },

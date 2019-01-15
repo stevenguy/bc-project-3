@@ -12,6 +12,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import DoneAllIcon from '@material-ui/icons/DoneAll'
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -47,6 +48,7 @@ class Dashboard extends Component {
       {/* {!local.password ? <Redirect to={{pathname: '/register'
     }} /> : */}
       <React.Fragment>
+          <Notifications />
           <ResponsiveDrawer />
           <main className={classes.content}>
             <div className={classes.toolbar} />

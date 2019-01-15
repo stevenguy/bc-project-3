@@ -31,7 +31,11 @@ import { NavLink } from 'react-router-dom'
 import { Route } from "react-router-dom";
 import firebase, { auth, provider } from '../../utils/firebase.js';
 import { Redirect } from "react-router";
+import API from '../../utils/API'
+import openSocket from 'socket.io-client'
+import Badge from '@material-ui/core/Badge';
 
+const socket = openSocket()
 
 const drawerWidth = 180;
 
@@ -92,7 +96,28 @@ var local = localStorage.getItem('user')
 let user = JSON.parse(local)
 
 class ResponsiveDrawer extends React.Component {
+
+  constructor(props) {
+    super(props)
+   // Socket listening to notification
+    socket.on('notification', msg => {
+      API.getJournals()
+      .then((res) => {
+        this.setState({pendingCount: res.data})
+      })
+    })
+  }
+
+  componentDidMount() {
+    API.getJournals()
+      .then((res) => {
+        this.setState({pendingCount: res.data})
+      })
+  }
+
   state = {
+    pendingCount: 0,
+    invisible: true,
     mobileOpen: false,
     menuArr: ['Dashboard', 'Entries', 'Upload', 'Status', 'Search', 'Reports']
   };
@@ -111,6 +136,7 @@ class ResponsiveDrawer extends React.Component {
         });
 }
 
+  
   render() {
     const { classes, theme } = this.props;
 
@@ -140,24 +166,26 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>
         {this.state.menuArr.map(text => (
-             <NavLink exact={true} style={{ textDecoration: 'none' }} key={text} to={text}>
+             <NavLink  exact={true} style={{ textDecoration: 'none' }} key={text} to={text}>
              <ListItem
               button>
+              {text === 'Status' && this.state.pendingCount > 0 
+              ? <Badge color="secondary" badgeContent={this.state.pendingCount}><ListItemIcon><StatusIcon /></ListItemIcon><ListItemText primary={text} /></Badge>
+              : text === 'Status' && this.state.pendingCount === 0
+              ? <React.Fragment><ListItemIcon><StatusIcon /></ListItemIcon><ListItemText primary={text} /></React.Fragment> : "" }
                <ListItemIcon>{text === "Dashboard" 
                ? <DashboardIcon /> 
                : text === "Entries"
                ? <CreateIcon />
                : text === "Upload"
                ? <CloudUploadIcon />
-               : text === "Status"
-               ? <StatusIcon />
                : text === "Search"
                ? <SearchIcon />
                : text === "Reports"
                ? <BarChartIcon />
                : ""
               }</ListItemIcon>
-               <ListItemText primary={text} />
+               {text !== 'Status' ? <ListItemText primary={text}/> : ""}
              </ListItem>
              </NavLink>
           ))}

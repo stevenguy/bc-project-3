@@ -19,6 +19,7 @@ import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 import SimpleCard from '../components/Cards/searchCard'
 import { red } from "@material-ui/core/colors";
+import Notifications from "../components/Notifications"
 
 
 import ReactDOM from 'react-dom';
@@ -300,6 +301,7 @@ class Search extends Component {
 
       return (
         <React.Fragment>
+        <Notifications />
         <ResponsiveDrawer />
 
         {/* <main className = {classes.content}> */}
