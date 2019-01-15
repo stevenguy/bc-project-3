@@ -6,6 +6,26 @@ router.route("/")
   .get(transactionsController.findAll)
   .post(transactionsController.create)
 
+// Finds Transaction by Preparer's name
+router.route("/preparer/:name")
+  .get(transactionsController.transByPreparer)
+
+// Finds Transaction by Approver's name
+router.route("/approver/:name")
+  .get(transactionsController.transByApprover)
+
+// Aggregate Preparer Data for Autofill Feature
+router.route("/preparer")
+  .get(transactionsController.getPreparer)
+
+// Aggregate Approver Data for Autofill Feature
+router.route("/approver")
+  .get(transactionsController.getApprover)
+
+// Aggregate MongoId Data for Autofill feature
+router.route("/journal")
+  .get(transactionsController.getJournalId)
+
 // Aggregate Data by Description, Type, Year, Quarter, Month, and Amount  
 router.route("/monthly")
   .get(transactionsController.monthly)  
@@ -78,9 +98,6 @@ router.route("/accounts")
 router.route("/:id")
   .get(transactionsController.findById)
   .put(transactionsController.update)
-  .delete(transactionsController.remove);
-
-// Aggregate Preparer
-router.route("/preparer")
-  .get(transactionsController.preparer)    
+  .delete(transactionsController.remove)
+  
 module.exports = router;

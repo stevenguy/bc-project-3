@@ -88,34 +88,42 @@ export default {
   acctmonth: function() {
     return axios.get("/api/transactions/acctmonth");
   },
-  // // sums data by account details and month
-  // compareyear: function() {
-  //   return axios.get("/api/transactions/compareyear");
-  // },
-  // // sums data by account details and month
-  // comparequarter: function() {
-  //   return axios.get("/api/transactions/comparequarter");
-  // },
-  // // sums data by account details and month
-  // comparemonth: function() {
-  //   return axios.get("/api/transactions/comparemonth");
-  // },
-  // compareyrsum: function() {
-  //   return axios.get("/api/transactions/compareyrsum");
-  // },
-  // // sums data by account details and month
-  // compareqtrsum: function() {
-  //   return axios.get("/api/transactions/compareqtrsum");
-  // },
-  // // sums data by account details and month
-  // comparemthsum: function() {
-  //   return axios.get("/api/transactions/comparemthsum");
-  // },
-  preparer: function() {
-    return axios.get("/api/transactions/preparer")
+  // sums data by account details and month
+  compareyear: function() {
+    return axios.get("/api/transactions/compareyear");
+  },
+  // sums data by account details and month
+  comparequarter: function() {
+    return axios.get("/api/transactions/comparequarter");
+  },
+  // sums data by account details and month
+  comparemonth: function() {
+    return axios.get("/api/transactions/comparemonth");
+  },
+  compareyrsum: function() {
+    return axios.get("/api/transactions/compareyrsum");
+  },
+  // sums data by account details and month
+  compareqtrsum: function() {
+    return axios.get("/api/transactions/compareqtrsum");
+  },
+  // sums data by account details and month
+  comparemthsum: function() {
+    return axios.get("/api/transactions/comparemthsum");
+  },
+  preparerAutofill: function() {
+    return axios.get("/api/transactions/preparer");
+  },
+  approverAutofill: function() {
+    return axios.get("/api/transactions/approver");
+  },
+  transByPreparer: function(name) {
+    return axios.get("/api/transactions/preparer/" + name );
+  },
+  transByApprover: function(name) {
+    return axios.get("/api/transactions/approver/" + name );
+  },
+  journalIdAutofill: function(name) {
+    return axios.get("/api/transactions/journal");
   }
-  //  handles approving journals
-  // approveJournal: function () {
-  //   return axios.get("/api/transactions");
-  // }
 }
