@@ -14,6 +14,8 @@ import firebase, { auth, provider } from '../utils/firebase.js';
 import Auth from "../utils/user";
 import { Redirect } from "react-router";
 import {Link} from 'react-router-dom';
+import Chip from '@material-ui/core/Chip';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const styles = theme => ({
     //Style goes here
@@ -128,6 +130,12 @@ const styles = theme => ({
         [theme.breakpoints.down('sm')]: {
             display: 'block',
           },
+    },
+    chip: {
+        margin: theme.spacing.unit,
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%'
     }
 
 });
@@ -141,7 +149,8 @@ class Login extends Component {
         userName: '',
         password: '',
         showPassword: false,
-        user: null
+        user: null,
+        errorMsg: ''
     }
 
     handleChange = prop => event => {
@@ -152,7 +161,7 @@ class Login extends Component {
 
     handleFormSubmit = event => {
         event.preventDefault()
-        console.log('Submit')
+        // this.setState({errorMsg: ''})
         if(this.state.userName != '' || this.state.password != '' || !this.state.userName.includes('@')){
             var credintials = {
                 email: this.state.userName,
@@ -165,11 +174,11 @@ class Login extends Component {
                     local = JSON.parse(localStorage.getItem('user'));
                     window.location.reload();
                 } else{
-                    alert('Invalid email or password');
+                    this.setState({errorMsg: "Invalid email or password"})
                 }
             })
         }else{
-            alert('Invalid email or password');
+            this.setState({errorMsg: "Invalid email or password"})
         }
     };
 
@@ -322,6 +331,13 @@ class Login extends Component {
                                                     },
                                                 }}
                                             />
+                                            {this.state.errorMsg 
+                                            ? <Chip
+                                            icon={<ErrorIcon />}
+                                            label={this.state.errorMsg}
+                                            className={classes.chip}
+                                            color="secondary"
+                                            />: null}
                                             <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={classes.button}>
                                                 Sign In
                                             </Button>

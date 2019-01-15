@@ -19,14 +19,14 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
   },
   formControl: {
-    margin: 0,
-    maxWidth: 150,
-    minWidth: 100,
     padding: "0 10px",
-    flexGrow: '1'
+    flex: '1',
+    minWidth: '150px',
+    [theme.breakpoints.down('sm')]: {
+        minWidth: '50%',
+      }
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
@@ -37,6 +37,9 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
         flex: '100%'
       }
+  },
+  textField: {
+      maxWidth: '100%'
   }
 });
 
@@ -71,6 +74,7 @@ class EntriesForm extends Component {
                         margin="normal"
                         label="Date"
                         format='MM/dd/yy'
+                        className={classes.textField}
                         value={this.props.entries[index].date}
                         onChange={this.props.handleDateChange(index)}
                     />
