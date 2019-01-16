@@ -104,8 +104,8 @@ class Upload extends Component {
       UploadButton = _ => {
         if(this.state.csv === 0){
             alert('You have not selected any CSV files to Upload.')
-        }else if(this.state.mapped.indexOf(null) > -1){
-            alert('You have not uploaded a CSV')
+        }else if(this.state.map.indexOf(null) > -1){
+            alert('Your Columns Do Not match our criteria. please download our template.')
         }else if(this.state.mapped.indexOf(null) > -1){
             alert('You have not finished Mapping')
         }else{
@@ -145,11 +145,20 @@ class Upload extends Component {
             <ResponsiveDrawer />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
+
                     <Grid   container 
                             direction="column"
                             justify="center"
                             style={{padding: '10px'}}>
                             <Paper>
+
+                            <Grid item xs={12} sm={12}>
+                                <Typography style={{paddingLeft: '10px', paddingTop: '5px'}}>
+                                    <a>Need a sample CSV to upload your Journal Entries? &nbsp;</a>
+                                    <a href={'../../public/'} download="Journal_Entry_Example.csv" style={{textDecoration: 'none'}}>Download CSV Template</a>
+                                </Typography>
+                            </Grid>
+
                             <Grid item xs={12} sm={12}> <Typography style={{fontSize: 24, textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</Typography></Grid>
                                 <Grid item xs={12} sm={12} >
                                     
