@@ -40,6 +40,10 @@ export default {
   getAccount: function() {
     return axios.get("/api/accounts")
   },
+  //Get Count of the Pending
+  countPending: function() {
+    return axios.get('/api/journals')
+  },
   //Get list of journal
   getJournals: function(status) {
     return axios.get('/api/journals/status/' + status)
