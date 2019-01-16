@@ -10,6 +10,7 @@ module.exports = {
   },
 
   authUser: function (req, res) {
+    console.log(req.body)
     db.User.findOne({ 'email': req.body.email })
       .then(dbModel => {
         if (dbModel == null) {
@@ -32,5 +33,21 @@ module.exports = {
     db.User.findOneAndUpdate({ '_id': req.body._id}, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+
+  authPassword: function (req, res) {
+    console.log(req.body)
+    db.User.findOne({'email' : req.body.email, 'password' : req.body.password})
+    .then(dbModel => {
+      if(dbModel){
+        res.json(dbModel);
+      }else{
+        res.json(false);
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(422).json(err)
+    })
   }
 };

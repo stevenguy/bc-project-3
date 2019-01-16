@@ -1,10 +1,37 @@
 import React, { Component } from "react";
-// import API from "../utils/API";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import API from "../utils/API";
+// import PropTypes from 'prop-types';
+// import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
+
+// import React from 'react';
+import PropTypes from 'prop-types';
+import deburr from 'lodash/deburr';
+import Autosuggest from 'react-autosuggest';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import Popper from '@material-ui/core/Popper';
+import { withStyles } from '@material-ui/core/styles';
+import SimpleCard from '../components/Cards/searchCard'
+import { red } from "@material-ui/core/colors";
+import Notifications from "../components/Notifications"
+
+
+import ReactDOM from 'react-dom';
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FilledInput from '@material-ui/core/FilledInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button'
 
 const drawerWidth = 180;
 
@@ -17,43 +44,333 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-  }
+  },
+
+  // my styles
+  root: {
+    height: 250,
+    flexGrow: 1,
+    marginLeft: '100px',
+    marginRight: '100px',
+    position: 'relative',
+    top: '200px',
+  },
+  container: {
+    // position: 'relative',
+    // flexGrow: 2
+    // width: '100%'
+    flex: 1
+  },
+  suggestionsContainerOpen: {
+    position: 'absolute',
+    zIndex: 1,
+    marginTop: theme.spacing.unit,
+    width: '50%'
+    // left: 0,
+    // right: 0,
+    
+  },
+  suggestion: {
+    display: 'block',
+  },
+  suggestionsList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+  divider: {
+    height: theme.spacing.unit * 2,
+  },
+  carduh: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+
+  boot: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+  },
+  formControl: {
+    // margin: theme.spacing.unit,
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2,
+  },
+
 });
+
+let suggestions = ''
+
+
+function renderInputComponent(inputProps) {
+  const { classes, inputRef = () => {}, ref, ...other } = inputProps;
+
+  return (
+    <TextField
+      fullWidth
+      InputProps={{
+        inputRef: node => {
+          ref(node);
+          inputRef(node);
+        },
+        classes: {
+          input: classes.input,
+        },
+      }}
+      {...other}
+    />
+  );
+}
+
+function renderSuggestion(suggestion, { query, isHighlighted }) {
+  const matches = match(suggestion._id.label, query);
+  const parts = parse(suggestion._id.label, matches);
+
+  return (
+    <MenuItem selected={isHighlighted} component="div">
+      <div>
+        {parts.map((part, index) => {
+          return part.highlight ? (
+            <span key={String(index)} style={{ fontWeight: 600 }}>
+              {part.text}
+            </span>
+          ) : (
+            <strong key={String(index)} style={{ fontWeight: 300 }}>
+              {part.text}
+            </strong>
+          );
+        })}
+      </div>
+    </MenuItem>
+  );
+}
+
+function getSuggestions(value) {
+  const inputValue = deburr(value.trim()).toLowerCase();
+  const inputLength = inputValue.length;
+  let count = 0;
+
+  return inputLength === 0
+    ? []
+    : suggestions.filter(suggestion => {
+        const keep =
+          count < 5 && suggestion._id.label.slice(0, inputLength).toLowerCase() === inputValue;
+
+        if (keep) {
+          count += 1;
+        }
+
+        return keep;
+      });
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion._id.label;
+}
+
+
 
 class Search extends Component {
     state = {
       //State goes here
+    single: '',
+    popper: '',
+    suggestions: [],
+    viewCard: false,
+    searchData: {},
+    category: 30,
+    labelWidth: 0,
     }
- 
+    componentWillMount() {
+      API.journalIdAutofill()
+        .then(r => {
+            suggestions = r.data
+          })
+          .then(r => console.log(suggestions))
+    }
+    
+    componentDidMount() {
+      this.setState({
+        labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+      });
+    }
+    
+    handleSuggestionsFetchRequested = ({ value }) => {
+      this.setState({
+        suggestions: getSuggestions(value),
+      });
+    };
+  
+    handleSuggestionsClearRequested = () => {
+      this.setState({
+        suggestions: [],
+      });
+    };
+  
+    handleAutoChange = name => (event, { newValue }) => {
+      this.setState({
+        [name]: newValue,
+      });
+    };
+
+    selectChanger = () => {
+      if(this.state.category === 20){
+        API.preparerAutofill()
+          .then(r => {
+            console.log('hey its working')
+            suggestions = r.data
+            console.log(r.data)
+          })
+      }
+      else if(this.state.category === 30) {
+        API.journalIdAutofill()
+        .then(r => {
+            suggestions = r.data
+          })
+          .then(r => console.log(suggestions))
+      }
+      else if(this.state.category === 10){
+        API.approverAutofill()
+        .then(r => {
+            suggestions = r.data
+          })
+          .then(r => console.log(suggestions))
+      }
+    }
+
+    handleSelectChange = event => {
+      this.setState({ [event.target.name]: event.target.value })
+      console.log('ran!')
+      this.setState({viewCard: false})
+      this.setState({single: ""})
+    };
+
+    searchItem = () => {
+      switch (this.state.category){
+        case 10: {
+          // console.log('Approver')
+          // console.log(this.state.single)
+          API.transByApprover(this.state.single)
+            .then (r => console.log(r.data))
+        }
+        break
+        case 20: {
+          // console.log('Preparer')
+          // console.log(this.state.single)
+          API.transByPreparer(this.state.single)
+            .then (r => console.log(r.data))
+        }
+        break 
+        case 30: {
+          // console.log('Database ID')
+          API.getTransaction(this.state.single)
+            .then (r => {
+              this.setState({searchData: r.data})
+              this.setState({viewCard: true})
+            })
+        }
+        default: console.log('please select a category!')
+      }
+    }
+
     render() {
       const { classes } = this.props;
 
+      const autosuggestProps = {
+        renderInputComponent,
+        suggestions: this.state.suggestions,
+        onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
+        onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
+        getSuggestionValue,
+        renderSuggestion,
+      };
+
+      //Renders Card when submit is clicked 
+      let isShowing = this.state.viewCard
+      let button 
+      if (isShowing) {
+      button = <SimpleCard info= {this.state.searchData} />;
+      } else {
+        button = ""
+      }
+
+      // Calling selectChanger function here because view re-renders immediately after state.category is changed 
+      this.selectChanger()
+
       return (
         <React.Fragment>
+        <Notifications />
         <ResponsiveDrawer />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Typography paragraph>
-           This is Search Component
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-            consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus
-            sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-            In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
-            viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-          </Typography>
-        </main>
-        <Footer />
-        </React.Fragment>
+
+        {/* <main className = {classes.content}> */}
+          {/* <div className={classes.toolbar} /> */}
+            <div className={classes.root}>
+            <Grid container spacing={8} alignItems= 'flex-end'>
+{/* SELECT CODE  */}
+            <Grid item lg ={3} >
+            <form className={classes.boot} autoComplete="off">
+              <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel
+                    ref={ref => {this.InputLabelRef = ref}}
+                    htmlFor="outlined-category-simple"
+                  >
+                  Search By:
+                  </InputLabel>
+                  <Select
+                    // defaultValue = {30}
+                    value={this.state.category}
+                    onChange={this.handleSelectChange}
+                    input={
+                      <OutlinedInput
+                      labelWidth={this.state.labelWidth}
+                      name="category"
+                      id="outlined-category-simple"
+                      />
+                      }
+                    >
+                    <MenuItem value={10}>Approver</MenuItem>
+                    <MenuItem value={20}>Preparer</MenuItem>
+                    <MenuItem value={30}>Journal ID</MenuItem>
+                  </Select>
+                </FormControl>
+              </form>
+              </Grid>
+{/* AUTOSUGGEST CODE  */}
+              <Grid item lg ={6}>  
+              <Autosuggest
+                {...autosuggestProps}
+                inputProps={{
+                  classes,
+                  placeholder: 'Type your search input here!',
+                  value: this.state.single,
+                  onChange: this.handleAutoChange('single'),
+                }}
+                theme={{
+                  container: classes.container,
+                  suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                  suggestionsList: classes.suggestionsList,
+                  suggestion: classes.suggestion,
+                }}
+                renderSuggestionsContainer={options => (
+                  <Paper {...options.containerProps} square> {options.children} </Paper>
+                )}
+              />
+              </Grid>
+              <Grid item lg ={3}>  
+              <Button variant= 'contained' color= 'primary' onClick = {this.searchItem} >Submit</Button>
+              </Grid>
+          </Grid>
+              <div className={classes.carduh}> {button} </div>
+          </div>
+      {/* </main> */}
+      <Footer />
+      </React.Fragment>
           );
         }
       }
+
 Search.propTypes = {
   classes: PropTypes.object.isRequired,
 };

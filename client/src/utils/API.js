@@ -1,6 +1,14 @@
 import axios from "axios";
+import openSocket from 'socket.io-client'
+
+const socket = openSocket()
+
 
 export default {
+  // Socket emitting notification
+  notification: function(message) {
+    socket.emit('notification', message)
+  },
   // Gets all transactions
   getTransactions: function() {
     return axios.get("/api/transactions");
@@ -36,6 +44,10 @@ export default {
   getJournals: function(status) {
     return axios.get('/api/journals/' + status)
   },
+  // sums data from the database (month)
+  monthly: function() {
+    return axios.get("/api/transactions/monthly");
+  },
   // sums data from the database (quarterly)
   quarterly: function() {
     return axios.get("/api/transactions/quarterly");
@@ -51,10 +63,6 @@ export default {
   // Pulls all the accounts from the database
   accounts: function() {
     return axios.get("/api/transactions/accounts");
-  },
-  // sums data from the database (month)
-  reports: function() {
-    return axios.get("/api/transactions/reports");
   },
   // Pulls data by type and year
   typeyear: function() {
@@ -106,5 +114,19 @@ export default {
   // handles approving journals
   approveJournal: function (journal) {
     return axios.put('/api/transactions/approve', journal)
+  preparerAutofill: function() {
+    return axios.get("/api/transactions/preparer");
+  },
+  approverAutofill: function() {
+    return axios.get("/api/transactions/approver");
+  },
+  transByPreparer: function(name) {
+    return axios.get("/api/transactions/preparer/" + name );
+  },
+  transByApprover: function(name) {
+    return axios.get("/api/transactions/approver/" + name );
+  },
+  journalIdAutofill: function(name) {
+    return axios.get("/api/transactions/journal");
   }
-};
+}
