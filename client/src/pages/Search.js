@@ -183,6 +183,7 @@ class Search extends Component {
     category: 30,
     labelWidth: 0,
     }
+
     componentWillMount() {
       API.journalIdAutofill()
         .then(r => {
@@ -309,6 +310,7 @@ class Search extends Component {
             <div className={classes.root}>
             <Grid container spacing={8} alignItems= 'flex-end'>
 {/* SELECT CODE  */}
+
             <Grid item lg ={3} >
             <form className={classes.boot} autoComplete="off">
               <FormControl variant="outlined" className={classes.formControl}>
@@ -338,6 +340,7 @@ class Search extends Component {
               </form>
               </Grid>
 {/* AUTOSUGGEST CODE  */}
+
               <Grid item lg ={6}>  
               <Autosuggest
                 {...autosuggestProps}
