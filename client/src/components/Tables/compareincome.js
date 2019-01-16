@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ResponsiveDrawer from "../ResponsiveDrawer";
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
