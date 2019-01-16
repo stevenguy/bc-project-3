@@ -40,8 +40,8 @@ export default {
   getAccount: function() {
     return axios.get("/api/accounts")
   },
-  //Get list of journal
-  getJournals: function() {
+  //Get Count of the Pending
+  countPending: function() {
     return axios.get('/api/journals')
   },
   // sums data from the database (month)

@@ -1,7 +1,7 @@
 const db = require("../models")
 
 module.exports = {
-  findAll: function (req, res) {
+  countPending: function (req, res) {
     db.Journal
       .aggregate(
         [{
@@ -19,6 +19,27 @@ module.exports = {
         ])
       .then(accounts => {
         res.json(accounts.length)
+      })
+      .catch(err => res.status(422).json(err))
+    },
+  findAll: function (req, res) {
+    db.Journal
+      .aggregate(
+        [{
+          $lookup:
+          {
+            from: 'transactions',
+            localField: '_id',
+            foreignField: 'journal_id',
+            as: 'transaction'
+          }
+        },
+        {
+          $match: { 'transaction.status': req.params.status }
+        }
+        ])
+      .then(accounts => {
+        res.json(accounts)
       })
       .catch(err => res.status(422).json(err))
     },
