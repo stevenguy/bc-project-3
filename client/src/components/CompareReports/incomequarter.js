@@ -392,10 +392,26 @@ class IncomeQuarter extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} >
                     <TableCell><b>REVENUE</b></TableCell>
-                    <TableCell align="right"><b>{this.state.quarter === 1 ? 4 : this.state.quarter - 1}</b></TableCell>
-                    <TableCell align="right"><b>{this.state.quarter}</b></TableCell>
+                    {this.state.quarter === 1 ?
+                      <React.Fragment>
+                        <TableCell align="right">Q4-{this.state.years - 1}</TableCell>
+                        <TableCell align="right">Q1-{this.state.years}</TableCell>
+                      </React.Fragment>
+                      :
+                      quarter
+                        .filter(output => output.value === this.state.quarter || output.value === this.state.quarter - 1 )
+                        .map((output, i) => {
+                          return (
+                            <React.Fragment>
+                              <TableCell key={i} align="right">{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</TableCell>
+                              <TableCell key={i} align="right">{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</TableCell>
+                            </React.Fragment>
+                          );
+                        }
+                      )
+                    }
                   </TableRow>
                 </TableHead>
               </Table>
@@ -433,10 +449,26 @@ class IncomeQuarter extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} >
                     <TableCell><b>EXPENSES</b></TableCell>
-                    <TableCell align="right"><b>{this.state.quarter === 1 ? 4 : this.state.quarter - 1}</b></TableCell>
-                    <TableCell align="right"><b>{this.state.quarter}</b></TableCell>
+                    {this.state.quarter === 1 ?
+                      <React.Fragment>
+                        <TableCell align="right">Q4-{this.state.years - 1}</TableCell>
+                        <TableCell align="right">Q1-{this.state.years}</TableCell>
+                      </React.Fragment>
+                      :
+                      quarter
+                        .filter(output => output.value === this.state.quarter || output.value === this.state.quarter - 1 )
+                        .map((output, i) => {
+                          return (
+                            <React.Fragment>
+                              <TableCell key={i} align="right">{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</TableCell>
+                              <TableCell key={i} align="right">{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</TableCell>
+                            </React.Fragment>
+                          );
+                        }
+                      )
+                    }
                   </TableRow>
                 </TableHead>
               </Table>
