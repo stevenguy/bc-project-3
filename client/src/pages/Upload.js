@@ -52,6 +52,8 @@ const csvData = [
     ['1/2/2019','10000','Cash','Assets','HP Computer','To Record HP Computer','Credit','-69.54']
   ];
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 class Upload extends Component {
 
     constructor(props) {
@@ -80,7 +82,7 @@ class Upload extends Component {
 
         if(_map.length === 8){
             this.setState({csv: JSON.stringify(result.data), map: _map})
-            console.log(this.state)
+            // console.log(this.state)
         }else{
             alert(`Your CSV file does not contain the right amount of columns. Please revise and try again. \n\n Your Columns: ${_map} \n\n Expected Columns: ${expectedColumns}`)
         }
@@ -121,29 +123,22 @@ class Upload extends Component {
             //start mapping
             let tempCSV = this.state.csv
             this.state.map.forEach((element, i) => {
-                console.log(element)
+                // console.log(element)
                 tempCSV = tempCSV.split(element).join(this.state.mapped[i])
-                console.log(tempCSV)
+                // console.log(tempCSV)
             });
             console.log('here')
             console.log(tempCSV)
-
-            var i;
-            for(i = 0 ; i < this.state.csv.length ; i++){
-                if(this.state.csv[i] !== null){
-                    API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user'))._id})
-                }
-            }
+            API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user')).name})
+            .then(() => API.notification(user.name + " Added New Journal!"))
             this.setState({uploaded: 1})
         }
       }
 
       handleChange = event => {
-          console.log(event.target.value)
           var _mapped = this.state.mapped
           _mapped[event.target.name] = event.target.value
           this.setState({mapped: _mapped})
-          console.log(this.state)
       }
 
     render() {

@@ -25,7 +25,7 @@ module.exports = {
   csv: function(req, res) {
     console.log(req.body)
     db.Transaction
-      .insertMany(req.body)
+      .create(req.body)
   },
   // handles approving journals
   approve: function(req, res) {
