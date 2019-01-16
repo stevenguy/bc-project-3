@@ -21,6 +21,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
+    "@devexpress/dx-react-chart": "^1.10.0",
+    "@devexpress/dx-react-chart-material-ui": "^1.10.0",
+    "@devexpress/dx-react-core": "^1.10.0",
     "@material-ui/core": "^3.7.1",
     "@material-ui/icons": "^3.0.1",
     "autosuggest-highlight": "^3.1.1",
