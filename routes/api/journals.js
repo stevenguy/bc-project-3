@@ -5,5 +5,8 @@ router.route('/')
 .get(journalsController.countPending)
 .post(journalsController.create)
 
+router.route('/:status')
+.get(journalsController.findAll)
+
 
 module.exports = router;

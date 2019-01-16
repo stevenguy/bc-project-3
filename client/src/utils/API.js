@@ -44,6 +44,10 @@ export default {
   countPending: function() {
     return axios.get('/api/journals')
   },
+  //Get list of journal
+  getJournals: function(status) {
+    return axios.get('/api/journals/' + status)
+  },
   // sums data from the database (month)
   monthly: function() {
     return axios.get("/api/transactions/monthly");
