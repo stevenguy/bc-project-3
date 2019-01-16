@@ -27,9 +27,11 @@ module.exports = {
     db.Transaction
       .insertMany(req.body)
   },
-  update: function(req, res) {
+  // handles approving journals
+  approve: function(req, res) {
+    console.log(req.body.journalId)
     db.Transaction
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .updateMany({ journal_id: req.body.journalId }, { $set: { status: 'Approved' } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

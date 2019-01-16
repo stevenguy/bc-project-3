@@ -4,7 +4,11 @@ const transactionsController = require("../../controllers/transactionsController
 // Matches with "/api/transactions"
 router.route("/")
   .get(transactionsController.findAll)
-  .post(transactionsController.create)
+  .put(transactionsController.create)
+
+// Matches with '/api/transactions/approve
+router.route('/approve')
+  .put(transactionsController.approve)
 
 // Finds Transaction by Preparer's name
 router.route("/preparer/:name")
@@ -73,7 +77,7 @@ router.route("/accounts")
 // Matches with "/api/transactions/:id"
 router.route("/:id")
   .get(transactionsController.findById)
-  .put(transactionsController.update)
+  // .put(transactionsController.update)
   .delete(transactionsController.remove)
-  
+
 module.exports = router;
