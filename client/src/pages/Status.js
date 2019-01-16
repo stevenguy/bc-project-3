@@ -16,11 +16,8 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-<<<<<<< HEAD
 import Journals from '../components/Journals'
-=======
 import Notifications from "../components/Notifications"
->>>>>>> 30fd37e3650da74035370f86fc6da16e022a6637
 
 const drawerWidth = 180
 

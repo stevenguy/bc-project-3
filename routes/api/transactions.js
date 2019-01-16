@@ -101,14 +101,11 @@ router.route("/accounts")
 // Matches with "/api/transactions/:id"
 router.route("/:id")
   .get(transactionsController.findById)
-<<<<<<< HEAD
   // .put(transactionsController.update)
   .delete(transactionsController.remove)
 
 module.exports = router
-=======
   .put(transactionsController.update)
   .delete(transactionsController.remove)
   
 module.exports = router;
->>>>>>> 30fd37e3650da74035370f86fc6da16e022a6637

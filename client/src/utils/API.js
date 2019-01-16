@@ -114,6 +114,7 @@ export default {
   // handles approving journals
   approveJournal: function (journal) {
     return axios.put('/api/transactions/approve', journal)
+  },
   preparerAutofill: function() {
     return axios.get("/api/transactions/preparer");
   },
