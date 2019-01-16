@@ -172,7 +172,7 @@ class Upload extends Component {
                                             {
                                                 isDragActive ?
                                                 <Typography paragraph>Drop files here...</Typography> :
-                                                <Typography paragraph>Drag in files or Click to Upload. (4 CSV file limit)</Typography>
+                                                <Typography paragraph>Drag in CSV file or Click to Upload.</Typography>
                                             }
                                             </div> )
                                         }}
