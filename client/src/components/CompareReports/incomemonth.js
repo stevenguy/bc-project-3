@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import Footer from "../Footer";
-import ResponsiveDrawer from "../ResponsiveDrawer";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import grey from '@material-ui/core/colors/grey';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -365,7 +365,6 @@ class IncomeMonth extends Component {
     return (
 
       <React.Fragment>
-      <ResponsiveDrawer />
       <div style={ { height: 10 } }></div>
       <Paper className="row">
         <form className={classes.container} noValidate autoComplete="off">
@@ -386,9 +385,9 @@ class IncomeMonth extends Component {
             variant="outlined"
           >
             {this.state.year.map(y => (
-              <option key={y._id.year} value={y._id.year}>
+              <MenuItem key={y._id.year} value={y._id.year}>
                 {y._id.year}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
           <TextField
@@ -407,11 +406,10 @@ class IncomeMonth extends Component {
             margin="normal"
             variant="outlined"
           >
-            {/* Populate based on quarters */}
             {month.map(m => (
-              <option key={m.valueMonth} value={m.valueMonth}>
+              <MenuItem key={m.valueMonth} value={m.valueMonth}>
                 {m.labelMonth}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>
@@ -429,17 +427,31 @@ class IncomeMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} >
                     <TableCell><b>REVENUE</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month === 1 ? 12 : this.state.month - 1}</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month}</b></TableCell>
+                    {this.state.month === 1 ?
+                      <React.Fragment>
+                        <TableCell align="right">December {this.state.years}</TableCell>
+                        <TableCell align="right">January {this.state.years}</TableCell>
+                      </React.Fragment>
+                      :
+                      month
+                        .filter(output => output.valueMonth === this.state.month || output.valueMonth === this.state.month - 1 )
+                        .map((output, i) => {
+                          return (
+                            <React.Fragment>
+                              <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                              <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                            </React.Fragment>
+                          );
+                        }
+                      )
+                    }
                   </TableRow>
                 </TableHead>
               </Table>
               <Table>
                 <TableBody>
-                {console.log(this.state.transactions)}
-                {console.log(this.state.typesum)}
                 {this.state.transactions
                   .filter(output => output.type === 'Revenue')
                   .map((output, i) => {
@@ -472,10 +484,26 @@ class IncomeMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} >
                     <TableCell><b>EXPENSES</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month === 1 ? 12 : this.state.month - 1}</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month}</b></TableCell>
+                    {this.state.month === 1 ?
+                      <React.Fragment>
+                        <TableCell align="right">December {this.state.years}</TableCell>
+                        <TableCell align="right">January {this.state.years}</TableCell>
+                      </React.Fragment>
+                      :
+                      month
+                        .filter(output => output.valueMonth === this.state.month || output.valueMonth === this.state.month - 1 )
+                        .map((output, i) => {
+                          return (
+                            <React.Fragment>
+                              <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                              <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                            </React.Fragment>
+                          );
+                        }
+                      )
+                    }
                   </TableRow>
                 </TableHead>
               </Table>

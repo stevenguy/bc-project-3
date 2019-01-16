@@ -40,8 +40,18 @@ export default {
   getAccount: function() {
     return axios.get("/api/accounts")
   },
+  //Get Count of the Pending
+  countPending: function() {
+    return axios.get('/api/journals')
+  },
   //Get list of journal
-  getJournals: function() {
+  getJournals: function(status) {
+    return axios.get('/api/journals/status/' + status)
+  },
+  approveJournal: function(journalId) {
+    return axios.put('/api/transactions/approve/', journalId)
+  },
+  getJournal: function() {
     return axios.get('/api/journals')
   },
   // sums data from the database (month)
@@ -87,29 +97,6 @@ export default {
   // sums data by account details and month
   acctmonth: function() {
     return axios.get("/api/transactions/acctmonth");
-  },
-  // sums data by account details and month
-  compareyear: function() {
-    return axios.get("/api/transactions/compareyear");
-  },
-  // sums data by account details and month
-  comparequarter: function() {
-    return axios.get("/api/transactions/comparequarter");
-  },
-  // sums data by account details and month
-  comparemonth: function() {
-    return axios.get("/api/transactions/comparemonth");
-  },
-  compareyrsum: function() {
-    return axios.get("/api/transactions/compareyrsum");
-  },
-  // sums data by account details and month
-  compareqtrsum: function() {
-    return axios.get("/api/transactions/compareqtrsum");
-  },
-  // sums data by account details and month
-  comparemthsum: function() {
-    return axios.get("/api/transactions/comparemthsum");
   },
   preparerAutofill: function() {
     return axios.get("/api/transactions/preparer");
