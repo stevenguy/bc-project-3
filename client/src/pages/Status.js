@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import ResponsiveDrawer from "../components/ResponsiveDrawer"
 import Footer from "../components/Footer"
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import grey from '@material-ui/core/colors/grey'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
@@ -15,9 +14,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
+import Journals from '../components/Journals'
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180
 
@@ -62,7 +62,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    paddingBottom: '20px',
+    paddingBottom: '80px',
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
@@ -94,15 +94,15 @@ const styles = theme => ({
 
 const journals = [
   {
-    value: 1,
+    value: 'Approved',
     label: 'Approved'
   },
   {
-    value: 2,
+    value: 'Unapproved',
     label: 'Unapproved'
   },
   {
-    value: 3,
+    value: 'Pending',
     label: 'Pending'
   }
 ]
@@ -110,7 +110,7 @@ const journals = [
 class Status extends Component {
   state = {
     journals: 'Select',
-    journalData: []
+    journalData: [],
   }
 
   handleExpand = panel => (event, expanded) => {
@@ -123,10 +123,7 @@ class Status extends Component {
     this.setState({
       [fin]: event.target.value,
     })
-  }
-
-  componentDidMount() {
-    API.getJournals()
+    API.getJournals(event.target.value)
       .then(res => {
         res.data.map((data) => {
           data.transaction.map((data) => {
@@ -138,18 +135,12 @@ class Status extends Component {
       .catch(e => console.log(e))
   }
 
-  handleApprove = event => {
-    console.log(this.state)
-    let approvedStatus = {
-    }
-    .catch(e => console.log(e))
-  }
-
   render() {
     const { classes } = this.props;
 
     return (
       <React.Fragment>
+        <Notifications />
         <ResponsiveDrawer />
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -180,88 +171,28 @@ class Status extends Component {
               </TextField>
             </form>
           </Paper>
-          <div style={ { height: 10 } }></div>
-          {(() => {
-            switch (this.state.journals) {
-              case 1:
-                return (
-              <React.Fragment>
-                <Paper>
-                  {this.state.journalData.map((output, j) => (
-                    <React.Fragment>
-                      <Card>
-                    {output.transaction.map((transactions, i) => (
-                    transactions.status === 'Approved' ?
-                          <CardContent>
-                            <Typography className={classes.heading}>{transactions.transaction}</Typography>
-                            <Table>
-                              <TableBody>
-                                <TableRow>
-                                  <TableCell><b>Journal ID:</b> {transactions.journal_id}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Date:</b> {transactions.date.toLocaleDateString('en-US')}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Account:</b> {transactions.account}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Description:</b> {transactions.description}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Type:</b> {transactions.type}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Memo:</b> {transactions.memo}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Detail:</b> {transactions.details}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Preparer:</b> {transactions.preparer}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Prepared Date:</b> {transactions.prepared_date}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Approver:</b> {transactions.approver}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell><b>Approved Date:</b> {transactions.approved_date}</TableCell>
-                                </TableRow>
-                              </TableBody>
-                            </Table>
-                          </CardContent> : ''
-                    ))
-                  }
-                  <Button value={this.state.journalData} onClick={this.handleApprove} variant="contained" className={classes.button}>
-                      Approve
-                    </Button>
-                    </Card>
-                    <Divider light />
-                    </React.Fragment>
-                  ))
-                  }
-                </Paper>
+          <div style={{ height: 10 }}></div>
+          <Paper>
+            {this.state.journalData.map((output, j) => (
+              <React.Fragment key={j}>
+                <Card>
+                  <Journals
+                    output={output}
+                    />
+                </Card>
+                <Divider light />
               </React.Fragment>
-                )
-              case 2:
-                return null;
-              case 3:
-                return null;
-              default:
-                return null;
-            }
-          })()}
+            ))}
+          </Paper>
         </main>
         <Footer />
       </React.Fragment>
-    )
-  }
-}
+          )
+        }
+      }
 
 Status.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
+            classes: PropTypes.object.isRequired,
+      }
+      
 export default withStyles(styles)(Status)

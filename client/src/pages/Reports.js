@@ -11,6 +11,7 @@ import IncomeStatement from '../components/Tables/incomestatement';
 import AccountDetail from '../components/Tables/accounts';
 import CompareIncome from '../components/Tables/compareincome';
 import CompareBalance from '../components/Tables/comparebalance';
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -55,7 +56,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    paddingBottom: '20px',
+    paddingBottom: '80px',
   },
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
@@ -112,6 +113,7 @@ class Report extends Component {
 
     return (
       <React.Fragment>
+      <Notifications />
       <ResponsiveDrawer />
       <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -158,7 +160,7 @@ class Report extends Component {
               default:
                 return null;
             }
-        })}
+        })()}
       </main>
       <Footer />
       </React.Fragment>

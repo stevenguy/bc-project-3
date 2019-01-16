@@ -11,5 +11,9 @@ export default {
 
     getUser: function (data) {
         return axios.get("api/user", data)
+    },
+
+    authPassword: function (data) {
+        return axios.post("api/user/login", data)
     }
 };

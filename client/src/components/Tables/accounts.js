@@ -260,7 +260,7 @@ class Acct extends Component {
         res.data.forEach(element => {
           acctdetails.push({
             journal_id: element._id.journal_id,
-            date: element._id.date,
+            date: new Date(element._id.date),
             account: element._id.account,
             description: element._id.description,
             type: element._id.type,
@@ -268,9 +268,9 @@ class Acct extends Component {
             memo: element._id.memo,
             detail: element._id.detail,
             preparer: element._id.preparer,
-            prepared_date: element._id.prepared_date,
+            prepared_date: new Date(element._id.prepared_date),
             approver: element._id.approver,
-            approved_date: element._id.approved_date,
+            approved_date: new Date(element._id.approved_date),
             year: element._id.year,
             quarter: element._id.quarter,
             amount: element.amount,
@@ -287,7 +287,7 @@ class Acct extends Component {
           if (element._id.quarter === this.state.quarter) {  
             acctdetails.push({
               journal_id: element._id.journal_id,
-              date: element._id.date,
+              date: new Date(element._id.date),
               account: element._id.account,
               description: element._id.description,
               type: element._id.type,
@@ -295,9 +295,9 @@ class Acct extends Component {
               memo: element._id.memo,
               detail: element._id.detail,
               preparer: element._id.preparer,
-              prepared_date: element._id.prepared_date,
+              prepared_date: new Date(element._id.prepared_date),
               approver: element._id.approver,
-              approved_date: element._id.approved_date,
+              approved_date: new Date(element._id.approved_date),
               year: element._id.year,
               quarter: element._id.quarter,
               amount: element.amount,
@@ -315,7 +315,7 @@ class Acct extends Component {
           if (element._id.month === this.state.month) {  
             acctdetails.push({
               journal_id: element._id.journal_id,
-              date: element._id.date,
+              date: new Date(element._id.date),
               account: element._id.account,
               description: element._id.description,
               type: element._id.type,
@@ -323,9 +323,9 @@ class Acct extends Component {
               memo: element._id.memo,
               detail: element._id.detail,
               preparer: element._id.preparer,
-              prepared_date: element._id.prepared_date,
+              prepared_date: new Date(element._id.prepared_date),
               approver: element._id.approver,
-              approved_date: element._id.approved_date,
+              approved_date: new Date(element._id.approved_date),
               year: element._id.year,
               quarter: element._id.quarter,
               month: element._id.month,
@@ -374,7 +374,7 @@ class Acct extends Component {
       })
       .catch(err => console.log(err));
     } else if (this.state.level === 3) {
-      API.reports()
+      API.monthly()
       .then(res => {
         let acctdetailsum = []
         res.data.forEach(element => {
@@ -404,7 +404,6 @@ class Acct extends Component {
     return (
 
       <React.Fragment>
-      <ResponsiveDrawer />
       <div style={ { height: 10 } }></div>
       <Paper className="row">
         <form className={classes.container} noValidate autoComplete="off">
@@ -646,21 +645,19 @@ class Acct extends Component {
 
       <React.Fragment>
         <Paper>
-          {this.state.acctdetailsum.map((output, i) => {
-              if (output.description === this.state.account 
-              && output.year === this.state.years
-              ) {
-                return (
-                  <TableRow>
-                    <TableCell colSpan={3} align="right"><b>BALANCE: {ccyFormat(output.amount)}</b></TableCell>
-                  </TableRow>
-                );
-              }
-          })}
-          {this.state.acctdetails.map((output, i) => {
-            if (output.description === this.state.account 
-            && output.year === this.state.years
-            ) {
+          {this.state.acctdetailsum
+            .filter(output => output.description === this.state.account && output.year === this.state.years)
+            .map((output, i) => {
+              return (
+                <TableRow>
+                  <TableCell colSpan={3} align="right"><b>BALANCE: {ccyFormat(output.amount)}</b></TableCell>
+                </TableRow>
+              );
+            }
+          )}
+          {this.state.acctdetails
+            .filter(output => output.description === this.state.account && output.year === this.state.years)
+            .map((output, i) => {
               return (
                 <ExpansionPanel expanded={this.state.expanded === i } onChange={this.handleExpand(i)} key={i}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -674,7 +671,7 @@ class Acct extends Component {
                         <TableCell><b>Journal ID:</b> {output.journal_id}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell><b>Date:</b> {output.date}</TableCell>
+                        <TableCell><b>Date:</b> {output.date.toLocaleDateString('en-US')}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell><b>Account:</b> {output.account}</TableCell>
@@ -695,21 +692,21 @@ class Acct extends Component {
                         <TableCell><b>Preparer:</b> {output.preparer}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell><b>Prepared Date:</b> {output.prepared_date}</TableCell>
+                        <TableCell><b>Prepared Date:</b> {output.prepared_date.toLocaleDateString('en-US')}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell><b>Approver:</b> {output.approver}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell><b>Approved Date:</b> {output.approved_date}</TableCell>
+                        <TableCell><b>Approved Date:</b> {output.approved_date.toLocaleDateString('en-US')}</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               );  
-              }
-          })}
+            }
+          )}
         </Paper>
       </React.Fragment>
     <Footer />

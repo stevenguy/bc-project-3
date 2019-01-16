@@ -11,7 +11,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import StatusIcon from '@material-ui/icons/ThumbsUpDown';
 import CreateIcon from '@material-ui/icons/Create';
 import SettingsIcon from '@material-ui/icons/Settings';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -31,10 +31,11 @@ import { NavLink } from 'react-router-dom'
 import { Route } from "react-router-dom";
 import firebase, { auth, provider } from '../../utils/firebase.js';
 import { Redirect } from "react-router";
+import API from '../../utils/API'
+import openSocket from 'socket.io-client'
+import Badge from '@material-ui/core/Badge';
 
-
-
-
+const socket = openSocket()
 
 const drawerWidth = 180;
 
@@ -43,7 +44,7 @@ const styles = theme => ({
     display: 'flex',
   },
   drawer: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       width: drawerWidth,
       flexShrink: 0,
     },
@@ -51,13 +52,13 @@ const styles = theme => ({
   appBar: {
     backgroundColor: '#000000b0',
     marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
   menuButton: {
     marginRight: 20,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'none',
     },
   },
@@ -85,13 +86,38 @@ const styles = theme => ({
   brand: {
     margin: "0",
     textAlign: 'center'
+  },
+  userName: {
+    alignSelf: 'center'
   }
 });
 
 var local = localStorage.getItem('user')
+let user = JSON.parse(local)
 
 class ResponsiveDrawer extends React.Component {
+
+  constructor(props) {
+    super(props)
+   // Socket listening to notification
+    socket.on('notification', msg => {
+      API.countPending()
+      .then((res) => {
+        this.setState({pendingCount: res.data})
+      })
+    })
+  }
+
+  componentDidMount() {
+    API.countPending()
+      .then((res) => {
+        this.setState({pendingCount: res.data})
+      })
+  }
+
   state = {
+    pendingCount: 0,
+    invisible: true,
     mobileOpen: false,
     menuArr: ['Dashboard', 'Entries', 'Upload', 'Status', 'Search', 'Reports']
   };
@@ -110,18 +136,19 @@ class ResponsiveDrawer extends React.Component {
         });
 }
 
+  
   render() {
     const { classes, theme } = this.props;
 
     const drawer = (
       <div>
         <div className={classes.toolbar}>
-        <p className={classes.brand}><img src="../images/acctg_blue.png" alt="acctg" style={ { height: 50, width: 100}}/></p>
+        <p className={classes.brand}><img src="../../images/acctg_blue.png" alt="acctg" style={ { height: 50, width: 100}}/></p>
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
-          <Avatar alt="Login User" src="./images/1.png" className={classes.avatar} />
-          <Typography>user@email.com</Typography>
+          <Avatar alt="Login User" src={user.photoURL} className={classes.avatar} />
+          <Typography className={classes.userName}>{user.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
@@ -139,23 +166,26 @@ class ResponsiveDrawer extends React.Component {
         <Divider />
         <List>
         {this.state.menuArr.map(text => (
-             <NavLink key={text} to={text}>
-             <ListItem button>
+             <NavLink  exact={true} style={{ textDecoration: 'none' }} key={text} to={text}>
+             <ListItem
+              button>
+              {text === 'Status' && this.state.pendingCount > 0 
+              ? <Badge color="secondary" badgeContent={this.state.pendingCount}><ListItemIcon><StatusIcon /></ListItemIcon><ListItemText primary={text} /></Badge>
+              : text === 'Status' && this.state.pendingCount === 0
+              ? <React.Fragment><ListItemIcon><StatusIcon /></ListItemIcon><ListItemText primary={text} /></React.Fragment> : "" }
                <ListItemIcon>{text === "Dashboard" 
                ? <DashboardIcon /> 
                : text === "Entries"
                ? <CreateIcon />
                : text === "Upload"
-               ? <AttachFileIcon />
-               : text === "Status"
-               ? <StatusIcon />
+               ? <CloudUploadIcon />
                : text === "Search"
                ? <SearchIcon />
                : text === "Reports"
                ? <BarChartIcon />
                : ""
               }</ListItemIcon>
-               <ListItemText primary={text} />
+               {text !== 'Status' ? <ListItemText primary={text}/> : ""}
              </ListItem>
              </NavLink>
           ))}
@@ -187,7 +217,7 @@ class ResponsiveDrawer extends React.Component {
         </AppBar>
         <nav className={classes.drawer}>
           {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-          <Hidden smUp implementation="css">
+          <Hidden mdUp implementation="css">
             <Drawer
               container={this.props.container}
               variant="temporary"
@@ -201,7 +231,7 @@ class ResponsiveDrawer extends React.Component {
               {drawer}
             </Drawer>
           </Hidden>
-          <Hidden xsDown implementation="css">
+          <Hidden mdDown implementation="css">
             <Drawer
               classes={{
                 paper: classes.drawerPaper,
@@ -220,10 +250,6 @@ class ResponsiveDrawer extends React.Component {
 
 ResponsiveDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
-  // Injected by the documentation to work in an iframe.
-  // You won't need it on your project.
-  container: PropTypes.object,
-  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);

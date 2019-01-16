@@ -1,0 +1,5 @@
+Date1,Account1,Description1,Type1,Transaction1,Memo1,Details1,Amount1
+1/1/2019,12000,Inventory,Assets,Prepaid Insurance,To Record Prepaid Insurance,Debit,589.63
+1/1/2019,10000,Cash,Assets,HP Computer,To Record HP Computer,Credit,-589.63
+1/2/2019,50200,Supplies,Expenses,Staples,To Record Staples,Debit,69.54
+1/2/2019,10000,Cash,Assets,HP Computer,To Record HP Computer,Credit,-69.54

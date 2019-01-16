@@ -20,7 +20,7 @@ router.route("/")
             data[index]["prepared_date"] = new Date(),
             data[index]["status"] = 'Pending',
             data[index]["year"] = date.getFullYear(),
-            data[index]["month"] = date.getMonth(),
+            data[index]["month"] = date.getMonth() + 1,
             data[index]["quarter"] = (date.getMonth()/3) + 1
             data[index]["journal_id"] = dbModel._id
             index++

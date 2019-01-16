@@ -23,7 +23,7 @@ let transactionSeed = [
     prepared_date: new Date('2017-01-01'),
     approver: 'Jean Grey',
     approved_date: new Date('2017-01-02'),
-    status: 'Approved',
+    status: 'Pending',
     year: 2017,
     month: 1,
     quarter: 1
@@ -42,7 +42,7 @@ let transactionSeed = [
     prepared_date: new Date('2017-01-01'),
     approver: 'Jean Grey',
     approved_date: new Date('2017-01-02'),
-    status: 'Approved',
+    status: 'Pending',
     year: 2017,
     month: 1,
     quarter: 1
@@ -28703,3 +28703,33 @@ db.Journal
     console.error(err);
     process.exit(1);
   });
+
+// db.Transaction
+//   .remove({})
+//   .then(() => db.Transaction.collection.insertMany(transactionSeed))
+//   .then(() => db.Account.remove({}))
+//   .then(() => db.Transaction.aggregate(
+//     [
+//       {
+//         $group: {
+//           _id: {
+//             number: {$toInt : '$account'}, 
+//             name: '$description', 
+//             type: '$type'
+//           }
+//         }
+//       }
+//     ]
+//   ))
+//   .then((data) => {
+//     let dataArr =[]
+//     data.forEach(element => {
+//       dataArr.push(element._id)
+//     })
+//     return db.Account.collection.insertMany(dataArr)
+//   })
+//   .then(() => process.exit(0))
+//   .catch(err => {
+//     console.error(err);
+//     process.exit(1);
+//   });
