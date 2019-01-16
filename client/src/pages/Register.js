@@ -29,9 +29,6 @@ const styles = theme => ({
         background: "linear-gradient(42deg, rgba(4,4,32,1) 0%, rgba(26,26,69,1) 32%, rgba(191,76,95,1) 59%, rgba(186,17,17,1) 100%)"
     },
     root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
         height: "100%"
     },
     card: {
@@ -61,9 +58,7 @@ const styles = theme => ({
         flexWrap: 'wrap',
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        //flexWrap: 'wrap',
+        flexWrap: 'wrap',
         display: 'block',
         width: '100%',
         color: 'white'
@@ -107,8 +102,7 @@ const styles = theme => ({
         width: "18px",
         height: "18px",
     }
-
-});
+})
 
 class Register extends Component {
     state = {
@@ -201,13 +195,12 @@ class Register extends Component {
                         justify="center"
                         alignItems='center'
                     >
-
-                        <form className={styles.container}>
+                        <form className={classes.container}>
 
                             <TextField
                                 id="Username-input"
                                 label="Email"
-                                className={styles.textField}
+                                className={classes.textField}
                                 type="Username"
                                 name="username"
                                 margin="normal"
@@ -222,16 +215,16 @@ class Register extends Component {
                                 }}
                                 InputProps={{
                                     classes: {
-                                        input: styles.whiteText,
+                                        input: classes.whiteText,
                                         root: styles.cssOutlinedInput,
                                         focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
+                                        notchedOutline: classes.notchedOutline,
                                     }
                                 }}
                             />
                             <TextField
                                 id="outlined-adornment-password"
-                                className={classNames(styles.margin, styles.textField)}
+                                className={classNames(classes.margin, classes.textField)}
                                 variant="outlined"
                                 type={this.state.showPassword ? 'text' : 'password'}
                                 label="Password"
@@ -239,7 +232,7 @@ class Register extends Component {
                                 onChange={this.handleChange('password')}
                                 InputLabelProps={{
                                     classes: {
-                                        root: styles.cssLabel,
+                                        root: styles.cssOutlinedInput,
                                         focused: styles.cssFocused,
                                     },
                                 }}
@@ -249,17 +242,17 @@ class Register extends Component {
                                             <IconButton
                                                 aria-label="Toggle password visibility"
                                                 onClick={this.handleClickShowPassword}
-                                                className={styles.whiteText}
+                                                className={classes.whiteText}
                                             >
                                                 {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
                                     classes: {
-                                        input: styles.whiteText,
+                                        input: classes.whiteText,
                                         root: styles.cssOutlinedInput,
                                         focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
+                                        notchedOutline: classes.notchedOutline,
                                     },
                                 }}
                             />
@@ -268,7 +261,7 @@ class Register extends Component {
                             <TextField
                                 id="Name-input"
                                 label="Full Name"
-                                className={styles.textField}
+                                className={classes.textField}
                                 type="Name"
                                 name="name"
                                 margin="normal"
@@ -277,16 +270,16 @@ class Register extends Component {
                                 onChange={this.handleChange('name')}
                                 InputLabelProps={{
                                     classes: {
-                                        root: styles.cssLabel,
+                                        root: styles.cssOutlinedInput,
                                         focused: styles.cssFocused,
                                     },
                                 }}
                                 InputProps={{
                                     classes: {
-                                        input: styles.whiteText,
+                                        input: classes.whiteText,
                                         root: styles.cssOutlinedInput,
                                         focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
+                                        notchedOutline: classes.notchedOutline,
                                     }
                                 }}
                             />
@@ -294,7 +287,7 @@ class Register extends Component {
                             <TextField
                                 id="photo-input"
                                 label="Photo URL"
-                                className={styles.textField}
+                                className={classes.textField}
                                 type="Text"
                                 name="url"
                                 margin="normal"
@@ -303,16 +296,16 @@ class Register extends Component {
                                 onChange={this.handleChange('newURL')}
                                 InputLabelProps={{
                                     classes: {
-                                        root: styles.cssLabel,
+                                        root: styles.cssOutlinedInput,
                                         focused: styles.cssFocused,
                                     },
                                 }}
                                 InputProps={{
                                     classes: {
-                                        input: styles.whiteText,
+                                        input: classes.whiteText,
                                         root: styles.cssOutlinedInput,
                                         focused: styles.cssFocused,
-                                        notchedOutline: styles.notchedOutline,
+                                        notchedOutline: classes.notchedOutline,
                                     }
                                 }}
                             />
