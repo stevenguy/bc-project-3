@@ -25,7 +25,8 @@ router.route("/")
             data[index]["journal_id"] = dbModel._id
             index++
         }); 
-        transactionsController.csv({body: data})
+        res.json(dbModel)
+        return transactionsController.csv({body: data})
       })
   });
 
