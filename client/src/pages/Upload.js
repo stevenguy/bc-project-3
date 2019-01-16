@@ -127,23 +127,15 @@ class Upload extends Component {
             });
             console.log('here')
             console.log(tempCSV)
-
-            var i;
-            for(i = 0 ; i < this.state.csv.length ; i++){
-                if(this.state.csv[i] !== null){
-                    API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user'))._id})
-                }
-            }
+            API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user'))._id})
             this.setState({uploaded: 1})
         }
       }
 
       handleChange = event => {
-          console.log(event.target.value)
           var _mapped = this.state.mapped
           _mapped[event.target.name] = event.target.value
           this.setState({mapped: _mapped})
-          console.log(this.state)
       }
 
     render() {
