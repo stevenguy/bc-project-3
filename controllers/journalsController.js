@@ -22,7 +22,7 @@ module.exports = {
       })
       .catch(err => res.status(422).json(err))
     },
-  findAll: function (req, res) {
+  find: function (req, res) {
     db.Journal
       .aggregate(
         [{
@@ -37,16 +37,16 @@ module.exports = {
         {
           $match: { 'transaction.status': req.params.status }
         }
-        ])
+        ]).limit(10)
       .then(accounts => {
         res.json(accounts)
       })
       .catch(err => res.status(422).json(err))
-    },
-    create: function (req, res) {
-      db.Journal
-        .create(req.body)
-        .then(dbModel => res.json(dbModel))
-        .catch(err => res.status(422).json(err));
-    }
+  },
+  create: function (req, res) {
+    db.Journal
+      .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+}
   }
