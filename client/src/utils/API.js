@@ -42,7 +42,13 @@ export default {
   },
   //Get list of journal
   getJournals: function(status) {
-    return axios.get('/api/journals/' + status)
+    return axios.get('/api/journals/status/' + status)
+  },
+  approveJournal: function(journalId) {
+    return axios.put('/api/transactions/approve/', journalId)
+  },
+  getJournal: function() {
+    return axios.get('/api/journals')
   },
   // sums data from the database (month)
   monthly: function() {
