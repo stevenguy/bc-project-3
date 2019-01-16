@@ -441,8 +441,8 @@ class IncomeMonth extends Component {
                         .map((output, i) => {
                           return (
                             <React.Fragment>
-                              <TableCell key={i} align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                              <TableCell key={i} align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                              <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                              <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
                             </React.Fragment>
                           );
                         }
@@ -498,8 +498,8 @@ class IncomeMonth extends Component {
                         .map((output, i) => {
                           return (
                             <React.Fragment>
-                              <TableCell key={i} align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                              <TableCell key={i} align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                              <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                              <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
                             </React.Fragment>
                           );
                         }
