@@ -66,7 +66,7 @@ class Dashboard extends Component {
                   title='Search Journal Entries' 
                   path='Search' 
                   icon={<SearchIcon className={classes.icon}/>}
-                  text='Search for a journal entry by ID number, Preparer, or Approver'
+                  text='Search for a journal entry by Journal ID, Preparer, or Approver'
               />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
@@ -74,7 +74,7 @@ class Dashboard extends Component {
                   title='Run Reports' 
                   path='Reports' 
                   icon={<DirectionsRunIcon className={classes.icon}/>}
-                  text='Run dem Reports'
+                  text='Run monthly, quarterly, and yearly financial reports'
               />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
