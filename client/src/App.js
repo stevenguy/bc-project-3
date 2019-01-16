@@ -8,6 +8,7 @@ import Reports from "./pages/Reports"
 import Login from "./pages/Login"
 import Status from "./pages/Status"
 import Admin from "./pages/Admin"
+import Register from './pages/Register'
 import "./App.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route exact path="/Search" component={Search} />
             <Route exact path="/Reports" component={Reports} />
             <Route exact path = "/Admin" component={Admin}/>
+            <Route exact path="/Register" component={Register}/>
           </Switch>
         </div>
       </Router>

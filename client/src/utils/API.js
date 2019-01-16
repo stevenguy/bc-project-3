@@ -1,6 +1,14 @@
 import axios from "axios";
+import openSocket from 'socket.io-client'
+
+const socket = openSocket()
+
 
 export default {
+  // Socket emitting notification
+  notification: function(message) {
+    socket.emit('notification', message)
+  },
   // Gets all transactions
   getTransactions: function() {
     return axios.get("/api/transactions");
@@ -36,6 +44,10 @@ export default {
   getJournals: function() {
     return axios.get('/api/journals')
   },
+  // sums data from the database (month)
+  monthly: function() {
+    return axios.get("/api/transactions/monthly");
+  },
   // sums data from the database (quarterly)
   quarterly: function() {
     return axios.get("/api/transactions/quarterly");
@@ -51,10 +63,6 @@ export default {
   // Pulls all the accounts from the database
   accounts: function() {
     return axios.get("/api/transactions/accounts");
-  },
-  // sums data from the database (month)
-  reports: function() {
-    return axios.get("/api/transactions/reports");
   },
   // Pulls data by type and year
   typeyear: function() {
@@ -80,34 +88,19 @@ export default {
   acctmonth: function() {
     return axios.get("/api/transactions/acctmonth");
   },
-  // sums data by account details and month
-  compareyear: function() {
-    return axios.get("/api/transactions/compareyear");
+  preparerAutofill: function() {
+    return axios.get("/api/transactions/preparer");
   },
-  // sums data by account details and month
-  comparequarter: function() {
-    return axios.get("/api/transactions/comparequarter");
+  approverAutofill: function() {
+    return axios.get("/api/transactions/approver");
   },
-  // sums data by account details and month
-  comparemonth: function() {
-    return axios.get("/api/transactions/comparemonth");
+  transByPreparer: function(name) {
+    return axios.get("/api/transactions/preparer/" + name );
   },
-  compareyrsum: function() {
-    return axios.get("/api/transactions/compareyrsum");
+  transByApprover: function(name) {
+    return axios.get("/api/transactions/approver/" + name );
   },
-  // sums data by account details and month
-  compareqtrsum: function() {
-    return axios.get("/api/transactions/compareqtrsum");
-  },
-  // sums data by account details and month
-  comparemthsum: function() {
-    return axios.get("/api/transactions/comparemthsum");
-  },
-  preparer: function() {
-    return axios.get("/api/transactions/preparer")
+  journalIdAutofill: function(name) {
+    return axios.get("/api/transactions/journal");
   }
-  //  handles approving journals
-  // approveJournal: function () {
-  //   return axios.get("/api/transactions");
-  // }
 }

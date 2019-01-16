@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Notifications from "../components/Notifications"
 
 const drawerWidth = 180;
 
@@ -36,7 +37,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    paddingBottom: '20px',
+    paddingBottom: '80px',
   }
   });
 
@@ -140,11 +141,10 @@ class Upload extends Component {
         const { classes } = this.props;
         return (
             <React.Fragment>
+            <Notifications />
             <ResponsiveDrawer />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-            {/* <div style={{ flexGrow: 1}}> */}
-                <paper>
                     <Grid   container 
                             direction="column"
                             justify="center"
@@ -240,8 +240,6 @@ class Upload extends Component {
                             </Grid>
                         </Paper>
                     </Grid>
-                </paper>
-            {/* </div> */}
         </main>
         <Footer /> 
         </React.Fragment>
