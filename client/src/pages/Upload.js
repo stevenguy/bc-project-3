@@ -18,6 +18,7 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Notifications from "../components/Notifications"
+import { CSVLink, CSVDownload } from "react-csv";
 
 const drawerWidth = 180;
 
@@ -42,6 +43,14 @@ const styles = theme => ({
   });
 
 const expectedColumns = ['date','account','description','type','transaction','memo','details','amount']
+
+const csvData = [
+    ['date','account','description','type','transaction','memo','details','amount'],
+    ['1/1/2019','12000','Inventory','Assets','Prepaid Insurance','To Record Prepaid Insurance','Debit','589.63'],
+    ['1/1/2019','10000','Cash','Assets','HP Computer','To Record HP Computer','Credit','-589.63'],
+    ['1/2/2019','50200','Supplies','Expenses','Staples','To Record Staples','Debit','69.54'],
+    ['1/2/2019','10000','Cash','Assets','HP Computer','To Record HP Computer','Credit','-69.54']
+  ];
 
 class Upload extends Component {
 
@@ -155,7 +164,7 @@ class Upload extends Component {
                             <Grid item xs={12} sm={12}>
                                 <Typography style={{paddingLeft: '10px', paddingTop: '5px'}}>
                                     <a>Need a sample CSV to upload your Journal Entries? &nbsp;</a>
-                                    <a href={'../../public/'} download="Journal_Entry_Example.csv" style={{textDecoration: 'none'}}>Download CSV Template</a>
+                                    <CSVLink data={csvData} target="_blank" filename={"Journal Entry Example.csv"}>Download CSV Template</CSVLink>
                                 </Typography>
                             </Grid>
 
