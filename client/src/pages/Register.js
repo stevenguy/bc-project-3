@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-import ResponsiveDrawer from "../components/ResponsiveDrawer";
-import Footer from "../components/Footer"
-import Userinfo from "../components/UserInfo"
-import API from "../utils/API";
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,10 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
-import firebase, { auth, provider } from '../utils/firebase.js';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Auth from "../utils/user";
 import { Redirect } from "react-router";
 
@@ -36,6 +29,9 @@ const styles = theme => ({
     },
     card: {
         height: "80%",
+        [theme.breakpoints.down('sm')]: {
+            height: '100%',
+          },
     },
     brand: {
         backgroundColor: "rgb(229, 115, 106)",
@@ -101,7 +97,39 @@ const styles = theme => ({
         height: '50px'
     }, 
     head: {
-        justify:'center'
+        justify:'center',
+        margin: '10px'
+    },
+    googleIcon: {
+        display: "inline-block",
+        verticalAlign: "middle",
+        margin: "8px 8px 8px 8px",
+        width: "18px",
+        height: "18px",
+    },
+    line: {
+        width: '100%', 
+        textAlign: 'center', 
+        borderBottom: '1px solid white', 
+        lineHeight: '0.1em',
+        margin: '10px 0 20px'
+     },
+     lineText: { 
+         color: 'white',
+         padding: '0 10px',
+         backgroundColor: "rgb(46, 50, 68)",
+         fontFamily: "Roboto, Helvetica, Arial, sans-serif"
+     },
+    breakPoints: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+          },
+    },
+    mobileLogo: {
+        display: 'none',
+        [theme.breakpoints.down('sm')]: {
+            display: 'block',
+          },
     }
 })
 
