@@ -41,7 +41,13 @@ export default {
     return axios.get("/api/accounts")
   },
   //Get list of journal
-  getJournals: function() {
+  getJournals: function(status) {
+    return axios.get('/api/journals/status/' + status)
+  },
+  approveJournal: function(journalId) {
+    return axios.put('/api/transactions/approve/', journalId)
+  },
+  getJournal: function() {
     return axios.get('/api/journals')
   },
   // sums data from the database (month)
