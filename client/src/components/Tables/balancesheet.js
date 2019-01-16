@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import grey from '@material-ui/core/colors/grey';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -225,7 +226,6 @@ class BalanceSheet extends Component {
 
     if (this.state.level === 1){
       API.yearly()
-      // .then(res => console.log(res))
       .then(res => {
         let transactions = []
         res.data.forEach(element => {
@@ -361,9 +361,9 @@ class BalanceSheet extends Component {
             variant="outlined"
           >
             {level.map(l => (
-              <option key={l.value} value={l.value}>
+              <MenuItem key={l.value} value={l.value}>
                 {l.label}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>
@@ -392,9 +392,9 @@ class BalanceSheet extends Component {
                       variant="outlined"
                     >
                       {this.state.year.map(y => (
-                        <option key={y._id.year} value={y._id.year}>
+                        <MenuItem key={y._id.year} value={y._id.year}>
                           {y._id.year}
-                        </option>
+                        </MenuItem>
                       ))}
                     </TextField>
                     <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
@@ -422,9 +422,9 @@ class BalanceSheet extends Component {
                       variant="outlined"
                     >
                       {this.state.year.map(y => (
-                        <option key={y._id.year} value={y._id.year}>
+                        <MenuItem key={y._id.year} value={y._id.year}>
                           {y._id.year}
-                        </option>
+                        </MenuItem>
                       ))}
                     </TextField>
                     <TextField
@@ -444,9 +444,9 @@ class BalanceSheet extends Component {
                       variant="outlined"
                     >
                       {quarter.map(q => (
-                        <option key={q.value} value={q.value}>
+                        <MenuItem key={q.value} value={q.value}>
                           {q.label}
-                        </option>
+                        </MenuItem>
                       ))}
                     </TextField>
                     <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>
@@ -474,9 +474,9 @@ class BalanceSheet extends Component {
                       variant="outlined"
                     >
                       {this.state.year.map(y => (
-                        <option key={y._id.year} value={y._id.year}>
+                        <MenuItem key={y._id.year} value={y._id.year}>
                           {y._id.year}
-                        </option>
+                        </MenuItem>
                       ))}
                     </TextField>
                     <TextField
@@ -496,9 +496,9 @@ class BalanceSheet extends Component {
                       variant="outlined"
                     >
                       {month.map(m => (
-                        <option key={m.valueMonth} value={m.valueMonth}>
+                        <MenuItem key={m.valueMonth} value={m.valueMonth}>
                           {m.labelMonth}
-                        </option>
+                        </MenuItem>
                       ))}
                     </TextField>
                     <Button onClick={this.handleRun} variant="contained" color="grey" className={classes.button}>

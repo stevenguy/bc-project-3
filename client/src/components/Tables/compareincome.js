@@ -7,6 +7,7 @@ import grey from '@material-ui/core/colors/grey';
 import IncomeMonth from "../CompareReports/incomemonth";
 import IncomeQuarter from "../CompareReports/incomequarter";
 import IncomeYear from "../CompareReports/incomeyear";
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -126,9 +127,9 @@ class CompareIncome extends Component {
             variant="outlined"
           >
             {compare.map(c => (
-              <option key={c.value} value={c.value}>
+              <MenuItem key={c.value} value={c.value}>
                 {c.label}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>

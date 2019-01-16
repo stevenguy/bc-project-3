@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import grey from '@material-ui/core/colors/grey';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -215,9 +216,9 @@ class BalanceYear extends Component {
             variant="outlined"
           >
             {this.state.year.map(y => (
-              <option key={y._id.year} value={y._id.year}>
+              <MenuItem key={y._id.year} value={y._id.year}>
                 {y._id.year}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>
