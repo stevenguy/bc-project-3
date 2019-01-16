@@ -1,20 +1,13 @@
 import React, { Component } from "react"
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import ResponsiveDrawer from "../components/ResponsiveDrawer"
 import Footer from "../components/Footer"
 import grey from '@material-ui/core/colors/grey'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import API from '../utils/API'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Journals from '../components/Journals'
 import Notifications from "../components/Notifications"
@@ -30,29 +23,11 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
   },
-  dense: {
-    marginTop: 16,
-  },
   menu: {
     width: 200,
   },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
   table: {
     minWidth: 700,
-  },
-  head: {
-    backgroundColor: grey[300],
-    color: theme.palette.common.white,
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -68,31 +43,16 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: '100%',
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
   card: {
     minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
   },
 })
 
 const journals = [
+  {
+    value: 'Pending',
+    label: 'Pending'
+  },
   {
     value: 'Approved',
     label: 'Approved'
@@ -100,10 +60,6 @@ const journals = [
   {
     value: 'Unapproved',
     label: 'Unapproved'
-  },
-  {
-    value: 'Pending',
-    label: 'Pending'
   }
 ]
 
@@ -111,6 +67,19 @@ class Status extends Component {
   state = {
     journals: 'Select',
     journalData: [],
+  }
+
+  componentDidMount() {
+    API.getJournals('Pending')
+      .then(res => {
+        res.data.map((data) => {
+          data.transaction.map((data) => {
+            data.date = new Date(data.date)
+          })
+        })
+        this.setState({ journalData: res.data })
+      })
+      .catch(e => console.log(e))
   }
 
   handleExpand = panel => (event, expanded) => {
@@ -152,7 +121,7 @@ class Status extends Component {
                 select
                 label="Journal Status"
                 className={classes.textField}
-                value={this.state.journals}
+                value={this.state.journals === 'Select' ? 'Pending' : this.state.journals}
                 onChange={this.handleJournals('journals')}
                 SelectProps={{
                   MenuProps: {
