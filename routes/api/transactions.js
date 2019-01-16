@@ -80,8 +80,4 @@ router.route("/:id")
   // .put(transactionsController.update)
   .delete(transactionsController.remove)
 
-module.exports = router
-  .put(transactionsController.update)
-  .delete(transactionsController.remove)
-  
 module.exports = router;
