@@ -240,10 +240,12 @@ class Login extends Component {
                 >
                     <Grid item className={classes.card + " " + classes.breakPoints} md={4}>
                         <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
-                            <div className={classes.flex}>
-                                <img src="../images/acctg_blue.png" alt="acctg" style={ {display: 'block', height: 200, width: 400}}/>
-                                <Typography color='inherit' variant='h3' component="h3">
-                                    Web Accountant
+                            <div style={{ justifyContent: 'center'}} className={classes.flex}>
+                                <div style={{display: 'flex', alignSelf: 'flex-start', maxHeight: '250px', marginTop: '-150px'}}>
+                                    <img src="../images/acctg_blue.png" alt="acctg" style={ {display: 'block', height: 'auto', maxWidth: '100%'}}/>
+                                </div>
+                                <Typography style={{marginTop: '-50px'}} color='inherit' variant='h3' component="h3">
+                                    Web Accounting
                                 </Typography>
                             </div>
                         </Paper>
@@ -260,7 +262,7 @@ class Login extends Component {
                                         </div>
                                         <div className={classes.mobileLogo}>
                                             <Typography color='inherit' variant='h6' component="h6">
-                                                Web Accountant
+                                                Web Accounting
                                             </Typography>
                                         </div>
                                         <Typography style={ {marginTop: '30px'}}className={classes.textField} color='inherit' variant="h5" component="h5">SIGN IN</Typography>
