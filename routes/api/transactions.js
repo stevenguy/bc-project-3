@@ -4,7 +4,7 @@ const transactionsController = require("../../controllers/transactionsController
 // Matches with "/api/transactions"
 router.route("/")
   .get(transactionsController.findAll)
-  .put(transactionsController.create)
+  .post(transactionsController.create)
 
 // Matches with '/api/transactions/approve
 router.route('/approve')
