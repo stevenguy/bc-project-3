@@ -4,7 +4,11 @@ const transactionsController = require("../../controllers/transactionsController
 // Matches with "/api/transactions"
 router.route("/")
   .get(transactionsController.findAll)
-  .post(transactionsController.create)
+  .put(transactionsController.create)
+
+// Matches with '/api/transactions/approve
+router.route('/approve')
+  .put(transactionsController.approve)
 
 // Aggregate Data by Description, Type, Year, Quarter, Month, and Amount  
 router.route("/reports")
@@ -77,7 +81,7 @@ router.route("/accounts")
 // Matches with "/api/transactions/:id"
 router.route("/:id")
   .get(transactionsController.findById)
-  .put(transactionsController.update)
-  .delete(transactionsController.remove);
+  // .put(transactionsController.update)
+  .delete(transactionsController.remove)
 
-module.exports = router;
+module.exports = router

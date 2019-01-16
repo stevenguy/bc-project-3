@@ -2,6 +2,7 @@ const db = require("../models")
 
 module.exports = {
   findAll: function (req, res) {
+    console.log(req.params.status)
     db.Journal
       .aggregate(
         [{
@@ -14,7 +15,7 @@ module.exports = {
           }
         },
         {
-          $match: { 'transaction.status': 'Approved' }
+          $match: { 'transaction.status': req.params.status }
         }
         ]).limit(10)
       .then(accounts => {
