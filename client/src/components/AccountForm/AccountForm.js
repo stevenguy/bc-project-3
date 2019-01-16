@@ -5,7 +5,8 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-
+import Chip from '@material-ui/core/Chip';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const styles = theme => ({
   //Style goes here
@@ -15,18 +16,37 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   formControl: {
-    margin: 0,
-    minWidth: 120,
-    maxWidth: 150,
+    minWidth: '120px',
     padding: "0 10px",
-    flexGrow: '1',
+    [theme.breakpoints.down('sm')]: {
+        minWidth: '50%',
+      }
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
   div: {
-      flex: '100%'
-  }
+      flex: '100%',
+      marginLeft: '10px'
+  },
+  chip: {
+    margin: theme.spacing.unit,
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  test: {
+    padding: "0 10px",
+    [theme.breakpoints.down('sm')]: {
+        width: '50%',
+      }
+  },
+  textField: {
+    width: '100px',
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      }
+}
 });
 
 class AccountForm extends Component {
@@ -38,6 +58,7 @@ class AccountForm extends Component {
         newBtn: "Create New Account",
         accountID: '',
         isNew: false,
+        errorMsg: ''
     }
 
     isNew = (data) => {
@@ -49,9 +70,12 @@ class AccountForm extends Component {
     }
 
     createAccount = () => {
-        if (this.props.accounts.find(account => account.name === this.state.newName) !== undefined ||
+        if (!this.state.newName || !this.state.newNumber || !this.state.newTpe) {
+            this.setState({errorMsg: "Please input all required fields"})
+        }
+        else if (this.props.accounts.find(account => account.name === this.state.newName) !== undefined ||
             this.props.accounts.find(account => account.number === this.state.newNumber) !== undefined) {
-                console.log('Account already exist')
+                this.setState({errorMsg: "Account Already Exist!"})
             } else {
                 let newAccount = {
                     name: this.state.newName,
@@ -75,7 +99,7 @@ class AccountForm extends Component {
     createNew = event => {
       this.state.isNew 
       ? this.setState({newBtn: 'Create New Account'}, () => this.isNew(false))
-      : this.setState({newBtn: 'Select Existing Account'}, () => this.isNew(true)) 
+      : this.setState({newBtn: 'Select Existing Account', errorMsg: ''}, () => this.isNew(true)) 
     }
 
     render() {
@@ -121,6 +145,7 @@ class AccountForm extends Component {
                 </FormControl>
                 <FormControl  className={classes.formControl}>
                     <TextField
+                        className={classes.textField}
                         id="newType"
                         name="newType"
                         label="Type"
@@ -134,6 +159,14 @@ class AccountForm extends Component {
                         >
                     </TextField>
                 </FormControl>
+                {this.state.errorMsg 
+                ? <Chip
+                icon={<ErrorIcon />}
+                label={this.state.errorMsg}
+                className={classes.chip}
+                color="secondary"
+                variant="outlined"
+                />: null}
                 <div className={classes.div}>
                 <Button variant="contained" color="primary" onClick={this.createAccount}>
                     Create
@@ -189,15 +222,16 @@ class AccountForm extends Component {
                         ))}
                     </TextField>
                 </FormControl>
-                <FormControl  className={classes.formControl}>
+                <FormControl  className={classes.test}>
                     <TextField
                         id="type"
                         label="Type"
                         name="type"
+                        margin='normal'
+                        className={classes.textField}
                         required
                         value={this.props.entries[this.props.entryIndex].account.type}
                         margin="normal"
-                        fullWidth
                         InputProps={{
                             form:'form1',
                             readOnly: true,

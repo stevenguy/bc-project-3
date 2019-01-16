@@ -12,20 +12,21 @@ import Divider from '@material-ui/core/Divider';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import AccountForm from './AccountForm'
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   //Style goes here
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
   },
   formControl: {
-    margin: 0,
-    maxWidth: 150,
-    minWidth: 100,
     padding: "0 10px",
-    flexGrow: '1'
+    flex: '1',
+    minWidth: '150px',
+    [theme.breakpoints.down('sm')]: {
+        minWidth: '50%',
+      }
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
@@ -36,6 +37,9 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
         flex: '100%'
       }
+  },
+  textField: {
+      maxWidth: '100%'
   }
 });
 
@@ -49,7 +53,7 @@ class EntriesForm extends Component {
       const { classes } = this.props;
 
       return (
-        <React.Fragment>
+        <Paper>
             <div>
                 {this.props.entries.map((entry, index) => (
                     <React.Fragment key={index}>
@@ -70,6 +74,7 @@ class EntriesForm extends Component {
                         margin="normal"
                         label="Date"
                         format='MM/dd/yy'
+                        className={classes.textField}
                         value={this.props.entries[index].date}
                         onChange={this.props.handleDateChange(index)}
                     />
@@ -152,7 +157,7 @@ class EntriesForm extends Component {
                 <AddIcon />
             </Fab>
             </div>
-        </React.Fragment>
+        </Paper>
           );
         }
       }

@@ -4,6 +4,7 @@ const routes = require("./routes")
 const app = express()
 const PORT = process.env.PORT || 3001
 const bodyParser = require("body-parser")
+const socket = require('socket.io')
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }))
@@ -20,6 +21,18 @@ app.use(routes)
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/bookkeeping")
 
 // Start the API server
-app.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`)
+let server = app.listen(PORT, function() {
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+});
+
+let io = socket(server)
+
+io.on('connection', socket => {
+  console.log('Made socket connection')
+  socket.on('notification', function(msg) {
+    io.emit('notification', msg)
+  })
+  socket.on('disconnet', function() {
+    console.log('User disconnected')
+  })
 })
