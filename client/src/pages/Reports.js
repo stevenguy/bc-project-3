@@ -12,6 +12,7 @@ import AccountDetail from '../components/Tables/accounts';
 import CompareIncome from '../components/Tables/compareincome';
 import CompareBalance from '../components/Tables/comparebalance';
 import Notifications from "../components/Notifications"
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -138,9 +139,9 @@ class Report extends Component {
             variant="outlined"
           >
             {financials.map(f => (
-              <option key={f.value} value={f.value}>
+              <MenuItem key={f.value} value={f.value}>
                 {f.label}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>

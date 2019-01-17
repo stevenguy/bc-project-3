@@ -32,7 +32,7 @@ io.on('connection', socket => {
   socket.on('notification', function(msg) {
     io.emit('notification', msg)
   })
-  socket.on('disconnet', function() {
+  socket.on('disconnect', function() {
     console.log('User disconnected')
   })
 })

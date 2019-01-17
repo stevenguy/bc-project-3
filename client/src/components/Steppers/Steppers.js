@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import {EntriesForm, SubmitForm} from "../AccountForm";
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const styles = theme => ({
   root: {
@@ -147,6 +148,7 @@ class Steppers extends React.Component {
               <div className={classes.root}>
               {this.props.entries.length < 2 
               ? <Chip
+              icon={<ErrorIcon />}
               label="Minimum of 2 entries"
               className={classes.chip}
               color="secondary"
@@ -156,6 +158,7 @@ class Steppers extends React.Component {
               }
               {this.state.errorMsg 
                 ? <Chip
+                icon={<ErrorIcon />}
                 label={this.state.errorMsg}
                 className={classes.chip}
                 color="secondary"

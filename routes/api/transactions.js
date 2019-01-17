@@ -6,6 +6,10 @@ router.route("/")
   .get(transactionsController.findAll)
   .post(transactionsController.create)
 
+// Matches with '/api/transactions/approve
+router.route('/approve')
+  .put(transactionsController.approve)
+
 // Finds Transaction by Preparer's name
 router.route("/preparer/:name")
   .get(transactionsController.transByPreparer)
@@ -61,30 +65,6 @@ router.route("/typequarter")
 // Aggregate Data by Type, Year, and Amount  
 router.route("/typeyear")
   .get(transactionsController.typeyear)
-
-// // Aggregate Data by Type, Year, and Amount  
-// router.route("/compareyear")
-//   .get(transactionsController.compareyear)  
-
-// // Aggregate Data by Type, Year, and Amount  
-// router.route("/comparequarter")
-//   .get(transactionsController.comparequarter) 
-
-// // Aggregate Data by Type, Year, and Amount  
-// router.route("/comparemonth")
-//   .get(transactionsController.comparemonth)  
-
-// // Aggregate Data by Type, Year, and Amount  
-// router.route("/compareyrsum")
-//   .get(transactionsController.compareyrsum)  
-
-// // Aggregate Data by Type, Year, and Amount  
-// router.route("/compareqtrsum")
-//   .get(transactionsController.compareqtrsum) 
-
-// // Aggregate Data by Type, Year, and Amount  
-// router.route("/comparemthsum")
-//   .get(transactionsController.comparemthsum)
   
 // Aggregate Year
 router.route("/year")
@@ -97,7 +77,7 @@ router.route("/accounts")
 // Matches with "/api/transactions/:id"
 router.route("/:id")
   .get(transactionsController.findById)
-  .put(transactionsController.update)
+  // .put(transactionsController.update)
   .delete(transactionsController.remove)
   
 module.exports = router;

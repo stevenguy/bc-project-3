@@ -23,7 +23,7 @@ let transactionSeed = [
     prepared_date: new Date('2017-01-01'),
     approver: 'Jean Grey',
     approved_date: new Date('2017-01-02'),
-    status: 'Approved',
+    status: 'Pending',
     year: 2017,
     month: 1,
     quarter: 1
@@ -42,7 +42,7 @@ let transactionSeed = [
     prepared_date: new Date('2017-01-01'),
     approver: 'Jean Grey',
     approved_date: new Date('2017-01-02'),
-    status: 'Approved',
+    status: 'Pending',
     year: 2017,
     month: 1,
     quarter: 1

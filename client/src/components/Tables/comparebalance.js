@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ResponsiveDrawer from "../ResponsiveDrawer";
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,6 +7,7 @@ import grey from '@material-ui/core/colors/grey';
 import BalanceMonth from "../CompareReports/balancemonth";
 import BalanceQuarter from "../CompareReports/balancequarter";
 import BalanceYear from "../CompareReports/balanceyear";
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -106,7 +106,6 @@ class CompareBalance extends Component {
     return (
 
       <React.Fragment>
-      <ResponsiveDrawer />
       <div style={ { height: 10 } }></div>
       <Paper className="row">
 
@@ -128,9 +127,9 @@ class CompareBalance extends Component {
             variant="outlined"
           >
             {compare.map(c => (
-              <option key={c.value} value={c.value}>
+              <MenuItem key={c.value} value={c.value}>
                 {c.label}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>

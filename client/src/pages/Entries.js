@@ -107,7 +107,7 @@ class Entries extends Component {
             details: this.state.entries[i].details,
             amount: this.state.entries[i].amount,
             //Need to update the praparer to pull from local storage once the user features set up
-            preparer: 'Mearat',
+            preparer: user.name,
             prepared_date: new Date(),
             status: 'Pending',
             year: this.state.entries[i].date.getFullYear(),
