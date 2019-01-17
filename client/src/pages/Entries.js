@@ -105,7 +105,7 @@ class Entries extends Component {
             transaction: this.state.entries[i].description,
             memo: this.state.entries[i].memo,
             details: this.state.entries[i].details,
-            amount: this.state.entries[i].amount,
+            amount: this.state.entries[i].details === 'Debit' ? this.state.entries[i].amount : -1 * this.state.entries[i].amount,
             //Need to update the praparer to pull from local storage once the user features set up
             preparer: user.name,
             prepared_date: new Date(),
