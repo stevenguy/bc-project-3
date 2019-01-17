@@ -401,8 +401,8 @@ class IncomeQuarter extends Component {
                     <TableCell><b>REVENUE</b></TableCell>
                     {this.state.quarter === 1 ?
                       <React.Fragment>
-                        <TableCell align="right">Q4-{this.state.years - 1}</TableCell>
-                        <TableCell align="right">Q1-{this.state.years}</TableCell>
+                        <TableCell align="right"><b>Q4-{this.state.years - 1}</b></TableCell>
+                        <TableCell align="right"><b>Q1-{this.state.years}</b></TableCell>
                       </React.Fragment>
                       :
                       quarter
@@ -410,8 +410,8 @@ class IncomeQuarter extends Component {
                         .map((output, i) => {
                           return (
                             <React.Fragment>
-                              <TableCell align="right">{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</TableCell>
-                              <TableCell align="right">{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</b></TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</b></TableCell>
                             </React.Fragment>
                           );
                         }
@@ -458,8 +458,8 @@ class IncomeQuarter extends Component {
                     <TableCell><b>EXPENSES</b></TableCell>
                     {this.state.quarter === 1 ?
                       <React.Fragment>
-                        <TableCell align="right">Q4-{this.state.years - 1}</TableCell>
-                        <TableCell align="right">Q1-{this.state.years}</TableCell>
+                        <TableCell align="right"><b>Q4-{this.state.years - 1}</b></TableCell>
+                        <TableCell align="right"><b>Q1-{this.state.years}</b></TableCell>
                       </React.Fragment>
                       :
                       quarter
@@ -467,8 +467,8 @@ class IncomeQuarter extends Component {
                         .map((output, i) => {
                           return (
                             <React.Fragment>
-                              <TableCell align="right">{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</TableCell>
-                              <TableCell align="right">{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</b></TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</b></TableCell>
                             </React.Fragment>
                           );
                         }

@@ -434,8 +434,8 @@ class BalanceMonth extends Component {
                     <TableCell><b>ASSETS</b></TableCell>
                       {this.state.month === 1 ?
                         <React.Fragment>
-                          <TableCell align="right">December {this.state.years}</TableCell>
-                          <TableCell align="right">January {this.state.years}</TableCell>
+                          <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                          <TableCell align="right"><b>January {this.state.years}</b></TableCell>
                         </React.Fragment>
                         :
                         month
@@ -443,8 +443,8 @@ class BalanceMonth extends Component {
                           .map((output, i) => {
                             return (
                               <React.Fragment>
-                                <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                                <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
                               </React.Fragment>
                             );
                           }
@@ -491,8 +491,8 @@ class BalanceMonth extends Component {
                     <TableCell><b>LIABILITIES</b></TableCell>
                       {this.state.month === 1 ?
                         <React.Fragment>
-                          <TableCell align="right">December {this.state.years}</TableCell>
-                          <TableCell align="right">January {this.state.years}</TableCell>
+                          <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                          <TableCell align="right"><b>January {this.state.years}</b></TableCell>
                         </React.Fragment>
                         :
                         month
@@ -500,8 +500,8 @@ class BalanceMonth extends Component {
                           .map((output, i) => {
                             return (
                               <React.Fragment>
-                                <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                                <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
                               </React.Fragment>
                             );
                           }
@@ -548,8 +548,8 @@ class BalanceMonth extends Component {
                     <TableCell><b>RETAINED EARNINGS</b></TableCell>
                     {this.state.month === 1 ?
                         <React.Fragment>
-                          <TableCell align="right">December {this.state.years}</TableCell>
-                          <TableCell align="right">January {this.state.years}</TableCell>
+                          <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                          <TableCell align="right"><b>January {this.state.years}</b></TableCell>
                         </React.Fragment>
                         :
                         month
@@ -557,8 +557,8 @@ class BalanceMonth extends Component {
                           .map((output, i) => {
                             return (
                               <React.Fragment>
-                                <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                                <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
                               </React.Fragment>
                             );
                           }
