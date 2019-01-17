@@ -151,8 +151,7 @@ class Dashboard extends Component {
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item md={6} sm={12}>
-
+              <Grid item lg={6} md={12} sm={12} xs={12} >
                 <Chart
                   data={this.state.expenseGraph}
                 >
@@ -162,8 +161,8 @@ class Dashboard extends Component {
                   <LineSeries valueField="make" argumentField="month" />
                 </Chart>
               </Grid>
-              <Grid item md={6} sm={12}>
 
+              <Grid item lg={6} md={12} sm={12} xs={12}>
                 <Chart
                   data={this.state.revenueGraph}
                 >
