@@ -105,6 +105,7 @@ class BalanceQuarter extends Component {
     typesum: [],
     years: 0,
     quarter: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -130,6 +131,8 @@ class BalanceQuarter extends Component {
   }
 
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
     
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
@@ -328,6 +331,8 @@ class BalanceQuarter extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
 
       <React.Fragment>
@@ -393,7 +398,7 @@ class BalanceQuarter extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>ASSETS</b></TableCell>
                     {this.state.quarter === 1 ?
                       <React.Fragment>
@@ -450,7 +455,7 @@ class BalanceQuarter extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>LIABILITIES</b></TableCell>
                     {this.state.quarter === 1 ?
                       <React.Fragment>
@@ -507,7 +512,7 @@ class BalanceQuarter extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>RETAINED EARNINGS</b></TableCell>
                     {this.state.quarter === 1 ?
                       <React.Fragment>

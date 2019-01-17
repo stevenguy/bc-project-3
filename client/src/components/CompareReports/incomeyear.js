@@ -80,6 +80,7 @@ class IncomeYear extends Component {
     transactions: [],
     typesum: [],
     years: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -99,6 +100,8 @@ class IncomeYear extends Component {
   }
 
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
 
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
@@ -193,6 +196,8 @@ class IncomeYear extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
 
       <React.Fragment>
@@ -235,7 +240,7 @@ class IncomeYear extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head}  style={styles}>
                     <TableCell><b>REVENUE</b></TableCell>
                     <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
                     <TableCell align="right"><b>{this.state.years}</b></TableCell>
@@ -276,7 +281,7 @@ class IncomeYear extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>EXPENSES</b></TableCell>
                     <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
                     <TableCell align="right"><b>{this.state.years}</b></TableCell>
