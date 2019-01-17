@@ -94,7 +94,7 @@ class Entries extends Component {
 
     submitForm = () => {
       let entriesArr = []
-      API.newJournal({createdBy: 'Mearat'})
+      API.newJournal({createdBy: user.name})
       .then((journal) => {
         for (let i = 0; i < this.state.entries.length; i++) {
           entriesArr.push({
