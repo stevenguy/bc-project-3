@@ -137,6 +137,7 @@ class IncomeMonth extends Component {
     typesum: [],
     years: 0,
     month: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -162,6 +163,8 @@ class IncomeMonth extends Component {
   }
 
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
 
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
@@ -285,8 +288,6 @@ class IncomeMonth extends Component {
           res.data.forEach(element => {
             let currMonth = this.state.month
             let prevMonth = this.state.month - 1
-            console.log(currMonth)
-            console.log(prevMonth)
             let index = description.indexOf(element._id.description)
             if (element._id.month === currMonth && element._id.year === this.state.years) {
               currAmt[index] += element.amount 
@@ -362,6 +363,8 @@ class IncomeMonth extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
 
       <React.Fragment>
@@ -427,7 +430,7 @@ class IncomeMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>REVENUE</b></TableCell>
                     {this.state.month === 1 ?
                       <React.Fragment>
@@ -484,7 +487,7 @@ class IncomeMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>EXPENSES</b></TableCell>
                     {this.state.month === 1 ?
                       <React.Fragment>

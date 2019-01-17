@@ -185,6 +185,7 @@ class IncomeStatement extends Component {
     years: 0,
     quarter: 0,
     month: 0,
+    hideHeaders: true
   };
 
   handleLevel = lvl => event => {
@@ -222,6 +223,8 @@ class IncomeStatement extends Component {
   }
 
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
 
     if (this.state.level === 1){
       API.yearly()
@@ -336,6 +339,8 @@ class IncomeStatement extends Component {
   render() {
     
     const { classes } = this.props;
+
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
 
     return (
 
@@ -517,7 +522,7 @@ class IncomeStatement extends Component {
       <Paper>
           <Table>
           <TableHead>
-              <TableRow className={classes.head}>
+              <TableRow className={classes.head} style={styles}>
               <TableCell><b>REVENUE</b></TableCell>
               <TableCell align="right"><b>BALANCE</b></TableCell>
               </TableRow>
@@ -555,7 +560,7 @@ class IncomeStatement extends Component {
       <Paper>
           <Table>
           <TableHead>
-              <TableRow className={classes.head}>
+              <TableRow className={classes.head} style={styles}>
               <TableCell><b>EXPENSES</b></TableCell>
               <TableCell align="right"><b>BALANCE</b></TableCell>
               </TableRow>

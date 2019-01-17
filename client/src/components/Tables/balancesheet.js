@@ -186,6 +186,7 @@ class BalanceSheet extends Component {
     years: 0,
     quarter: 0,
     month: 0,
+    hideHeaders: true
   };
 
   handleLevel = lvl => event => {
@@ -222,7 +223,9 @@ class BalanceSheet extends Component {
     .catch(err => console.log(err));
   }
 
-  handleRun = () => {
+  handleRun = (event) => {
+
+    this.setState({hideHeaders: false})
 
     if (this.state.level === 1){
       API.yearly()
@@ -337,6 +340,8 @@ class BalanceSheet extends Component {
   render() {
     
     const { classes } = this.props;
+
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
 
     return (
 
@@ -514,11 +519,11 @@ class BalanceSheet extends Component {
 
       <div style={ { height: 10 } }></div>
 
-      <React.Fragment>
+      <React.Fragment >
         <Paper>
           <Table>
             <TableHead>
-              <TableRow className={classes.head}>
+              <TableRow className={classes.head} style={styles}>
                 <TableCell><b>ASSETS</b></TableCell>
                 <TableCell align="right"><b>BALANCE</b></TableCell>
               </TableRow>
@@ -557,7 +562,7 @@ class BalanceSheet extends Component {
         <Paper>
           <Table>
             <TableHead>
-              <TableRow className={classes.head}>
+              <TableRow className={classes.head} style={styles}>
                 <TableCell><b>LIABILITIES</b></TableCell>
                 <TableCell align="right"><b>BALANCE</b></TableCell>
               </TableRow>
@@ -596,7 +601,7 @@ class BalanceSheet extends Component {
         <Paper>
           <Table>
             <TableHead>
-              <TableRow className={classes.head}>
+              <TableRow className={classes.head} style={styles}>
                 <TableCell><b>RETAINED EARNINGS</b></TableCell>
                 <TableCell align="right"><b>BALANCE</b></TableCell>
               </TableRow>
