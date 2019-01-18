@@ -123,7 +123,7 @@ class Dashboard extends Component {
           <ResponsiveDrawer />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <Grid container alignItems={'center'} alignContent = {'center'} spacing={10}>
+            <Grid container alignItems={'center'} alignContent = {'center'} spacing={24}>
               <Grid item lg={3} sm={6} xs={12}>
                 <DashboardCard
                   title='Approved/Unapproved Journal Entries'
