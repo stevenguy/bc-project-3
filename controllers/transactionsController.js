@@ -30,14 +30,14 @@ module.exports = {
   // handles approving journals
   approve: function(req, res) {
     db.Transaction
-      .updateMany({ journal_id: req.body.journalId }, { $set: { status: 'Approved' } })
+      .updateMany({ journal_id: req.body.journalId }, { $set: { status: 'Approved', approver: req.body.user } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   unapprove: function(req, res) {
     console.log(req.body.journalId)
     db.Transaction
-      .updateMany({ journal_id: req.body.journalId }, { $set: { status: 'Unapproved' } })
+      .updateMany({ journal_id: req.body.journalId }, { $set: { status: 'Unapproved', approver: req.body.user } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

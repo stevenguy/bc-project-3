@@ -75,7 +75,7 @@ class Journals extends Component {
 
   handleApprove = journal => {
     this.setState({ hideUnapprove: true })
-    API.approveJournal({ journalId: journal })
+    API.approveJournal({ journalId: journal, user: user.name })
       .then(() => {
         this.setState({ disableApprove: true })
         API.notification(user.name + " Approved A Journal!")
@@ -84,9 +84,10 @@ class Journals extends Component {
 
   handleUnapprove = journal => {
     this.setState({ hideApprove: true })
-    API.unapproveJournal({ journalId: journal })
+    API.unapproveJournal({ journalId: journal, user: user.name })
       .then(() => {
         this.setState({ disableUnapprove: true })
+        API.notification(user.name + " Unapproved A Journal!")
       })
   }
 
@@ -108,6 +109,34 @@ class Journals extends Component {
                   </React.Fragment>
                 )
                 )}
+                {
+                  this.props.output.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
+                    ? <Button style={hideUnapprove} onClick={() => {
+                      this.handleApprove(this.props.output._id)
+                    }}
+                      variant="contained" className={classes.button}>
+                      Approve
+                </Button>
+                    : this.props.output.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
+                      ? <Button disabled variant="contained" className={classes.button}>
+                        Approved!
+                </Button>
+                      : ''
+                }
+                {
+                  this.props.output.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
+                    ? <Button style={hideApprove} onClick={() => {
+                      this.handleUnapprove(this.props.output._id)
+                    }}
+                      variant="contained" className={classes.button}>
+                      Unapprove
+                </Button>
+                    : this.props.output.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
+                      ? <Button disabled variant="contained" className={classes.button}>
+                        Unapproved!
+                </Button>
+                      : ''
+                }
               </List>
             ) : (
               <React.Fragment>
