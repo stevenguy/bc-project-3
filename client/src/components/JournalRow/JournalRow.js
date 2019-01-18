@@ -29,7 +29,7 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit,
     alignSelf: 'center'
-  }
+  },
 })
 
 class JournalRow extends Component {
@@ -47,7 +47,7 @@ class JournalRow extends Component {
     const { classes } = this.props;
 
     return (
-      <Paper>
+      <React.Fragment>
         <ListItem button onClick={this.handleClick} key={this.props.index} alignItems="flex-start">
           <ListItemAvatar>
             {this.props.entry.details === "Debit"
@@ -65,7 +65,7 @@ class JournalRow extends Component {
                   {this.state.open ? "Memo: " + this.props.entry.memo : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {'Account: ' + this.props.entry.account}
+                  {'Amount: $' + this.props.entry.amount}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
                   {this.state.open ? 'Preparer: ' + this.props.entry.preparer : null}
@@ -77,7 +77,7 @@ class JournalRow extends Component {
                   {this.state.open ? 'Approver: ' + this.props.entry.approver : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open ? 'Approved Date: ' + this.props.entry.approved_date : null}
+                  {this.state.open ? 'Approved Date: ' + this.props.entry.approved_date.toLocaleDateString('en-US') : null}
                 </Typography>
                 {this.props.entry.date.toLocaleDateString('en-US')}
               </React.Fragment>
@@ -85,7 +85,7 @@ class JournalRow extends Component {
           />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-      </Paper>
+      </React.Fragment>
     )
   }
 }
