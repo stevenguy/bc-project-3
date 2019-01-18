@@ -148,7 +148,7 @@ class ResponsiveDrawer extends React.Component {
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
         {local 
-          ? <React.Fragment> <Avatar alt="Login User" src={user.photoURL === '' ? '../../images/avatar.jpg': user.photoURL} className={classes.avatar} />
+          ? <React.Fragment> <Avatar alt="Login User" src={!user.photoURL ? '../../images/avatar.jpg': user.photoURL} className={classes.avatar} />
           <Typography className={classes.userName}>{user.name}</Typography>
           </React.Fragment>
           : <Redirect to='/'/>}
