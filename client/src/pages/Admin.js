@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
@@ -7,10 +8,16 @@ import Userinfo from "../components/UserInfo"
 import API from "../utils/API";
 import Auth from "../utils/user";
 import { Redirect } from "react-router";
+import classNames from 'classnames'
 
-const pStyle = {
-  textAlign: 'center'
-};
+
+const styles = theme => ({
+
+  center: {
+    marginTop:'10px'
+  }
+
+})
 
 var local = JSON.parse(localStorage.getItem('user'));
 
@@ -60,38 +67,51 @@ class Admin extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <React.Fragment>
+        <Grid
+                        container
+                        className={classes.center}
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
+                        style={{}}
+                    >
 
-        {(local == null || local.role != 'admin') ? <Redirect to='/' /> : <h3>AdminPage</h3>}
+        <div className={classes.center}>
+        {(local == null || local.role != 'Admin') ? <Redirect to='/' /> : <h3>AdminPage</h3>}
 
-          <div className='list' style={pStyle}>
 
-            {!this.state.accounts.length ? (<h1>No new pending users</h1>)
-              :
-              (this.state.accounts.map(stuff => {
-                return (
-                  <Userinfo
+          {!this.state.accounts.length ? (<h1>No new pending users</h1>)
+            :
+            (this.state.accounts.map(stuff => {
+
+              return (stuff.role != 'Admin' ?
+                <Userinfo
                   id={stuff._id}
                   image={stuff.photoURL}
-                    name={stuff.name}
-                    email={stuff.email}
-                    role={stuff.role}
-                    clicked={this.assignRole}
-                    />
-                );
-              })
-              )
-            }
-          </div>
+                  name={stuff.name}
+                  email={stuff.email}
+                  role={stuff.role}
+                  clicked={this.assignRole}
+                />
+                : <h1></h1>
+              );
+            })
+            )
+          }
+        </div>
 
+        </Grid>
 
       </React.Fragment>
     );
   }
 }
-// Entries.propTypes = {
-//   classes: PropTypes.object.isRequired, 
-// };
 
-export default Admin;
+Admin.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Admin);

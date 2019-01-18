@@ -111,78 +111,80 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-        {/* {!local.password ? <Redirect to={{pathname: '/register'
-    }} /> : */}
-        <React.Fragment>
-          <Notifications />
-          <ResponsiveDrawer />
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Grid container alignItems={'center'} alignContent = {'center'} spacing={10}>
-              <Grid item lg={3} sm={6} xs={12}>
-                <DashboardCard
-                  title='Approved/Unapproved Journal Entries'
-                  path='Entries'
-                  icon={<DoneAllIcon className={classes.icon} />}
-                  text='Create a new Journal Entry or check to see if existing entries are Approved/Unapproved'   
-                  color={'#76ff03'}               
-                />
+        {/* {!local.password ? <Redirect to={{
+          pathname: '/register'
+        }} /> :} */}
+          <React.Fragment>
+            <Notifications />
+            <ResponsiveDrawer />
+            <main className={classes.content}>
+              <div className={classes.toolbar} />
+              <Grid container alignItems={'center'} alignContent={'center'} spacing={10}>
+                <Grid item lg={3} sm={6} xs={12}>
+                  <DashboardCard
+                    title='Approved/Unapproved Journal Entries'
+                    path='Entries'
+                    icon={<DoneAllIcon className={classes.icon} />}
+                    text='Create a new Journal Entry or check to see if existing entries are Approved/Unapproved'
+                    color={'#76ff03'}
+                  />
+                </Grid>
+                <Grid item lg={3} sm={6} xs={12}>
+                  <DashboardCard
+                    title='Search Journal Entries'
+                    path='Search'
+                    icon={<SearchIcon className={classes.icon} />}
+                    text='Search for a journal entry by ID number, Preparer, or Approver'
+                    color={'red'}
+                  />
+                </Grid>
+                <Grid item lg={3} sm={6} xs={12}>
+                  <DashboardCard
+                    title='Run Reports'
+                    path='Reports'
+                    icon={<DirectionsRunIcon className={classes.icon} />}
+                    text='Run dem Reports'
+                    color={'aqua'}
+                  />
+                </Grid>
+                <Grid item lg={3} sm={6} xs={12}>
+                  <DashboardCard
+                    title='Upload Transactions'
+                    path='Upload'
+                    icon={<CloudUploadIcon className={classes.icon} />}
+                    text='Upload new transactions via CSV file'
+                    color={'#ffc107'}
+                  />
+                </Grid>
               </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <DashboardCard
-                  title='Search Journal Entries'
-                  path='Search'
-                  icon={<SearchIcon className={classes.icon} />}
-                  text='Search for a journal entry by ID number, Preparer, or Approver'
-                  color={'red'} 
-                />
+              <Grid container spacing={40} style={{ paddingTop: 100 }}>
+                <Grid item md={6} sm={12} style={{ backgroundColor: '#f1f8e9' }}>
+                  <Chart
+
+                    data={this.state.expenseGraph}
+                  >
+                    <Title text='Expenses' />
+                    <ArgumentAxis />
+                    <ValueAxis />
+                    <LineSeries valueField="make" argumentField="month" />
+                  </Chart>
+                </Grid>
+                <Grid item md={6} sm={12} style={{ backgroundColor: '#ffebee' }}>
+                  <Chart
+                    data={this.state.revenueGraph}
+                  >
+                    <Title text='Revenue' />
+                    <ArgumentAxis />
+                    <ValueAxis />
+                    <LineSeries valueField="make" argumentField="month" />
+                  </Chart>
+                </Grid>
               </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <DashboardCard
-                  title='Run Reports'
-                  path='Reports'
-                  icon={<DirectionsRunIcon className={classes.icon} />}
-                  text='Run dem Reports'
-                  color={'aqua'} 
-                />
-              </Grid>
-              <Grid item lg={3} sm={6} xs={12}>
-                <DashboardCard
-                  title='Upload Transactions'
-                  path='Upload'
-                  icon={<CloudUploadIcon className={classes.icon} />}
-                  text='Upload new transactions via CSV file'
-                  color={'#ffc107'} 
-                />
-              </Grid>
-            </Grid>
-            <Grid container spacing = {40} style = {{paddingTop : 100}}>
-              <Grid item md={6} sm={12} style = {{backgroundColor: '#f1f8e9'}}>
-                <Chart
-                  
-                  data={this.state.expenseGraph}
-                >
-                  <Title text='Expenses' />
-                  <ArgumentAxis />
-                  <ValueAxis />
-                  <LineSeries valueField="make" argumentField="month" />
-                </Chart>
-              </Grid>
-              <Grid item md={6} sm={12} style = {{backgroundColor: '#ffebee'}}>
-                <Chart
-                  data={this.state.revenueGraph}
-                >
-                  <Title text='Revenue' />
-                  <ArgumentAxis />
-                  <ValueAxis />
-                  <LineSeries valueField="make" argumentField="month" />
-                </Chart>
-              </Grid>
-            </Grid>
-          </main>
-          <Footer />
-        </React.Fragment>
+            </main>
+            <Footer />
+          </React.Fragment>
         }
+        
           </React.Fragment>
     )
   }
