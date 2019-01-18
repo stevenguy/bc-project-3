@@ -182,16 +182,7 @@ class Register extends Component {
         }
     };
 
-    constructor(props) {
-        super(props);
-        this.handleLoad = this.handleLoad.bind(this);
-    }
-
     componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
-    }
-
-    handleLoad = _ => {
         let currentUser = localStorage.getItem('user')
         if (currentUser !== null) {
             this.setState({ currentAccount: JSON.parse(currentUser) })
