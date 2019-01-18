@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import Footer from "../Footer";
-import ResponsiveDrawer from "../ResponsiveDrawer";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import grey from '@material-ui/core/colors/grey';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -80,6 +80,7 @@ class IncomeYear extends Component {
     transactions: [],
     typesum: [],
     years: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -99,6 +100,8 @@ class IncomeYear extends Component {
   }
 
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
 
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
@@ -193,6 +196,8 @@ class IncomeYear extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
 
       <React.Fragment>
@@ -216,9 +221,9 @@ class IncomeYear extends Component {
             variant="outlined"
           >
             {this.state.year.map(y => (
-              <option key={y._id.year} value={y._id.year}>
+              <MenuItem key={y._id.year} value={y._id.year}>
                 {y._id.year}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>
@@ -235,7 +240,7 @@ class IncomeYear extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head}  style={styles}>
                     <TableCell><b>REVENUE</b></TableCell>
                     <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
                     <TableCell align="right"><b>{this.state.years}</b></TableCell>
@@ -276,7 +281,7 @@ class IncomeYear extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>EXPENSES</b></TableCell>
                     <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
                     <TableCell align="right"><b>{this.state.years}</b></TableCell>
