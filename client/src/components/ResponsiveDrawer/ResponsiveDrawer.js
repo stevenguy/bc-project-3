@@ -155,10 +155,14 @@ class ResponsiveDrawer extends React.Component {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
-            <ListItem button>
-              <ListItemIcon><SettingsIcon /></ListItemIcon>
-              <ListItemText primary='Settings' />
-            </ListItem>
+          {user.role.toLowerCase() === 'admin' ?
+            <NavLink  exact={true} style={{ textDecoration: 'none' }} to='/Admin'>
+              <ListItem button >
+                <ListItemIcon><SettingsIcon /></ListItemIcon>
+                <ListItemText primary='Admin' />
+              </ListItem>
+            </NavLink> : ""
+          }
             <ListItem button onClick={this.logout}>
               <ListItemIcon><PowerSettingsNewIcon/></ListItemIcon>
               <ListItemText primary='Log Out' />
@@ -211,6 +215,7 @@ class ResponsiveDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
+            {<Route path={'/Admin'} exact render={() => <div>Admin</div>}/>}
             {this.state.menuArr.map(text => (
               <Route key={text} path={'/' + text} exact render={() => <div>{text}</div>}/>
             ))}
