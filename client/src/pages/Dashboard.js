@@ -111,8 +111,6 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-        {/* {!local.password ? <Redirect to={{pathname: '/register'
-    }} /> : */}
         <React.Fragment>
           <Notifications />
           <ResponsiveDrawer />
@@ -142,7 +140,7 @@ class Dashboard extends Component {
                   title='Run Reports'
                   path='Reports'
                   icon={<DirectionsRunIcon className={classes.icon} />}
-                  text='Run dem Reports'
+                  text='Run monthly, quarterly, and yearly reports'
                   color={'aqua'} 
                 />
               </Grid>
@@ -159,7 +157,6 @@ class Dashboard extends Component {
             <Grid container spacing = {40} style = {{paddingTop : 100}}>
               <Grid item md={6} sm={12} style = {{backgroundColor: '#f1f8e9'}}>
                 <Chart
-                  
                   data={this.state.expenseGraph}
                 >
                   <Title text='Expenses' />
@@ -183,7 +180,7 @@ class Dashboard extends Component {
           <Footer />
         </React.Fragment>
         }
-          </React.Fragment>
+        </React.Fragment>
     )
   }
 }
