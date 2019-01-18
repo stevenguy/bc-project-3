@@ -25,7 +25,7 @@ module.exports = {
   csv: function(req, res) {
     console.log(req.body)
     db.Transaction
-      .insertMany(req.body)
+      .create(req.body)
   },
   // handles approving journals
   approve: function(req, res) {
@@ -300,7 +300,7 @@ module.exports = {
           }
         }]
       )
-      .sort({ amount: -1 })
+      .sort({ amount: - 1 })
       .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
   },  

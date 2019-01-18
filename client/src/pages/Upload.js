@@ -18,6 +18,7 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Notifications from "../components/Notifications"
+import { CSVLink, CSVDownload } from "react-csv";
 
 const drawerWidth = 180;
 
@@ -42,6 +43,16 @@ const styles = theme => ({
   });
 
 const expectedColumns = ['date','account','description','type','transaction','memo','details','amount']
+
+const csvData = [
+    ['date','account','description','type','transaction','memo','details','amount'],
+    ['1/1/2019','12000','Inventory','Assets','Prepaid Insurance','To Record Prepaid Insurance','Debit','589.63'],
+    ['1/1/2019','10000','Cash','Assets','HP Computer','To Record HP Computer','Credit','-589.63'],
+    ['1/2/2019','50200','Supplies','Expenses','Staples','To Record Staples','Debit','69.54'],
+    ['1/2/2019','10000','Cash','Assets','HP Computer','To Record HP Computer','Credit','-69.54']
+  ];
+
+const user = JSON.parse(localStorage.getItem('user'))
 
 class Upload extends Component {
 
@@ -71,7 +82,7 @@ class Upload extends Component {
 
         if(_map.length === 8){
             this.setState({csv: JSON.stringify(result.data), map: _map})
-            console.log(this.state)
+            // console.log(this.state)
         }else{
             alert(`Your CSV file does not contain the right amount of columns. Please revise and try again. \n\n Your Columns: ${_map} \n\n Expected Columns: ${expectedColumns}`)
         }
@@ -112,29 +123,22 @@ class Upload extends Component {
             //start mapping
             let tempCSV = this.state.csv
             this.state.map.forEach((element, i) => {
-                console.log(element)
+                // console.log(element)
                 tempCSV = tempCSV.split(element).join(this.state.mapped[i])
-                console.log(tempCSV)
+                // console.log(tempCSV)
             });
             console.log('here')
             console.log(tempCSV)
-
-            var i;
-            for(i = 0 ; i < this.state.csv.length ; i++){
-                if(this.state.csv[i] !== null){
-                    API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user'))._id})
-                }
-            }
+            API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user')).name})
+            .then(() => API.notification(user.name + " Added New Journal!"))
             this.setState({uploaded: 1})
         }
       }
 
       handleChange = event => {
-          console.log(event.target.value)
           var _mapped = this.state.mapped
           _mapped[event.target.name] = event.target.value
           this.setState({mapped: _mapped})
-          console.log(this.state)
       }
 
     render() {
@@ -155,7 +159,7 @@ class Upload extends Component {
                             <Grid item xs={12} sm={12}>
                                 <Typography style={{paddingLeft: '10px', paddingTop: '5px'}}>
                                     <a>Need a sample CSV to upload your Journal Entries? &nbsp;</a>
-                                    <a href={'../../public/'} download="Journal_Entry_Example.csv" style={{textDecoration: 'none'}}>Download CSV Template</a>
+                                    <CSVLink data={csvData} target="_blank" filename={"Journal Entry Example.csv"}>Download CSV Template</CSVLink>
                                 </Typography>
                             </Grid>
 

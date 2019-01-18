@@ -14,12 +14,14 @@ module.exports = {
     db.User.findOne({ 'email': req.body.email })
       .then(dbModel => {
         if (dbModel == null) {
+          console.log('creating user')
           db.User.create(req.body)
             .then(dbModel => {
               res.json(dbModel)
             })
         }
         else {
+          console.log('returning user')
           res.json(dbModel)
         }
       })

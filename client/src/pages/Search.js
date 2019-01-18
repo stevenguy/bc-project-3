@@ -44,6 +44,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    paddingBottom: '80px',
   },
 
   // my styles
@@ -306,8 +307,8 @@ class Search extends Component {
         <ResponsiveDrawer />
 
         <main className = {classes.content}>
-          {/* <div className={classes.toolbar} /> */}
-            <div className={classes.root}>
+          <div className={classes.toolbar} />
+            {/* <div className={classes.root}> */}
             <Grid container spacing={8} alignItems= 'flex-end'>
 {/* SELECT CODE  */}
 
@@ -366,7 +367,7 @@ class Search extends Component {
               </Grid>
           </Grid>
               <div className={classes.carduh}> {button} </div>
-          </div>
+          {/* </div> */}
       </main>
       <Footer />
       </React.Fragment>
