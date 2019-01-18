@@ -33,6 +33,7 @@ import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button'
 
+
 const drawerWidth = 180;
 
 const styles = theme => ({
@@ -84,7 +85,8 @@ const styles = theme => ({
   },
   carduh: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
 
   boot: {
@@ -99,6 +101,17 @@ const styles = theme => ({
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
   },
+  toot: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    marginLeft: '100px',
+    marginRight: '100px'
+  },
+  simpleCard: {
+    display: 'flex',
+    justifyContent: 'center'
+  }
 
 });
 
@@ -180,10 +193,11 @@ class Search extends Component {
     popper: '',
     suggestions: [],
     viewCard: false,
-    searchData: {},
+    searchData: [],
     category: 30,
     labelWidth: 0,
     }
+
     componentWillMount() {
       API.journalIdAutofill()
         .then(r => {
@@ -254,27 +268,48 @@ class Search extends Component {
           // console.log('Approver')
           // console.log(this.state.single)
           API.transByApprover(this.state.single)
-            .then (r => console.log(r.data))
+            .then (r => {
+              this.setState({searchData: r.data})
+              console.log(this.state.searchData)
+              this.setState({viewCard: true})
+            })
         }
         break
         case 20: {
           // console.log('Preparer')
           // console.log(this.state.single)
           API.transByPreparer(this.state.single)
-            .then (r => console.log(r.data))
+            .then (r => {
+              this.setState({searchData: r.data})
+              console.log(this.state.searchData)
+              this.setState({viewCard: true})
+            })
         }
         break 
         case 30: {
           // console.log('Database ID')
           API.getTransaction(this.state.single)
             .then (r => {
-              this.setState({searchData: r.data})
+              this.setState({searchData: [r.data]})
+              console.log(this.state.searchData)
               this.setState({viewCard: true})
             })
         }
         default: console.log('please select a category!')
       }
     }
+
+    // renderButton = () => {
+    //   let isShowing = this.state.viewCard
+    //   if (isShowing) {
+    //     this.state.searchData.map(info => {
+    //       <SimpleCard info={info} /> 
+    //     })
+    //   } 
+    //   else {
+    //       null
+    //     }
+    // }
 
     render() {
       const { classes } = this.props;
@@ -289,13 +324,13 @@ class Search extends Component {
       };
 
       //Renders Card when submit is clicked 
-      let isShowing = this.state.viewCard
-      let button 
-      if (isShowing) {
-      button = <SimpleCard info= {this.state.searchData} />;
-      } else {
-        button = ""
-      }
+      // let isShowing = this.state.viewCard
+      // let button 
+      // if (isShowing) {
+      // button = <SimpleCard info= {this.state.searchData} />;
+      // } else {
+      //   button = ""
+      // }
 
       // Calling selectChanger function here because view re-renders immediately after state.category is changed 
       this.selectChanger()
@@ -308,8 +343,10 @@ class Search extends Component {
         <main className = {classes.content}>
           <div className={classes.toolbar} />
             {/* <div className={classes.root}> */}
+            <Paper className={classes.toot} elevation={1}>
             <Grid container spacing={8} alignItems= 'flex-end'>
 {/* SELECT CODE  */}
+
             <Grid item lg ={3} >
             <form className={classes.boot} autoComplete="off">
               <FormControl variant="outlined" className={classes.formControl}>
@@ -339,6 +376,7 @@ class Search extends Component {
               </form>
               </Grid>
 {/* AUTOSUGGEST CODE  */}
+
               <Grid item lg ={6}>  
               <Autosuggest
                 {...autosuggestProps}
@@ -363,8 +401,16 @@ class Search extends Component {
               <Button variant= 'contained' color= 'primary' onClick = {this.searchItem} >Submit</Button>
               </Grid>
           </Grid>
-              <div className={classes.carduh}> {button} </div>
+              <div className={classes.carduh}> {
+                this.state.searchData.map(item => 
+                  <div className={classes.simpleCard}>
+                  {this.state.viewCard ? <SimpleCard info = {item}/>: null}
+                  </div>
+                  )
+              } 
+              </div>
           {/* </div> */}
+          </Paper>
       </main>
       <Footer />
       </React.Fragment>
