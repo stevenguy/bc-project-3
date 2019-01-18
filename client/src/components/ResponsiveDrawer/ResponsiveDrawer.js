@@ -155,7 +155,7 @@ class ResponsiveDrawer extends React.Component {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
-          {user.role.toLowerCase() === 'admin' ?
+          {!local ? <Redirect to='/'/> : user.role.toLowerCase() === 'admin' ?
             <NavLink  exact={true} style={{ textDecoration: 'none' }} to='/Admin'>
               <ListItem button >
                 <ListItemIcon><SettingsIcon /></ListItemIcon>
