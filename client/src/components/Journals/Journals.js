@@ -174,7 +174,7 @@ class Journals extends Component {
                           <TableCell><b>Approver:</b> {transactions.approver}</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell><b>Approved Date:</b> {transactions.status === 'Pending' || transactions.status === 'Unapproved' ? '' : transactions.approved_date.toLocaleDateString('en-US')}</TableCell>
+                          <TableCell><b>{transactions.status === 'Unapproved' ? 'Unapproved Date:' : 'Approved Date:' } </b> {transactions.status === 'Pending' ? '' : transactions.approved_date.toLocaleDateString('en-US')}</TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell><b>Status:</b> {transactions.status}</TableCell>
