@@ -173,10 +173,8 @@ class Register extends Component {
                 }
                 Auth.authUser(account)
                     .then(res => {
-                        localStorage.setItem('user', JSON.stringify(res.data));
-                        this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
                         this.state.registered = true;
-                        this.forceUpdate();
+                        this.forceUpdate()
                     })
             }
         }
