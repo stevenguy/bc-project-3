@@ -150,10 +150,8 @@ class Register extends Component {
 
     handleFormSubmit = event => {
         event.preventDefault();
-        console.log(this.state);
         if ((this.state.password != null && this.state.email != null)) {
-            if (this.state.currentAccount != null) {
-                console.log('updating google account')
+            if (Object.keys(this.state.currentAccount).length > 0 && this.state.currentAccount.constructor === Object) {
                 var account = this.state.currentAccount;
                 account.password = this.state.password;
                 account.photoURL = this.state.newURL;
@@ -166,7 +164,6 @@ class Register extends Component {
                         this.forceUpdate();
                     })
             } else {
-                console.log('creating new account')
                 var account = {
                     password: this.state.password,
                     photoURL: this.state.newURL,
@@ -174,7 +171,6 @@ class Register extends Component {
                     email: this.state.email,
                     role : 'Preparer'
                 }
-                console.log(account)
                 Auth.authUser(account)
                     .then(res => {
                         localStorage.setItem('user', JSON.stringify(res.data));
@@ -184,8 +180,6 @@ class Register extends Component {
                     })
             }
         }
-
-        console.log('accepted');
     };
 
     constructor(props) {
@@ -198,9 +192,10 @@ class Register extends Component {
     }
 
     handleLoad = _ => {
-        console.log(JSON.parse(localStorage.getItem('user')))
-        this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) })
-        console.log(this.state)
+        let currentUser = localStorage.getItem('user')
+        if (currentUser !== null) {
+            this.setState({ currentAccount: JSON.parse(currentUser) })
+        }
         if (this.state.currentAccount) {
             this.setState({
                 newURL: this.state.currentAccount.photoURL,

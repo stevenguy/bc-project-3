@@ -185,28 +185,28 @@ class Journals extends Component {
                 ))
               }
               {
-                this.props.output.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+                this.props.output.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
               ? <Button style={hideUnapprove} onClick={() => {
                 this.handleApprove(this.props.output._id)
               }} 
               variant="contained" className={classes.button}>
                 Approve
                 </Button>
-                      : this.props.output.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
+                      : this.props.output.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
               ? <Button disabled variant="contained" className={classes.button}>
                 Approved!
                 </Button>
               : ''
               }
               {
-                this.props.output.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+                this.props.output.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
               ? <Button style={hideApprove} onClick={() => {
                 this.handleUnapprove(this.props.output._id)
               }} 
               variant="contained" className={classes.button}>
                 Unapprove
                 </Button>
-                      : this.props.output.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
+                      : this.props.output.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
               ? <Button disabled variant="contained" className={classes.button}>
                 Unapproved!
                 </Button>
