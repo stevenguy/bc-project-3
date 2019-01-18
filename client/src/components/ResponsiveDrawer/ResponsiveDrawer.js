@@ -129,14 +129,13 @@ class ResponsiveDrawer extends React.Component {
 
   logout = () => {
     auth.signOut()
-        .then(() => {
-            // this.setState(({user: null}))
-            localStorage.removeItem('user');
-            local = null;
-            window.location.href = '/';
-        });
+      .then(() => {
+          // this.setState(({user: null}))
+          localStorage.removeItem('user');
+          local = null;
+          window.location.href = '/';
+      });
 }
-
   
   render() {
     const { classes, theme } = this.props;
