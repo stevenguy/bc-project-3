@@ -9,6 +9,8 @@ import Avatar from '@material-ui/core/Avatar';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import API from '../../utils/API'
 
 const drawerWidth = 180
 
@@ -37,6 +39,10 @@ class JournalRow extends Component {
     //State goes here
     labelWidth: 0,
     open: false,
+    hideApprove: false,
+    hideUnapprove: false,
+    disableApprove: false,
+    disableUnapprove: false
   }
 
   handleClick = () => {
@@ -45,6 +51,8 @@ class JournalRow extends Component {
 
   render() {
     const { classes } = this.props;
+    const hideApprove = this.state.hideApprove ? { display: 'none' } : {}
+    const hideUnapprove = this.state.hideUnapprove ? { display: 'none' } : {}
 
     return (
       <React.Fragment>
@@ -59,6 +67,7 @@ class JournalRow extends Component {
             secondary={
               <React.Fragment>
                 <Typography component="span" className={classes.inline} color="textPrimary">
+                  {console.log(this.props.entry)}
                   {"Description: " + this.props.entry.description}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
