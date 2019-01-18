@@ -65,19 +65,19 @@ class JournalRow extends Component {
                   {this.state.open ? "Memo: " + this.props.entry.memo : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {'Account: ' + this.props.entry.account}
+                  {'Amount: $' + this.props.entry.amount}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
                   {this.state.open ? 'Preparer: ' + this.props.entry.preparer : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open ? 'Prepared Date: ' + this.props.entry.prepared_date : null}
+                  {this.state.open ? 'Prepared Date: ' + this.props.entry.prepared_date.toLocaleDateString('en-US') : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
                   {this.state.open ? 'Approver: ' + this.props.entry.approver : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open ? 'Approved Date: ' + this.props.entry.approved_date : null}
+                  {this.state.open ? 'Approved Date: ' + this.props.entry.approved_date.toLocaleDateString('en-US') : null}
                 </Typography>
                 {this.props.entry.date.toLocaleDateString('en-US')}
               </React.Fragment>
