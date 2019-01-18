@@ -10,6 +10,10 @@ router.route("/")
 router.route('/approve')
   .put(transactionsController.approve)
 
+// Matches with '/api/transactions/unapprove
+router.route('/unapprove')
+  .put(transactionsController.unapprove)
+
 // Finds Transaction by Preparer's name
 router.route("/preparer/:name")
   .get(transactionsController.transByPreparer)
