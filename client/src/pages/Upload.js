@@ -77,11 +77,41 @@ class Upload extends Component {
     updateData(result) {
         console.log(result.data)
         var _map = []
+        var _mapped = [null, null, null, null, null, null, null, null]
         _map = Object.keys(result.data[0])
         
 
         if(_map.length === 8){
-            this.setState({csv: JSON.stringify(result.data), map: _map})
+            for(var i = 0; i < _map.length; i++){
+                switch(_map[i].toLowerCase()){
+                    case 'date':
+                        _mapped[i] = 'date'
+                        break
+                    case 'account':
+                        _mapped[i] = 'account'
+                        break
+                    case 'description':
+                        _mapped[i] = 'description'
+                        break
+                    case 'type':
+                        _mapped[i] = 'type'
+                        break
+                    case 'transaction':
+                        _mapped[i] = 'transaction'
+                        break
+                    case 'memo':
+                        _mapped[i] = 'memo'
+                        break
+                    case 'details':
+                        _mapped[i] = 'details'
+                        break
+                    case 'amount':
+                        _mapped[i] = 'amount'
+                        break
+                }
+
+                this.setState({csv: JSON.stringify(result.data), map: _map, mapped: _mapped})
+            }
             // console.log(this.state)
         }else{
             alert(`Your CSV file does not contain the right amount of columns. Please revise and try again. \n\n Your Columns: ${_map} \n\n Expected Columns: ${expectedColumns}`)
