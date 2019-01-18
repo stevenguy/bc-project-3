@@ -17,6 +17,8 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen'
+
 
 const styles = theme => ({
   card: {
@@ -63,12 +65,13 @@ class SimpleCard extends React.Component {
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
+              P
             </Avatar>
           }
           action={
             <IconButton>
               <MoreVertIcon />
+              {/* <FolderOpenIcon/> */}
             </IconButton>
           }
           title={

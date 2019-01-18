@@ -305,7 +305,7 @@ class Search extends Component {
         <Notifications />
         <ResponsiveDrawer />
 
-        {/* <main className = {classes.content}> */}
+        <main className = {classes.content}>
           {/* <div className={classes.toolbar} /> */}
             <div className={classes.root}>
             <Grid container spacing={8} alignItems= 'flex-end'>
@@ -367,7 +367,7 @@ class Search extends Component {
           </Grid>
               <div className={classes.carduh}> {button} </div>
           </div>
-      {/* </main> */}
+      </main>
       <Footer />
       </React.Fragment>
           );
