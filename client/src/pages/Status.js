@@ -128,6 +128,7 @@ class Status extends Component {
         res.data.map((data) => {
           data.transaction.map((data) => {
             data.date = new Date(data.date)
+            data.prepared_date = new Date(data.prepared_date)
           })
         })
         this.setState({ journalData: res.data })

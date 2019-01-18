@@ -158,7 +158,7 @@ class Journals extends Component {
                   <TableCell><b>Preparer:</b> {transactions.preparer}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell><b>Prepared Date:</b> {transactions.prepared_date}</TableCell>
+                  <TableCell><b>Prepared Date:</b> {transactions.prepared_date.toLocaleDateString('en-US')}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell><b>Approver:</b> {transactions.approver}</TableCell>
