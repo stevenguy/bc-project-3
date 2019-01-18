@@ -71,7 +71,7 @@ class JournalRow extends Component {
                   {this.state.open ? 'Preparer: ' + this.props.entry.preparer : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open ? 'Prepared Date: ' + this.props.entry.prepared_date : null}
+                  {this.state.open ? 'Prepared Date: ' + this.props.entry.prepared_date.toLocaleDateString('en-US') : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
                   {this.state.open ? 'Approver: ' + this.props.entry.approver : null}
