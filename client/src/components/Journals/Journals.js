@@ -212,6 +212,7 @@ class Journals extends Component {
                 </Button>
               : ''
               }
+              
               </React.Fragment>
             ) 
           }
