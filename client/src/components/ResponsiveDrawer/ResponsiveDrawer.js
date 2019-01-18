@@ -128,14 +128,13 @@ class ResponsiveDrawer extends React.Component {
 
   logout = () => {
     auth.signOut()
-        .then(() => {
-            // this.setState(({user: null}))
-            localStorage.removeItem('user');
-            local = null;
-            window.location.href = '/';
-        });
+      .then(() => {
+          // this.setState(({user: null}))
+          localStorage.removeItem('user');
+          local = null;
+          window.location.href = '/';
+      });
 }
-
   
   render() {
     const { classes, theme } = this.props;
@@ -147,7 +146,7 @@ class ResponsiveDrawer extends React.Component {
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
-          <Avatar alt="Login User" src={user.photoURL === null ? '../../public/avatar.jpg': user.photoURL} className={classes.avatar} />
+          <Avatar alt="Login User" src={user.photoURL === null ? '../../public/images/avatar.jpg': user.photoURL} className={classes.avatar} />
           <Typography className={classes.userName}>{user.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
