@@ -240,7 +240,7 @@ class Register extends Component {
                                         name="username"
                                         margin="normal"
                                         variant="outlined"
-                                        value={this.state.userName}
+                                        value={this.state.currentAccount ? this.state.currentAccount.email : this.state.email}
                                         onChange={this.handleChange('email')}
                                         InputLabelProps={{
                                             classes: {

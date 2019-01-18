@@ -17,6 +17,10 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen'
+import Button from '@material-ui/core/Button';
+import API from '../../utils/API'
+
 
 const styles = theme => ({
   card: {
@@ -48,27 +52,57 @@ const styles = theme => ({
   },
 });
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 class SimpleCard extends React.Component {
-  state = { expanded: false };
+  state = { 
+    expanded: false, 
+    journals: 'Select',
+    journalData: [],
+    hideApprove: false,
+    hideUnapprove: false,
+    disableApprove: false,
+    disableUnapprove: false,
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  handleApprove = journal => {
+    this.setState({ hideUnapprove: true })
+    API.approveJournal({ journalId: journal })
+      .then(() => {
+        this.setState({ disableApprove: true })
+        API.notification(user.name + " Approved A Journal!")
+      }) 
+  }
+
+  handleUnapprove = journal => {
+    this.setState({ hideApprove: true })
+    API.unapproveJournal({ journalId: journal })
+      .then(() => {
+        this.setState({ disableUnapprove: true })
+      })
+  }
+
   render() {
     const { classes } = this.props;
+    const hideApprove = this.state.hideApprove ? { display: 'none' } : {}
+    const hideUnapprove = this.state.hideUnapprove ? { display: 'none' } : {}
 
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
+              P
             </Avatar>
           }
           action={
             <IconButton>
               <MoreVertIcon />
+              {/* <FolderOpenIcon/> */}
             </IconButton>
           }
           title={
@@ -76,25 +110,6 @@ class SimpleCard extends React.Component {
           }
           subheader="September 14, 2016"
         />
-        {/* <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="Show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions> */}
-        {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit> */}
           <CardContent>
             <Grid container spacing= {32}>
               <Grid item>
@@ -118,6 +133,36 @@ class SimpleCard extends React.Component {
                 Approved/Unapproved Date: {this.props.info.approved_date}<br></br>
                 </Typography>
               </Grid>
+              {/* newcode~~~~~~~~~~~~~``` */}
+              {
+                this.props.info.status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+              ? <Button style={hideUnapprove} onClick={() => {
+                this.handleApprove(this.props._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Approve
+                </Button>
+                      : this.props.info.status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
+              ? <Button disabled variant="contained" className={classes.button}>
+                Approved!
+                </Button>
+              : ''
+              }
+              {
+                this.props.info.status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+              ? <Button style={hideApprove} onClick={() => {
+                this.handleUnapprove(this.props._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Unapprove
+                </Button>
+                      : this.props.info.status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
+              ? <Button disabled variant="contained" className={classes.button}>
+                Unapproved!
+                </Button>
+              : ''
+              }
+              {/* newcode~~~~~~~~~~~~~~~`` */}
             </Grid>
             {/* <Typography paragraph > Journal ID: {this.props.info.transaction} </Typography> */}
           </CardContent>
