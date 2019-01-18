@@ -75,6 +75,13 @@ class Journals extends Component {
       }) 
   }
 
+  handleUnapprove = journal => {
+    API.unapproveJournal({ journalId: journal })
+      .then(() => {
+        this.setState({ disable: true })
+      })
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -149,6 +156,20 @@ class Journals extends Component {
               : this.props.output.transaction[0].status === 'Pending' && this.state.disable 
               ? <Button disabled variant="contained" className={classes.button}>
                 Approved!
+                </Button>
+              : ''
+              }
+              {
+                this.props.output.transaction[0].status === 'Pending' && !this.state.disable 
+              ? <Button onClick={() => {
+                this.handleUnapprove(this.props.output._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Unapprove
+                </Button>
+              : this.props.output.transaction[0].status === 'Pending' && this.state.disable 
+              ? <Button disabled variant="contained" className={classes.button}>
+                Unapproved!
                 </Button>
               : ''
               }

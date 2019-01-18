@@ -47,6 +47,9 @@ export default {
   approveJournal: function(journalId) {
     return axios.put('/api/transactions/approve/', journalId)
   },
+  unapproveJournal: function(journalId) {
+    return axios.put('/api/transactions/unapprove/', journalId)
+  },
   getJournal: function() {
     return axios.get('/api/journals')
   },
