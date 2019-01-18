@@ -36,6 +36,9 @@ module.exports = {
         },
         {
           $match: { 'transaction.status': req.params.status }
+        },
+        {
+          $sort: { date: -1 }
         }
         ]).limit(10)
       .then(accounts => {
