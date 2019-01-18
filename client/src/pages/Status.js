@@ -11,6 +11,7 @@ import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import Journals from '../components/Journals'
 import Notifications from "../components/Notifications"
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180
 
@@ -137,9 +138,9 @@ class Status extends Component {
                 variant="outlined"
               >
                 {journals.map(j => (
-                  <option key={j.value} value={j.value}>
+                  <MenuItem key={j.value} value={j.value}>
                     {j.label}
-                  </option>
+                  </MenuItem>
                 ))}
               </TextField>
             </form>
