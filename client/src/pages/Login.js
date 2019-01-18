@@ -204,7 +204,8 @@ class Login extends Component {
                 var temp = {
                     name: result.user.displayName,
                     email: result.user.email,
-                    photoURL: result.user.photoURL
+                    photoURL: result.user.photoURL,
+                    role: 'Preparer'
                 };
                 console.log(temp);
                 Auth.authUser(temp)
