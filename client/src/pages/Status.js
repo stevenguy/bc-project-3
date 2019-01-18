@@ -76,7 +76,10 @@ class Status extends Component {
           data.transaction.map((data) => {
             data.date = new Date(data.date)
             data.prepared_date = new Date(data.prepared_date)
+<<<<<<< HEAD
             data.approved_date = new Date(data.approved_date)
+=======
+>>>>>>> 06bdfd54ee678dde169e6011424d144b2a5814fd
           })
         })
         this.setState({ journalData: res.data })
@@ -99,8 +102,6 @@ class Status extends Component {
         res.data.map((data) => {
           data.transaction.map((data) => {
             data.date = new Date(data.date)
-            data.prepared_date = new Date(data.prepared_date)
-            data.approved_date = new Date(data.approved_date)
           })
         })
         this.setState({ journalData: res.data })
