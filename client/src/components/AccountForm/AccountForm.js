@@ -27,7 +27,6 @@ const styles = theme => ({
   },
   div: {
       flex: '100%',
-      marginLeft: '10px'
   },
   chip: {
     margin: theme.spacing.unit,
@@ -70,7 +69,7 @@ class AccountForm extends Component {
     }
 
     createAccount = () => {
-        if (!this.state.newName || !this.state.newNumber || !this.state.newTpe) {
+        if (!this.state.newName || !this.state.newNumber || !this.state.newType) {
             this.setState({errorMsg: "Please input all required fields"})
         }
         else if (this.props.accounts.find(account => account.name === this.state.newName) !== undefined ||
@@ -168,7 +167,7 @@ class AccountForm extends Component {
                 variant="outlined"
                 />: null}
                 <div className={classes.div}>
-                <Button variant="contained" color="primary" onClick={this.createAccount}>
+                <Button style={{marginLeft: '10px'}} variant="contained" color="primary" onClick={this.createAccount}>
                     Create
                 </Button>
                 </div>

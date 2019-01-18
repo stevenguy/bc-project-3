@@ -15,7 +15,7 @@ const styles = theme => ({
       bottom: 0,
       left: 0,
       width: "100%",
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('lg')]: {
       marginLeft: drawerWidth,
       width: `calc(100% - ${drawerWidth}px)`,
     },

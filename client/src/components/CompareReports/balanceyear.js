@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import Footer from "../Footer";
-import ResponsiveDrawer from "../ResponsiveDrawer";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import grey from '@material-ui/core/colors/grey';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -80,6 +80,7 @@ class BalanceYear extends Component {
     transactions: [],
     typesum: [],
     years: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -99,6 +100,8 @@ class BalanceYear extends Component {
   }
 
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
 
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
@@ -193,6 +196,8 @@ class BalanceYear extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
       
       <React.Fragment>
@@ -216,9 +221,9 @@ class BalanceYear extends Component {
             variant="outlined"
           >
             {this.state.year.map(y => (
-              <option key={y._id.year} value={y._id.year}>
+              <MenuItem key={y._id.year} value={y._id.year}>
                 {y._id.year}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>
@@ -232,7 +237,7 @@ class BalanceYear extends Component {
           <Paper>
             <Table>
               <TableHead>
-                <TableRow className={classes.head}>
+                <TableRow className={classes.head} style={styles}>
                   <TableCell><b>ASSET</b></TableCell>
                   <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
                   <TableCell align="right"><b>{this.state.years}</b></TableCell>
@@ -273,7 +278,7 @@ class BalanceYear extends Component {
           <Paper>
             <Table>
               <TableHead>
-                <TableRow className={classes.head}>
+                <TableRow className={classes.head} style={styles}>
                   <TableCell><b>LIABILITIES</b></TableCell>
                   <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
                   <TableCell align="right"><b>{this.state.years}</b></TableCell>
@@ -314,7 +319,7 @@ class BalanceYear extends Component {
           <Paper>
             <Table>
               <TableHead>
-                <TableRow className={classes.head}>
+                <TableRow className={classes.head} style={styles}>
                   <TableCell><b>RETAINED EARNINGS</b></TableCell>
                   <TableCell align="right"><b>{this.state.years - 1}</b></TableCell>
                   <TableCell align="right"><b>{this.state.years}</b></TableCell>

@@ -12,6 +12,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import Auth from "../utils/user";
 import { Redirect } from "react-router";
+import classNames from 'classnames'
 
 const styles = theme => ({
     //Style goes here
@@ -125,12 +126,6 @@ const styles = theme => ({
             display: 'none',
           },
     },
-    mobileLogo: {
-        display: 'none',
-        [theme.breakpoints.down('sm')]: {
-            display: 'block',
-          },
-    }
 })
 
 class Register extends Component {
@@ -233,8 +228,8 @@ class Register extends Component {
                         
                             <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
                             
+                                <Typography style={{alignSelf: 'flex-end'}} color='inherit' variant="h5" component="h5">Register</Typography>
                                 <form className={classes.container}>
-                                <Typography color='inherit' variant="h5" component="h5">Register</Typography>
                                     <TextField
                                         id="Email-input"
                                         label="Email"

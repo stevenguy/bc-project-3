@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import Footer from "../Footer";
-import ResponsiveDrawer from "../ResponsiveDrawer";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import grey from '@material-ui/core/colors/grey';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -137,6 +137,7 @@ class IncomeMonth extends Component {
     typesum: [],
     years: 0,
     month: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -162,6 +163,8 @@ class IncomeMonth extends Component {
   }
 
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
 
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
@@ -285,8 +288,6 @@ class IncomeMonth extends Component {
           res.data.forEach(element => {
             let currMonth = this.state.month
             let prevMonth = this.state.month - 1
-            console.log(currMonth)
-            console.log(prevMonth)
             let index = description.indexOf(element._id.description)
             if (element._id.month === currMonth && element._id.year === this.state.years) {
               currAmt[index] += element.amount 
@@ -362,6 +363,8 @@ class IncomeMonth extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
 
       <React.Fragment>
@@ -385,9 +388,9 @@ class IncomeMonth extends Component {
             variant="outlined"
           >
             {this.state.year.map(y => (
-              <option key={y._id.year} value={y._id.year}>
+              <MenuItem key={y._id.year} value={y._id.year}>
                 {y._id.year}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
           <TextField
@@ -406,11 +409,10 @@ class IncomeMonth extends Component {
             margin="normal"
             variant="outlined"
           >
-            {/* Populate based on quarters */}
             {month.map(m => (
-              <option key={m.valueMonth} value={m.valueMonth}>
+              <MenuItem key={m.valueMonth} value={m.valueMonth}>
                 {m.labelMonth}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </form>
@@ -428,17 +430,31 @@ class IncomeMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>REVENUE</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month === 1 ? 12 : this.state.month - 1}</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month}</b></TableCell>
+                    {this.state.month === 1 ?
+                      <React.Fragment>
+                        <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                        <TableCell align="right"><b>January {this.state.years}</b></TableCell>
+                      </React.Fragment>
+                      :
+                      month
+                        .filter(output => output.valueMonth === this.state.month || output.valueMonth === this.state.month - 1 )
+                        .map((output, i) => {
+                          return (
+                            <React.Fragment>
+                              <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                              <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                            </React.Fragment>
+                          );
+                        }
+                      )
+                    }
                   </TableRow>
                 </TableHead>
               </Table>
               <Table>
                 <TableBody>
-                {console.log(this.state.transactions)}
-                {console.log(this.state.typesum)}
                 {this.state.transactions
                   .filter(output => output.type === 'Revenue')
                   .map((output, i) => {
@@ -471,10 +487,26 @@ class IncomeMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head}>
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>EXPENSES</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month === 1 ? 12 : this.state.month - 1}</b></TableCell>
-                    <TableCell align="right"><b>{this.state.month}</b></TableCell>
+                    {this.state.month === 1 ?
+                      <React.Fragment>
+                        <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                        <TableCell align="right"><b>January {this.state.years}</b></TableCell>
+                      </React.Fragment>
+                      :
+                      month
+                        .filter(output => output.valueMonth === this.state.month || output.valueMonth === this.state.month - 1 )
+                        .map((output, i) => {
+                          return (
+                            <React.Fragment>
+                              <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                              <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                            </React.Fragment>
+                          );
+                        }
+                      )
+                    }
                   </TableRow>
                 </TableHead>
               </Table>
