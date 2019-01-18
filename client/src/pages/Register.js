@@ -171,8 +171,10 @@ class Register extends Component {
                     password: this.state.password,
                     photoURL: this.state.newURL,
                     name: this.state.name,
-                    email: this.state.email
+                    email: this.state.email,
+                    role : 'Preparer'
                 }
+                console.log(account)
                 Auth.authUser(account)
                     .then(res => {
                         localStorage.setItem('user', JSON.stringify(res.data));
