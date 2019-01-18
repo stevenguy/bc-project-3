@@ -12,6 +12,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import Auth from "../utils/user";
 import { Redirect } from "react-router";
+import classNames from 'classnames'
 
 const styles = theme => ({
     //Style goes here
@@ -119,7 +120,7 @@ const styles = theme => ({
          padding: '0 10px',
          backgroundColor: "rgb(46, 50, 68)",
          fontFamily: "Roboto, Helvetica, Arial, sans-serif"
-     },
+    },
     breakPoints: {
         [theme.breakpoints.down('sm')]: {
             display: 'none',
