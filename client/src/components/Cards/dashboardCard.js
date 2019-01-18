@@ -16,7 +16,7 @@ const styles = {
   card: {
     maxWidth: 500,
     height: 300,
-    paddingBottom: 300,
+    paddingBottom: 325,
   },
   media: {
     height: 140,
@@ -37,9 +37,9 @@ function DashboardCard(props) {
   return (
     <Card className={classes.card} >
       <Link to={'/' + path} style={{color: 'black', textDecoration: 'none'}}>
-      <CardActionArea style={{color: props.color, height: 300}}>
+      <CardActionArea style={{color: props.color, height: 400}}>
         <div style={styles.spacing}>{icon}</div>
-        <CardContent>
+        <CardContent style={{paddingBottom: 500}}>
           <div style={styles.titleSizing}>
             <Typography gutterBottom variant="h5" component="h2" align="center">{title}</Typography>
           </div>
@@ -59,4 +59,3 @@ DashboardCard.propTypes = {
 };
 
 export default withStyles(styles)(DashboardCard);
-
