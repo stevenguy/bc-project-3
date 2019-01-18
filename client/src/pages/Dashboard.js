@@ -41,6 +41,7 @@ var local = JSON.parse(localStorage.getItem('user'));
 
 class Dashboard extends Component {
   state = {
+    spacing: '16',
     revenue: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     expense: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     revenueGraph:
@@ -106,6 +107,7 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
+    const { spacing } = this.state;
 
     return (
       <React.Fragment>
@@ -116,13 +118,14 @@ class Dashboard extends Component {
           <ResponsiveDrawer />
           <main className={classes.content}>
             <div className={classes.toolbar} />
-            <Grid container spacing={8}>
+            <Grid container alignItems={'center'} alignContent = {'center'} spacing={10}>
               <Grid item lg={3} sm={6} xs={12}>
                 <DashboardCard
                   title='Approved/Unapproved Journal Entries'
                   path='Entries'
                   icon={<DoneAllIcon className={classes.icon} />}
-                  text='Create a new Journal Entry or check to see if existing entries are Approved/Unapproved'
+                  text='Create a new Journal Entry or check to see if existing entries are Approved/Unapproved'   
+                  color={'#76ff03'}               
                 />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
@@ -131,6 +134,7 @@ class Dashboard extends Component {
                   path='Search'
                   icon={<SearchIcon className={classes.icon} />}
                   text='Search for a journal entry by ID number, Preparer, or Approver'
+                  color={'red'} 
                 />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
@@ -139,6 +143,7 @@ class Dashboard extends Component {
                   path='Reports'
                   icon={<DirectionsRunIcon className={classes.icon} />}
                   text='Run dem Reports'
+                  color={'aqua'} 
                 />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
@@ -147,12 +152,14 @@ class Dashboard extends Component {
                   path='Upload'
                   icon={<CloudUploadIcon className={classes.icon} />}
                   text='Upload new transactions via CSV file'
+                  color={'#ffc107'} 
                 />
               </Grid>
             </Grid>
-            <Grid container>
-              <Grid item lg={6} md={12} sm={12} xs={12} >
+            <Grid container spacing = {40} style = {{paddingTop : 100}}>
+              <Grid item md={6} sm={12} style = {{backgroundColor: '#f1f8e9'}}>
                 <Chart
+                  
                   data={this.state.expenseGraph}
                 >
                   <Title text='Expenses' />
@@ -161,8 +168,7 @@ class Dashboard extends Component {
                   <LineSeries valueField="make" argumentField="month" />
                 </Chart>
               </Grid>
-
-              <Grid item lg={6} md={12} sm={12} xs={12}>
+              <Grid item md={6} sm={12} style = {{backgroundColor: '#ffebee'}}>
                 <Chart
                   data={this.state.revenueGraph}
                 >
