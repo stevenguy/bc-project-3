@@ -158,7 +158,6 @@ class Dashboard extends Component {
             </Grid>
             <Grid container spacing = {40} style = {{paddingTop : 100}}>
               <Grid item md={6} sm={12} style = {{backgroundColor: '#f1f8e9'}}>
-
                 <Chart
                   
                   data={this.state.expenseGraph}
@@ -170,7 +169,6 @@ class Dashboard extends Component {
                 </Chart>
               </Grid>
               <Grid item md={6} sm={12} style = {{backgroundColor: '#ffebee'}}>
-
                 <Chart
                   data={this.state.revenueGraph}
                 >

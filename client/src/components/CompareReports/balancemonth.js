@@ -137,6 +137,7 @@ class BalanceMonth extends Component {
     typesum: [],
     years: 0,
     month: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -162,6 +163,8 @@ class BalanceMonth extends Component {
   }
   
   handleRun = () => {
+
+    this.setState({hideHeaders: false})
     
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
@@ -360,6 +363,8 @@ class BalanceMonth extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
 
       <React.Fragment>
@@ -425,12 +430,12 @@ class BalanceMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>ASSETS</b></TableCell>
                       {this.state.month === 1 ?
                         <React.Fragment>
-                          <TableCell align="right">December {this.state.years}</TableCell>
-                          <TableCell align="right">January {this.state.years}</TableCell>
+                          <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                          <TableCell align="right"><b>January {this.state.years}</b></TableCell>
                         </React.Fragment>
                         :
                         month
@@ -438,8 +443,8 @@ class BalanceMonth extends Component {
                           .map((output, i) => {
                             return (
                               <React.Fragment>
-                                <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                                <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
                               </React.Fragment>
                             );
                           }
@@ -482,12 +487,12 @@ class BalanceMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>LIABILITIES</b></TableCell>
                       {this.state.month === 1 ?
                         <React.Fragment>
-                          <TableCell align="right">December {this.state.years}</TableCell>
-                          <TableCell align="right">January {this.state.years}</TableCell>
+                          <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                          <TableCell align="right"><b>January {this.state.years}</b></TableCell>
                         </React.Fragment>
                         :
                         month
@@ -495,8 +500,8 @@ class BalanceMonth extends Component {
                           .map((output, i) => {
                             return (
                               <React.Fragment>
-                                <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                                <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
                               </React.Fragment>
                             );
                           }
@@ -539,12 +544,12 @@ class BalanceMonth extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>RETAINED EARNINGS</b></TableCell>
                     {this.state.month === 1 ?
                         <React.Fragment>
-                          <TableCell align="right">December {this.state.years}</TableCell>
-                          <TableCell align="right">January {this.state.years}</TableCell>
+                          <TableCell align="right"><b>December {this.state.years}</b></TableCell>
+                          <TableCell align="right"><b>January {this.state.years}</b></TableCell>
                         </React.Fragment>
                         :
                         month
@@ -552,8 +557,8 @@ class BalanceMonth extends Component {
                           .map((output, i) => {
                             return (
                               <React.Fragment>
-                                <TableCell align="right">{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</TableCell>
-                                <TableCell align="right">{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month - 1 ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
+                                <TableCell align="right"><b>{output.valueMonth === this.state.month ? output.labelMonth + " " + this.state.years : ""}</b></TableCell>
                               </React.Fragment>
                             );
                           }

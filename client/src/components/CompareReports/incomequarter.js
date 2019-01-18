@@ -104,6 +104,7 @@ class IncomeQuarter extends Component {
     typesum: [],
     years: 0,
     quarter: 0,
+    hideHeaders: true
   };
 
   handleYear = yr => event => {
@@ -130,6 +131,8 @@ class IncomeQuarter extends Component {
 
   handleRun = () => {
     
+    this.setState({hideHeaders: false})
+
     function ccyFormat(num) {
       var nf = new Intl.NumberFormat();
       return `${nf.format(num.toFixed(2))}`;
@@ -327,6 +330,8 @@ class IncomeQuarter extends Component {
     
     const { classes } = this.props;
 
+    const styles = this.state.hideHeaders ? {display: 'none'} : {}
+
     return (
 
       <React.Fragment>
@@ -392,12 +397,12 @@ class IncomeQuarter extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>REVENUE</b></TableCell>
                     {this.state.quarter === 1 ?
                       <React.Fragment>
-                        <TableCell align="right">Q4-{this.state.years - 1}</TableCell>
-                        <TableCell align="right">Q1-{this.state.years}</TableCell>
+                        <TableCell align="right"><b>Q4-{this.state.years - 1}</b></TableCell>
+                        <TableCell align="right"><b>Q1-{this.state.years}</b></TableCell>
                       </React.Fragment>
                       :
                       quarter
@@ -405,8 +410,8 @@ class IncomeQuarter extends Component {
                         .map((output, i) => {
                           return (
                             <React.Fragment>
-                              <TableCell align="right">{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</TableCell>
-                              <TableCell align="right">{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</b></TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</b></TableCell>
                             </React.Fragment>
                           );
                         }
@@ -449,12 +454,12 @@ class IncomeQuarter extends Component {
             <Paper>
               <Table>
                 <TableHead>
-                  <TableRow className={classes.head} >
+                  <TableRow className={classes.head} style={styles}>
                     <TableCell><b>EXPENSES</b></TableCell>
                     {this.state.quarter === 1 ?
                       <React.Fragment>
-                        <TableCell align="right">Q4-{this.state.years - 1}</TableCell>
-                        <TableCell align="right">Q1-{this.state.years}</TableCell>
+                        <TableCell align="right"><b>Q4-{this.state.years - 1}</b></TableCell>
+                        <TableCell align="right"><b>Q1-{this.state.years}</b></TableCell>
                       </React.Fragment>
                       :
                       quarter
@@ -462,8 +467,8 @@ class IncomeQuarter extends Component {
                         .map((output, i) => {
                           return (
                             <React.Fragment>
-                              <TableCell align="right">{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</TableCell>
-                              <TableCell align="right">{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter - 1 ? output.label + "-" + this.state.years : ""}</b></TableCell>
+                              <TableCell align="right"><b>{output.value === this.state.quarter ? output.label + "-" + this.state.years : ""}</b></TableCell>
                             </React.Fragment>
                           );
                         }

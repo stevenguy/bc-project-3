@@ -657,6 +657,7 @@ class Acct extends Component {
               return (
                 <ExpansionPanel expanded={this.state.expanded === i } onChange={this.handleExpand(i)} key={i}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography className={classes.heading}><b>Date:</b> {output.date.toLocaleDateString('en-US')}</Typography>
                     <Typography className={classes.heading}>{output.transaction}</Typography>
                     <Typography className={classes.secondaryHeading}>{ccyFormat(output.amount)}</Typography>
                   </ExpansionPanelSummary>
@@ -665,9 +666,6 @@ class Acct extends Component {
                     <TableBody>
                       <TableRow>
                         <TableCell><b>Journal ID:</b> {output.journal_id}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell><b>Date:</b> {output.date.toLocaleDateString('en-US')}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell><b>Account:</b> {output.account}</TableCell>

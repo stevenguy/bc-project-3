@@ -67,10 +67,14 @@ class Steppers extends React.Component {
           this.setState({isError: true, index: this.state.activeStep, errorMsg: "Unbalanced Journal, Please review."})
         }
     } else {
-        this.props.entries.length >1 &&
-        this.props.entries.every(entry => entry.description !== '' && entry.amount !== '' && entry.details !== '')
-        ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null, errorMsg: ""})
-        : this.setState({isError: true, index: this.state.activeStep, errorMsg: 'Please fill out all required fields.'})
+        if (this.props.entries.every(entry => entry.account._id !== '')) {
+          this.props.entries.length >1 &&
+          this.props.entries.every(entry => entry.description !== '' && entry.amount !== ''  && entry.details !== '')
+          ? this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null, errorMsg: ""})
+          : this.setState({isError: true, index: this.state.activeStep, errorMsg: 'Please fill out all required fields.'})
+        } else {
+          this.setState({isError: true, index: this.state.activeStep, errorMsg: 'Please click on create button first'})
+        }
     }
   };
 
