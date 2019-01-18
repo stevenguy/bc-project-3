@@ -211,7 +211,7 @@ class Login extends Component {
                     .then(res => {
                         localStorage.setItem('user', JSON.stringify(res.data));
                         local = JSON.parse(localStorage.getItem('user'));
-                        window.location.reload();
+                            window.location.reload();
                     })
                 // this.setState(({ user: result.user}))
             });
