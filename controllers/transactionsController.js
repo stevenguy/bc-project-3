@@ -62,7 +62,7 @@ module.exports = {
     console.log('preparer')
     db.Transaction
       .aggregate(
-        [{ $match: {status: 'Approved' }},
+        [
         { $group: {
             _id: {
               label: "$preparer"
@@ -77,7 +77,7 @@ module.exports = {
     console.log('approver')
     db.Transaction
       .aggregate(
-        [{ $match: {status: 'Approved' }},
+        [
         { $group: {
             _id: {
               label: "$approver"
@@ -92,7 +92,7 @@ module.exports = {
     console.log('journal ID')
     db.Transaction
       .aggregate(
-        [{ $match: {status: 'Approved' }},
+        [
         { $group: {
             _id: {
               label: "$_id"

@@ -18,6 +18,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen'
+import Button from '@material-ui/core/Button';
+import API from '../../utils/API'
 
 
 const styles = theme => ({
@@ -50,12 +52,28 @@ const styles = theme => ({
   },
 });
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 class SimpleCard extends React.Component {
-  state = { expanded: false };
+  state = { 
+    expanded: false, 
+    journals: 'Select',
+    journalData: [],
+    disable: false
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+
+  handleApprove = journal => {
+    API.approveJournal({ journalId: journal })
+      .then(() => {
+        this.setState({ disable: true })
+        API.notification(user.name + " Approved A Journal!")
+      }) 
+  }
+
 
   render() {
     const { classes } = this.props;
@@ -79,25 +97,6 @@ class SimpleCard extends React.Component {
           }
           subheader="September 14, 2016"
         />
-        {/* <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="Show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions> */}
-        {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit> */}
           <CardContent>
             <Grid container spacing= {32}>
               <Grid item>
@@ -121,6 +120,22 @@ class SimpleCard extends React.Component {
                 Approved/Unapproved Date: {this.props.info.approved_date}<br></br>
                 </Typography>
               </Grid>
+              {/* newcode~~~~~~~~~~~~~``` */}
+              {
+                this.props.info.status === 'Pending' && !this.state.disable 
+              ? <Button onClick={() => {
+                this.handleApprove(this.props.info._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Approve
+                </Button>
+              : this.props.info.status === 'Pending' && this.state.disable 
+              ? <Button disabled variant="contained" className={classes.button}>
+                Approved!
+                </Button>
+              : ''
+              }
+              {/* newcode~~~~~~~~~~~~~~~`` */}
             </Grid>
             {/* <Typography paragraph > Journal ID: {this.props.info.transaction} </Typography> */}
           </CardContent>
