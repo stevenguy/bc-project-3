@@ -4,6 +4,7 @@ import PropTypes, { element } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
+import Paper from '@material-ui/core/Paper';
 import Footer from "../components/Footer";
 import { Redirect } from "react-router";
 import DashboardCard from "../components/Cards/dashboardCard"
@@ -83,7 +84,7 @@ class Dashboard extends Component {
         var _revenueGraph = this.state.revenueGraph;
         var _expenseGraph = this.state.expenseGraph;
         res.data.forEach(element => {
-          console.log(element)
+          //console.log(element)
           switch (element._id.type) {
             case 'Revenue':
               _revenue[element._id.month - 1] += element.amount
@@ -93,15 +94,19 @@ class Dashboard extends Component {
           }
         })
         for (var i = 0; i < this.state.revenue.length; i++) {
-          _revenueGraph[i].make = _revenue[i]
+          _revenueGraph[i].make = _revenue[i] * -1
           _expenseGraph[i].make = _expense[i]
-        }
+          }
+          
+        
+      
+
         this.setState({ revenue: _revenue, expense: _expense, revenueGraph: _revenueGraph, expenseGraph: _expenseGraph })
-        console.log(_revenue)
-        console.log(_expense)
-        console.log(_revenueGraph)
-        console.log(_expenseGraph)
-        console.log(this.state)
+        // console.log(_revenue)
+        // console.log(_expense)
+        // console.log(_revenueGraph)
+        // console.log(_expenseGraph)
+        // console.log(this.state)
       })
   }
 
@@ -129,12 +134,13 @@ class Dashboard extends Component {
                 />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
-                <DashboardCard
+                <DashboardCard 
                   title='Search Journal Entries'
                   path='Search'
                   icon={<SearchIcon className={classes.icon} />}
                   text='Search for a journal entry by ID number, Preparer, or Approver'
                   color={'red'} 
+      
                 />
               </Grid>
               <Grid item lg={3} sm={6} xs={12}>
@@ -157,7 +163,7 @@ class Dashboard extends Component {
               </Grid>
             </Grid>
             <Grid container spacing = {40} style = {{paddingTop : 100}}>
-              <Grid item md={6} sm={12} style = {{backgroundColor: '#f1f8e9'}}>
+              <Grid item xs={12} lg={6} md={6} style = {{backgroundColor: '#f1f8e9'}}>
                 <Chart
                   
                   data={this.state.expenseGraph}
@@ -168,7 +174,7 @@ class Dashboard extends Component {
                   <LineSeries valueField="make" argumentField="month" />
                 </Chart>
               </Grid>
-              <Grid item md={6} sm={12} style = {{backgroundColor: '#ffebee'}}>
+              <Grid item xs={12} lg={6} md={6} style = {{backgroundColor: '#ffebee'}}>
                 <Chart
                   data={this.state.revenueGraph}
                 >
