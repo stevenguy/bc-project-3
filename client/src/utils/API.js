@@ -40,6 +40,10 @@ export default {
   getAccount: function() {
     return axios.get("/api/accounts")
   },
+  //Get Count of the Pending
+  countPending: function() {
+    return axios.get('/api/journals')
+  },
   //Get list of journal
   getJournals: function(status) {
     return axios.get('/api/journals/status/' + status)
@@ -47,12 +51,15 @@ export default {
   approveJournal: function(journalId) {
     return axios.put('/api/transactions/approve/', journalId)
   },
+<<<<<<< HEAD
   unapproveJournal: function(journalId) {
     return axios.put('/api/transactions/unapprove/', journalId)
   },
   getJournal: function() {
     return axios.get('/api/journals')
   },
+=======
+>>>>>>> 276a9348a7a0fa2c3b0716a5ef37d2370dd74e1e
   // sums data from the database (month)
   monthly: function() {
     return axios.get("/api/transactions/monthly");

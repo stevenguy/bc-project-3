@@ -12,10 +12,11 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import Auth from "../utils/user";
 import { Redirect } from "react-router";
+import classNames from 'classnames'
 
 const styles = theme => ({
     //Style goes here
-    login: {
+    register: {
         height: '100vh',
         width: '100%',
         background: "rgb(4,4,32)",
@@ -94,6 +95,10 @@ const styles = theme => ({
     },
     button: {
         color: 'white',
+        height: '50px'
+    }, 
+    head: {
+        justify:'center',
         margin: '10px'
     },
     googleIcon: {
@@ -121,14 +126,7 @@ const styles = theme => ({
             display: 'none',
           },
     },
-    mobileLogo: {
-        display: 'none',
-        [theme.breakpoints.down('sm')]: {
-            display: 'block',
-          },
-    }
-
-});
+})
 
 class Register extends Component {
     state = {
@@ -159,6 +157,7 @@ class Register extends Component {
                 var account = this.state.currentAccount;
                 account.password = this.state.password;
                 account.photoURL = this.state.newURL;
+                account.role = 'Preparer';
                 Auth.updateUser(account)
                     .then(res => {
                         localStorage.setItem('user', JSON.stringify(res.data));
@@ -169,18 +168,20 @@ class Register extends Component {
             } else {
                 console.log('creating new account')
                 var account = {
-                    password : this.state.password,
-                    photoURL : this.state.newURL,
-                    name : this.state.name,
-                    email : this.state.email
+                    password: this.state.password,
+                    photoURL: this.state.newURL,
+                    name: this.state.name,
+                    email: this.state.email,
+                    role : 'Preparer'
                 }
+                console.log(account)
                 Auth.authUser(account)
-                .then(res => {
-                    localStorage.setItem('user', JSON.stringify(res.data));
+                    .then(res => {
+                        localStorage.setItem('user', JSON.stringify(res.data));
                         this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
                         this.state.registered = true;
                         this.forceUpdate();
-                })
+                    })
             }
         }
 
@@ -218,152 +219,138 @@ class Register extends Component {
                 {this.state.registered ? <Redirect to={{ pathname: '/' }} /> :
                     <Grid
                         container
-                        className={classes.login}
+                        className={classes.register}
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
                         justify="center"
-                        alignItems='center'
+                        style={{ minHeight: '100vh' }}
                     >
-                        <Grid item className={classes.card + " " + classes.breakPoints} md={4}>
-                            <Paper square={true} className={classes.root + " " + classes.brand} elevation={10}>
-                                <div className={classes.flex}>
-                                    <Typography color='inherit' variant="h1" component="h1">
-                                        Logo Here
-                                    </Typography>
-                                    <Typography color='inherit' variant='h3' component="h3">
-                                        Web Accountant
-                                    </Typography>
-                                </div>
+                        <Grid item className={classes.card} md={4}>
+                        
+                            <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
+                            
+                                <Typography style={{alignSelf: 'flex-end'}} color='inherit' variant="h5" component="h5">Register</Typography>
+                                <form className={classes.container}>
+                                    <TextField
+                                        id="Email-input"
+                                        label="Email"
+                                        className={classes.textField}
+                                        type="Username"
+                                        name="username"
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={this.state.userName}
+                                        onChange={this.handleChange('email')}
+                                        InputLabelProps={{
+                                            classes: {
+                                                root: classes.cssLabel,
+                                                focused: classes.cssFocused,
+                                            },
+                                        }}
+                                        InputProps={{
+                                            classes: {
+                                                input: classes.whiteText,
+                                                root: classes.cssOutlinedInput,
+                                                focused: classes.cssFocused,
+                                                notchedOutline: classes.notchedOutline,
+                                            }
+                                        }}
+                                    />
+                                    <TextField
+                                        id="outlined-adornment-password"
+                                        className={classNames(classes.margin, classes.textField)}
+                                        variant="outlined"
+                                        type={this.state.showPassword ? 'text' : 'password'}
+                                        label="Password"
+                                        value={this.state.password}
+                                        onChange={this.handleChange('password')}
+                                        InputLabelProps={{
+                                            classes: {
+                                                root: classes.cssLabel,
+                                                focused: classes.cssFocused,
+                                            },
+                                        }}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="Toggle password visibility"
+                                                        onClick={this.handleClickShowPassword}
+                                                        className={classes.whiteText}
+                                                    >
+                                                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                            classes: {
+                                                input: classes.whiteText,
+                                                root: classes.cssOutlinedInput,
+                                                focused: classes.cssFocused,
+                                                notchedOutline: classes.notchedOutline,
+                                            },
+                                        }}
+                                    />
+                                    <TextField
+                                        id="Name-input"
+                                        label="Full Name"
+                                        className={classes.textField}
+                                        type="Name"
+                                        name="name"
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={this.state.currentAccount ? this.state.currentAccount.name : this.state.name}
+                                        onChange={this.handleChange('name')}
+                                        InputLabelProps={{
+                                            classes: {
+                                                root: classes.cssLabel,
+                                                focused: classes.cssFocused,
+                                            },
+                                        }}
+                                        InputProps={{
+                                            classes: {
+                                                input: classes.whiteText,
+                                                root: classes.cssOutlinedInput,
+                                                focused: classes.cssFocused,
+                                                notchedOutline: classes.notchedOutline,
+                                            }
+                                        }}
+                                    />
+
+                                    <TextField
+                                        id="photo-input"
+                                        label="Photo URL"
+                                        className={classes.textField}
+                                        type="Text"
+                                        name="url"
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={this.state.newURL}
+                                        onChange={this.handleChange('newURL')}
+                                        InputLabelProps={{
+                                            classes: {
+                                                root: classes.cssLabel,
+                                                focused: classes.cssFocused,
+                                            },
+                                        }}
+                                        InputProps={{
+                                            classes: {
+                                                input: classes.whiteText,
+                                                root: classes.cssOutlinedInput,
+                                                focused: classes.cssFocused,
+                                                notchedOutline: classes.notchedOutline,
+                                            }
+                                        }}
+                                    />
+
+                                    <Grid container justify="center">
+                                        <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={classes.button}>
+                                            Register
+                                        </Button>
+                                    </Grid>
+                                </form>
                             </Paper>
                         </Grid>
-                        <Grid item className={classes.card} md={4}>
-                        <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
-                            <div className={classes.flex}>
-                                <div className={classes.mobileLogo}>
-                                    <Typography color='inherit' variant="h5" component="h5">
-                                        Logo Here
-                                    </Typography>
-                                    <Typography color='inherit' variant='h6' component="h6">
-                                        Web Accountant
-                                    </Typography>
-                                </div>
-                            <Typography className={classes.textField} color='inherit' variant="h5" component="h5">Register</Typography>
-                            <form className={classes.container}>
-                                <TextField
-                                    id="Name-input"
-                                    label="Full Name"
-                                    className={classes.textField}
-                                    type="Name"
-                                    name="name"
-                                    margin="normal"
-                                    variant="outlined"
-                                    value={this.state.currentAccount ? this.state.currentAccount.name : this.state.name}
-                                    onChange={this.handleChange('name')}
-                                    InputLabelProps={{
-                                        classes: {
-                                            root: classes.cssLabel,
-                                            focused: classes.cssFocused,
-                                        },
-                                    }}
-                                    InputProps={{
-                                        classes: {
-                                            input: classes.whiteText,
-                                            root: classes.cssOutlinedInput,
-                                            focused: classes.cssFocused,
-                                            notchedOutline: classes.notchedOutline,
-                                        }
-                                    }}
-                                />
-                                <TextField
-                                    id="Username-input"
-                                    label="Email"
-                                    className={classes.textField}
-                                    type="Username"
-                                    name="username"
-                                    margin="normal"
-                                    variant="outlined"
-                                    value={this.state.currentAccount ? this.state.currentAccount.email : this.state.email}
-                                    onChange={this.handleChange('email')}
-                                    InputLabelProps={{
-                                        classes: {
-                                            root: classes.cssLabel,
-                                            focused: classes.cssFocused,
-                                        },
-                                    }}
-                                    InputProps={{
-                                        classes: {
-                                            input: classes.whiteText,
-                                            root: classes.cssOutlinedInput,
-                                            focused: classes.cssFocused,
-                                            notchedOutline: classes.notchedOutline,
-                                        }
-                                    }}
-                                />
-                                <TextField
-                                    id="outlined-adornment-password"
-                                    className={classes.textField}
-                                    variant="outlined"
-                                    type={this.state.showPassword ? 'text' : 'password'}
-                                    label="Password"
-                                    margin="normal"
-                                    value={this.state.password}
-                                    onChange={this.handleChange('password')}
-                                    InputLabelProps={{
-                                        classes: {
-                                            root: classes.cssLabel,
-                                            focused: classes.cssFocused,
-                                        },
-                                    }}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="Toggle password visibility"
-                                                    onClick={this.handleClickShowPassword}
-                                                    className={classes.whiteText}
-                                                >
-                                                    {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                        classes: {
-                                            input: classes.whiteText,
-                                            root: classes.cssOutlinedInput,
-                                            focused: classes.cssFocused,
-                                            notchedOutline: classes.notchedOutline,
-                                        },
-                                    }}
-                                />
-                                <TextField
-                                    id="photo-input"
-                                    label="Photo URL"
-                                    className={classes.textField}
-                                    type="Text"
-                                    name="url"
-                                    margin="normal"
-                                    variant="outlined"
-                                    value={this.state.newURL}
-                                    onChange={this.handleChange('newURL')}
-                                    InputLabelProps={{
-                                        classes: {
-                                            root: classes.cssLabel,
-                                            focused: classes.cssFocused,
-                                        },
-                                    }}
-                                    InputProps={{
-                                        classes: {
-                                            input: classes.whiteText,
-                                            root: classes.cssOutlinedInput,
-                                            focused: classes.cssFocused,
-                                            notchedOutline: classes.notchedOutline,
-                                        }
-                                    }}
-                                />
-                                <Button type='submit' onClick={this.handleFormSubmit} variant="outlined" className={classes.button}>
-                                    Register
-                                </Button>
-                            </form>
-                            </div>
-                        </Paper>
-                    </Grid> 
                     </Grid>
                 }
 

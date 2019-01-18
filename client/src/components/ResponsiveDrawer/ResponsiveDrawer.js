@@ -101,7 +101,7 @@ class ResponsiveDrawer extends React.Component {
     super(props)
    // Socket listening to notification
     socket.on('notification', msg => {
-      API.getJournal()
+      API.countPending()
       .then((res) => {
         this.setState({pendingCount: res.data})
       })
@@ -109,7 +109,7 @@ class ResponsiveDrawer extends React.Component {
   }
 
   componentDidMount() {
-    API.getJournal()
+    API.countPending()
       .then((res) => {
         this.setState({pendingCount: res.data})
       })
@@ -147,7 +147,7 @@ class ResponsiveDrawer extends React.Component {
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
-          <Avatar alt="Login User" src={user.photoURL} className={classes.avatar} />
+          <Avatar alt="Login User" src={user.photoURL === null ? '../../public/avatar.jpg': user.photoURL} className={classes.avatar} />
           <Typography className={classes.userName}>{user.name}</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>

@@ -13,7 +13,12 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Notifications from "../components/Notifications"
+import { CSVLink, CSVDownload } from "react-csv";
 
 const drawerWidth = 180;
 
@@ -37,6 +42,18 @@ const styles = theme => ({
   }
   });
 
+const expectedColumns = ['date','account','description','type','transaction','memo','details','amount']
+
+const csvData = [
+    ['date','account','description','type','transaction','memo','details','amount'],
+    ['1/1/2019','12000','Inventory','Assets','Prepaid Insurance','To Record Prepaid Insurance','Debit','589.63'],
+    ['1/1/2019','10000','Cash','Assets','HP Computer','To Record HP Computer','Credit','-589.63'],
+    ['1/2/2019','50200','Supplies','Expenses','Staples','To Record Staples','Debit','69.54'],
+    ['1/2/2019','10000','Cash','Assets','HP Computer','To Record HP Computer','Credit','-69.54']
+  ];
+
+const user = JSON.parse(localStorage.getItem('user'))
+
 class Upload extends Component {
 
     constructor(props) {
@@ -46,102 +63,112 @@ class Upload extends Component {
     // Bind this to function updateData (This eliminates the error)
     this.updateData = this.updateData.bind(this);
 
-    this.handleClick = this.handleClick.bind(this)
+    // this.handleClick = this.handleClick.bind(this)
     }
 
     state = {
-        csv: [ null, null, null, null ],
-        nameOption: [ null, null, null, null ],
-        length: 0,
-        current: -1,
-        uploaded: 0
+        csv: null,
+        nameOption: null,
+        uploaded: 0,
+        map: [],
+        mapped: [null, null, null, null, null, null, null, null]
     }
     
     updateData(result) {
-        var _csv = this.state.csv
+        console.log(result.data)
+        var _map = []
+        var _mapped = [null, null, null, null, null, null, null, null]
+        _map = Object.keys(result.data[0])
+        
 
-        if(this.state.current === -1 && this.state.length !== 3){
-            var i;
-            for(i = 0 ; i < _csv.length; i++){
-                if(_csv[i] === null){
-                    _csv[i] = JSON.stringify(result.data)
-                    break
+        if(_map.length === 8){
+            for(var i = 0; i < _map.length; i++){
+                switch(_map[i].toLowerCase()){
+                    case 'date':
+                        _mapped[i] = 'date'
+                        break
+                    case 'account':
+                        _mapped[i] = 'account'
+                        break
+                    case 'description':
+                        _mapped[i] = 'description'
+                        break
+                    case 'type':
+                        _mapped[i] = 'type'
+                        break
+                    case 'transaction':
+                        _mapped[i] = 'transaction'
+                        break
+                    case 'memo':
+                        _mapped[i] = 'memo'
+                        break
+                    case 'details':
+                        _mapped[i] = 'details'
+                        break
+                    case 'amount':
+                        _mapped[i] = 'amount'
+                        break
                 }
+
+                this.setState({csv: JSON.stringify(result.data), map: _map, mapped: _mapped})
             }
+            // console.log(this.state)
         }else{
-            _csv[this.state.current] = JSON.stringify(result.data)
+            alert(`Your CSV file does not contain the right amount of columns. Please revise and try again. \n\n Your Columns: ${_map} \n\n Expected Columns: ${expectedColumns}`)
         }
 
-        var _length = this.state.length + 1
-        this.setState({csv: _csv, length: _length});;
-        console.log(this.state)
     }
 
-    handleFiles = (files, isDropped) => {
-        // console.log(files.fileList[0])
+    handleFiles = (file, isDropped) => {
+        //console.log(file[0])
         // console.log(files.base64)
         // console.log(files.fileList[0].name)
-        var file;
-        console.log('this.state.current = ' + this.state.current)
-        isDropped === 1 ? file = files : file = files.fileList[0]
+        this.setState({
+            map: [],
+            mapped: [null, null, null, null, null, null, null, null]
+        })
 
-        Papa.parse(file, {
+        Papa.parse(file[0], {
             header: true,
             download: true,
             skipEmptyLines: true,
             complete: this.updateData
         });
 
-        var _nameOption = this.state.nameOption
-        if(isDropped === 1 && this.state.length !== 3){
-            var i;
-            for(i = 0 ; i < _nameOption.length; i++){
-                if(_nameOption[i] === null){
-                    _nameOption[i] = file.name
-                    break
-                }
-            }
-        }else{
-            _nameOption[this.state.current] = file.name
-        }
-
-        this.setState({nameOption: _nameOption})
+        this.setState({nameOption: file[0].name})
       }      
 
-      handleClick = (e, i) => {
-          console.log('fgrvajekkebkrehkaejhrakhjarekhjarek')
-          console.log(i)
-          this.setState({current: i})
-      }
-
       onDrop = (acceptedFiles, rejectedFiles) => {
-        this.handleClick(null, -1)
-        console.log(acceptedFiles)
-        if(this.state.length === 3){
-            alert('You already reached maximum (4) uploads.')
-        }else{
-            var i
-            for(i = 0 ; i < acceptedFiles.length; i++){
-                console.log(acceptedFiles[i])
-                this.handleFiles(acceptedFiles[i], 1)
-            };
-        }
+        this.handleFiles(acceptedFiles)
       }
 
       UploadButton = _ => {
-        if(this.state.length === 0){
+        if(this.state.csv === 0){
             alert('You have not selected any CSV files to Upload.')
+        }else if(this.state.map.indexOf(null) > -1){
+            alert('Your Columns Do Not match our criteria. please download our template.')
+        }else if(this.state.mapped.indexOf(null) > -1){
+            alert('You have not finished Mapping')
         }else{
+            //start mapping
+            let tempCSV = this.state.csv
+            this.state.map.forEach((element, i) => {
+                // console.log(element)
+                tempCSV = tempCSV.split(element).join(this.state.mapped[i])
+                // console.log(tempCSV)
+            });
             console.log('here')
-            var i;
-            for(i = 0 ; i < this.state.csv.length ; i++){
-                if(this.state.csv[i] !== null){
-                    console.log(`this.state[${i}] ` + this.state.csv[i])
-                    API.buntest({data: this.state.csv[i], name: 'Bunrith Buth'})
-                }
-            }
+            console.log(tempCSV)
+            API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user')).name})
+            .then(() => API.notification(user.name + " Added New Journal!"))
             this.setState({uploaded: 1})
         }
+      }
+
+      handleChange = event => {
+          var _mapped = this.state.mapped
+          _mapped[event.target.name] = event.target.value
+          this.setState({mapped: _mapped})
       }
 
     render() {
@@ -152,11 +179,20 @@ class Upload extends Component {
             <ResponsiveDrawer />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
+
                     <Grid   container 
                             direction="column"
                             justify="center"
                             style={{padding: '10px'}}>
                             <Paper>
+
+                            <Grid item xs={12} sm={12}>
+                                <Typography style={{paddingLeft: '10px', paddingTop: '5px'}}>
+                                    <a>Need a sample CSV to upload your Journal Entries? &nbsp;</a>
+                                    <CSVLink data={csvData} target="_blank" filename={"Journal Entry Example.csv"}>Download CSV Template</CSVLink>
+                                </Typography>
+                            </Grid>
+
                             <Grid item xs={12} sm={12}> <Typography style={{fontSize: 24, textAlign: 'center',paddingTop: '10px'}}>Drag & Drop</Typography></Grid>
                                 <Grid item xs={12} sm={12} >
                                     
@@ -170,7 +206,7 @@ class Upload extends Component {
                                             {
                                                 isDragActive ?
                                                 <Typography paragraph>Drop files here...</Typography> :
-                                                <Typography paragraph>Drag in files or Click to Upload. (4 CSV file limit)</Typography>
+                                                <Typography paragraph>Drag in CSV file or Click to Upload.</Typography>
                                             }
                                             </div> )
                                         }}
@@ -180,7 +216,7 @@ class Upload extends Component {
                             </Paper>
                     </Grid>
                     {
-                        [1,2,3,4].map((item, i) => {
+                        (this.state.map).map((item, i) => {
                             var varFile = 'File ' + item
                             return (
                                 <Grid   container 
@@ -194,25 +230,32 @@ class Upload extends Component {
                                                     alignItems="center"
                                                     justify="center">
                                                 <Grid item xs={12} sm={3}>
-                                                    <Typography h5 style={{padding: '10px', fontWeight: 400}}>Select</Typography>
+                                                    <Typography h5 style={{padding: '10px', fontWeight: 400}}>{item}</Typography>
                                                 </Grid>
                                                 <Grid item xs={12} sm={9}>
-                                                    <ReactFileReader fileTypes={[".csv"]} base64={true} multipleFiles={false} data={i} ref={this.setCurrent} handleFiles={this.handleFiles.bind(this)}>
-                                                        <TextField
-                                                            id="outlined-full-width"
-                                                            label={varFile}
-                                                            placeholder="your_csv_file.csv"
-                                                            //helperText="Full width!"
-                                                            fullWidth
-                                                            margin="normal"
-                                                            variant="outlined"
-                                                            data={i}
-                                                            onClick={(e) => this.handleClick(e, i) }
-                                                            InputLabelProps={{ shrink: true }}
-                                                            value={(this.state.nameOption === null || this.state.nameOption === '' ) ? '' : this.state.nameOption[i]}
-                                                            style={{padding: '10px' }}
-                                                        />
-                                                    </ReactFileReader>
+                                                    <Select
+                                                            value={this.state.mapped[i] ? this.state.mapped[i] : 'None'}
+                                                            onChange={this.handleChange}
+                                                            input={
+                                                            <OutlinedInput
+                                                                labelWidth={0}
+                                                                name={i}
+                                                                id="outlined-age-simple"
+                                                            />
+                                                            }
+                                                        >
+                                                        <MenuItem value="">
+                                                        <em>None</em>
+                                                        </MenuItem>
+                                                        <MenuItem value={'date'}>Date</MenuItem>
+                                                        <MenuItem value={'account'}>Account</MenuItem>
+                                                        <MenuItem value={'description'}>Description</MenuItem>
+                                                        <MenuItem value={'type'}>Type</MenuItem>
+                                                        <MenuItem value={'transaction'}>Transaction</MenuItem>
+                                                        <MenuItem value={'memo'}>Memo</MenuItem>
+                                                        <MenuItem value={'details'}>Details</MenuItem>
+                                                        <MenuItem value={'amount'}>Amount</MenuItem>
+                                                    </Select>
                                                 </Grid>
                                             </Grid>
                                         </Paper>

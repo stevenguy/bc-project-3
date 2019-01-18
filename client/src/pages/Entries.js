@@ -94,7 +94,7 @@ class Entries extends Component {
 
     submitForm = () => {
       let entriesArr = []
-      API.newJournal({createdBy: 'Mearat'})
+      API.newJournal({createdBy: user.name})
       .then((journal) => {
         for (let i = 0; i < this.state.entries.length; i++) {
           entriesArr.push({
@@ -105,9 +105,9 @@ class Entries extends Component {
             transaction: this.state.entries[i].description,
             memo: this.state.entries[i].memo,
             details: this.state.entries[i].details,
-            amount: this.state.entries[i].amount,
+            amount: this.state.entries[i].details === 'Debit' ? this.state.entries[i].amount : -1 * this.state.entries[i].amount,
             //Need to update the praparer to pull from local storage once the user features set up
-            preparer: 'Mearat',
+            preparer: user.name,
             prepared_date: new Date(),
             status: 'Pending',
             year: this.state.entries[i].date.getFullYear(),

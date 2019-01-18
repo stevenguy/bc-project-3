@@ -55,6 +55,8 @@ const journals = [
   }
 ]
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 class Journals extends Component {
   state = {
     journals: 'Select',
@@ -72,6 +74,7 @@ class Journals extends Component {
     API.approveJournal({ journalId: journal })
       .then(() => {
         this.setState({ disable: true })
+        API.notification(user.name + " Approved A Journal!")
       }) 
   }
 

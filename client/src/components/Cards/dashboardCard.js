@@ -14,8 +14,9 @@ import Divider from '@material-ui/core/Divider';
 
 const styles = {
   card: {
-    maxWidth: 300,
-    height: 350
+    maxWidth: 500,
+    height: 300,
+    paddingBottom: 300,
   },
   media: {
     height: 140,
@@ -32,11 +33,11 @@ const styles = {
 };
 
 function DashboardCard(props) {
-  const { classes, title, icon, path, text } = props;
+  const { classes, title, icon, path, text, color } = props;
   return (
     <Card className={classes.card} >
       <Link to={'/' + path} style={{color: 'black', textDecoration: 'none'}}>
-      <CardActionArea>
+      <CardActionArea style={{color: props.color, height: 300}}>
         <div style={styles.spacing}>{icon}</div>
         <CardContent>
           <div style={styles.titleSizing}>
