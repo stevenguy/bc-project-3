@@ -108,6 +108,7 @@ module.exports = {
     db.Transaction
       .find({preparer: req.params.name})
       .sort({ date: -1 })
+      .limit(10)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -116,6 +117,7 @@ module.exports = {
     db.Transaction
       .find({approver: req.params.name})
       .sort({ date: -1 })
+      .limit(10)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
