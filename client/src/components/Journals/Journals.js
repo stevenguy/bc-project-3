@@ -61,7 +61,10 @@ class Journals extends Component {
   state = {
     journals: 'Select',
     journalData: [],
-    disable: false
+    hideApprove: false,
+    hideUnapprove: false,
+    disableApprove: false,
+    disableUnapprove: false,
   }
 
   handleExpand = panel => (event, expanded) => {
@@ -71,22 +74,26 @@ class Journals extends Component {
   }
 
   handleApprove = journal => {
+    this.setState({ hideUnapprove: true })
     API.approveJournal({ journalId: journal })
       .then(() => {
-        this.setState({ disable: true })
+        this.setState({ disableApprove: true })
         API.notification(user.name + " Approved A Journal!")
       }) 
   }
 
   handleUnapprove = journal => {
+    this.setState({ hideApprove: true })
     API.unapproveJournal({ journalId: journal })
       .then(() => {
-        this.setState({ disable: true })
+        this.setState({ disableUnapprove: true })
       })
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
+    const hideApprove = this.state.hideApprove ? { display: 'none' } : {}
+    const hideUnapprove = this.state.hideUnapprove ? { display: 'none' } : {}
 
     return (
       <React.Fragment>
@@ -149,28 +156,28 @@ class Journals extends Component {
                 ))
               }
               {
-                this.props.output.transaction[0].status === 'Pending' && !this.state.disable 
-              ? <Button onClick={() => {
+                this.props.output.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+              ? <Button style={hideUnapprove} onClick={() => {
                 this.handleApprove(this.props.output._id)
               }} 
               variant="contained" className={classes.button}>
                 Approve
                 </Button>
-              : this.props.output.transaction[0].status === 'Pending' && this.state.disable 
+                      : this.props.output.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
               ? <Button disabled variant="contained" className={classes.button}>
                 Approved!
                 </Button>
               : ''
               }
               {
-                this.props.output.transaction[0].status === 'Pending' && !this.state.disable 
-              ? <Button onClick={() => {
+                this.props.output.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+              ? <Button style={hideApprove} onClick={() => {
                 this.handleUnapprove(this.props.output._id)
               }} 
               variant="contained" className={classes.button}>
                 Unapprove
                 </Button>
-              : this.props.output.transaction[0].status === 'Pending' && this.state.disable 
+                      : this.props.output.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
               ? <Button disabled variant="contained" className={classes.button}>
                 Unapproved!
                 </Button>

@@ -51,15 +51,12 @@ export default {
   approveJournal: function(journalId) {
     return axios.put('/api/transactions/approve/', journalId)
   },
-<<<<<<< HEAD
   unapproveJournal: function(journalId) {
     return axios.put('/api/transactions/unapprove/', journalId)
   },
   getJournal: function() {
     return axios.get('/api/journals')
   },
-=======
->>>>>>> 276a9348a7a0fa2c3b0716a5ef37d2370dd74e1e
   // sums data from the database (month)
   monthly: function() {
     return axios.get("/api/transactions/monthly");
