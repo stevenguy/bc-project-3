@@ -148,7 +148,7 @@ class Dashboard extends Component {
                   title='Run Reports'
                   path='Reports'
                   icon={<DirectionsRunIcon className={classes.icon} />}
-                  text='Run dem Reports'
+                  text='Run monthly, quarterly, and yearly reports'
                   color={'aqua'} 
                 />
               </Grid>
