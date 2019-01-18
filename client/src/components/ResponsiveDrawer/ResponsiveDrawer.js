@@ -92,11 +92,12 @@ const styles = theme => ({
   }
 });
 
+
 var local = localStorage.getItem('user')
 let user = JSON.parse(local)
 
 class ResponsiveDrawer extends React.Component {
-
+  
   constructor(props) {
     super(props)
    // Socket listening to notification
@@ -147,8 +148,11 @@ class ResponsiveDrawer extends React.Component {
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
-          <Avatar alt="Login User" src={user.photoURL} className={classes.avatar} />
+        {local 
+          ? <React.Fragment> <Avatar alt="Login User" src={user.photoURL === '' ? '../../images/avatar.jpg': user.photoURL} className={classes.avatar} />
           <Typography className={classes.userName}>{user.name}</Typography>
+          </React.Fragment>
+          : <Redirect to='/'/>}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
@@ -196,7 +200,6 @@ class ResponsiveDrawer extends React.Component {
 
     return (
       <React.Fragment>
-        {local ? '': <Redirect to='/'/>}
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
