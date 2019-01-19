@@ -243,7 +243,7 @@ class Search extends Component {
     handleApprove = journal => {
       console.log('journal testing hello' + journal)
       this.setState({ hideUnapprove: true })
-      API.approveJournal({ journalId: journal })
+      API.approveJournal({ journalId: journal, user: user.name })
         .then(() => {
           this.setState({ disableApprove: true })
           API.notification(user.name + " Approved A Journal!")
@@ -253,7 +253,7 @@ class Search extends Component {
     handleUnapprove = journal => {
       console.log('journal unapprove hello' + journal)
       this.setState({ hideApprove: true })
-      API.unapproveJournal({ journalId: journal })
+      API.unapproveJournal({ journalId: journal, user: user.name })
         .then(() => {
           this.setState({ disableUnapprove: true })
         })
