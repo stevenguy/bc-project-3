@@ -135,7 +135,8 @@ class Register extends Component {
         email: '',
         name: '',
         currentAccount: {},
-        registered: false
+        registered: false,
+        doOnce: false
     }
 
     handleClickShowPassword = () => {
@@ -192,7 +193,18 @@ class Register extends Component {
                 email: this.state.currentAccount.email
             })
         }
-    }
+    };
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.currentAccount && !this.state.doOnce) {
+            this.setState({
+                doOnce: true,
+                newURL: this.state.currentAccount.photoURL,
+                name: this.state.currentAccount.name,
+                email: this.state.currentAccount.email
+            })
+        }
+      }
 
     render() {
 
@@ -215,8 +227,9 @@ class Register extends Component {
                             <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
                             
                                 <Typography style={{alignSelf: 'flex-end'}} color='inherit' variant="h5" component="h5">Register</Typography>
-                                <form className={classes.container}>
-                                    <TextField
+                                <form className={classes.container} noValidate autoComplete="off">
+                                <TextField
+                                        disabled={this.state.currentAccount.email == null ? false : true}
                                         id="Email-input"
                                         label="Email"
                                         className={classes.textField}
@@ -224,7 +237,7 @@ class Register extends Component {
                                         name="username"
                                         margin="normal"
                                         variant="outlined"
-                                        value={this.state.currentAccount ? this.state.currentAccount.email : this.state.email}
+                                        value={this.state.email}
                                         onChange={this.handleChange('email')}
                                         InputLabelProps={{
                                             classes: {
@@ -276,6 +289,7 @@ class Register extends Component {
                                         }}
                                     />
                                     <TextField
+                                        disabled={this.state.currentAccount.name == null ? false : true}
                                         id="Name-input"
                                         label="Full Name"
                                         className={classes.textField}
@@ -283,7 +297,7 @@ class Register extends Component {
                                         name="name"
                                         margin="normal"
                                         variant="outlined"
-                                        value={this.state.currentAccount ? this.state.currentAccount.name : this.state.name}
+                                        value={this.state.name}
                                         onChange={this.handleChange('name')}
                                         InputLabelProps={{
                                             classes: {
@@ -302,6 +316,7 @@ class Register extends Component {
                                     />
 
                                     <TextField
+                                        disabled={this.state.currentAccount.photoURL == null ? false : true}
                                         id="photo-input"
                                         label="Photo URL"
                                         className={classes.textField}

@@ -75,6 +75,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    console.log(local.password)
     API.typemonth()
       .then((res) => {
         var _revenue = this.state.revenue;
@@ -108,8 +109,8 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-        {/* {!local.password ? <Redirect to={{pathname: '/register'
-    }} /> : */}
+        {local && !local.password ? <Redirect to={{pathname: '/register'
+    }} /> : 
         <React.Fragment>
           <Notifications />
           <ResponsiveDrawer />
