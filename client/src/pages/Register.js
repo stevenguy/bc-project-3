@@ -162,8 +162,13 @@ class Register extends Component {
                 Auth.updateUser(account)
                     .then(res => {
                         res.data.password = this.state.password;
-                        this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
+                        // this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
                         localStorage.removeItem('user');
+                        setTimeout(() => {
+                            localStorage.setItem('user', JSON.stringify(res.data));
+                            local = JSON.parse(localStorage.getItem('user'));
+                        }, 5000)
+
                         localStorage.setItem('user', JSON.stringify(res.data));
                         local = JSON.parse(localStorage.getItem('user'));
                         this.state.registered = true;
@@ -180,8 +185,12 @@ class Register extends Component {
                 Auth.authUser(account)
                     .then(res => {
                         res.data.password = this.state.password;
-                        this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
+                        // this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
                         localStorage.removeItem('user')
+                        setTimeout(() => {
+                            localStorage.setItem('user', JSON.stringify(res.data));
+                            local = JSON.parse(localStorage.getItem('user'));
+                        }, 5000)
                         localStorage.setItem('user', JSON.stringify(res.data));
                         local = JSON.parse(localStorage.getItem('user'));
                         this.state.registered = true;
