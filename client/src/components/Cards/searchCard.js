@@ -134,7 +134,7 @@ class SimpleCard extends React.Component {
                 <b>Preparer's Name: </b> {this.props.info.preparer}<br></br>
                 <b>Prepared Date: </b> {this.props.info.prepared_date.toLocaleDateString('en-US')}<br></br>
                 <b>Approver's Name: </b> {this.props.info.approver}<br></br>
-                <b>Approved/Unapproved Date: </b> {this.props.info.approved_date.toLocaleDateString('en-US')}<br></br>
+                <b>Approved/Unapproved Date: </b> {this.props.info.status === 'pending' ? this.props.info.approved_date.toLocaleDateString('en-US'): ''}<br></br>
                 </Typography>
               </Grid>
               {/* newcode~~~~~~~~~~~~~``` */}

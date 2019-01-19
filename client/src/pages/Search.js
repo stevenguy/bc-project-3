@@ -445,28 +445,28 @@ class Search extends Component {
                 </div>
                 )}
                 {
-                this.state.searchData[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+                this.state.searchData[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
               ? <Button style={hideUnapprove} onClick={() => {
                 this.handleApprove(this.state.searchData[0].journal_id)
               }} 
               variant="contained" className={classes.button}>
                 Approve
                 </Button>
-                      : this.state.searchData[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
+                      : this.state.searchData[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
               ? <Button disabled variant="contained" className={classes.button}>
                 Approved!
                 </Button>
               : ''
               }
               {
-                this.state.searchData[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+                this.state.searchData[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
               ? <Button style={hideApprove} onClick={() => {
                 this.handleUnapprove(this.state.searchData[0].journal_id)
               }} 
               variant="contained" className={classes.button}>
                 Unapprove
                 </Button>
-                      : this.state.searchData[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
+                      : this.state.searchData[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
               ? <Button disabled variant="contained" className={classes.button}>
                 Unapproved!
                 </Button>
@@ -482,28 +482,28 @@ class Search extends Component {
                       </div>
                     )}
                      {
-                item.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+                item.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
               ? <Button style={hideUnapprove} onClick={() => {
                 this.handleApprove(item._id)
               }} 
               variant="contained" className={classes.button}>
                 Approve
                 </Button>
-                      : item.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
+                      : item.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
               ? <Button disabled variant="contained" className={classes.button}>
                 Approved!
                 </Button>
               : ''
               }
               {
-                item.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+                item.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
               ? <Button style={hideApprove} onClick={() => {
                 this.handleUnapprove(item._id)
               }} 
               variant="contained" className={classes.button}>
                 Unapprove
                 </Button>
-                      : item.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
+                      : item.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
               ? <Button disabled variant="contained" className={classes.button}>
                 Unapproved!
                 </Button>
