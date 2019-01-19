@@ -97,7 +97,7 @@ class Journals extends Component {
                 {this.props.output.transaction.map((entry, index) => (
                   <React.Fragment key={index}>
                     <JournalRow entry={entry} index={index} />
-                    <Divider />
+                   {index === this.props.output.transaction.length - 1 ? '' : <Divider />} 
                   </React.Fragment>
                 )
                 )}

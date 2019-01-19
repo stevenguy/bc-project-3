@@ -11,7 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import Journals from '../components/Journals'
 import Notifications from "../components/Notifications"
 import MenuItem from '@material-ui/core/MenuItem';
-import { borders } from '@material-ui/system';
 
 const drawerWidth = 180
 
