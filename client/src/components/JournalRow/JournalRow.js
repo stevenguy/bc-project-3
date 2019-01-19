@@ -78,10 +78,10 @@ class JournalRow extends Component {
                   {this.state.open ? 'Prepared Date: ' + this.props.entry.prepared_date.toLocaleDateString('en-US') : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapprover: ' : 'Approver: '} {this.props.entry.status === 'Pending' ? '' : this.props.entry.approver}
+                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapprover: ' + this.props.entry.approver : this.state.open ? 'Approver: ' + this.props.entry.approver : null }
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapproved Date: ' : 'Approved Date: '} {this.props.entry.status === 'Pending' ? '' : this.props.entry.approved_date.toLocaleDateString('en-US')}
+                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapproved Date: ' + this.props.entry.approved_date.toLocaleDateString('en-US') : this.state.open ? 'Approver: ' + this.props.entry.approved_date.toLocaleDateString('en-US') : null }
                 </Typography>
                 {this.props.entry.date.toLocaleDateString('en-US')}
               </React.Fragment>
