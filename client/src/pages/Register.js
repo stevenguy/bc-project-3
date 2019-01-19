@@ -175,6 +175,7 @@ class Register extends Component {
                 Auth.authUser(account)
                     .then(res => {
                         this.state.registered = true;
+                        console.log(this.state.registered)
                         this.forceUpdate()
                     })
             }
@@ -196,6 +197,7 @@ class Register extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
+        console.log(this.state.registered)
         if (this.state.currentAccount && !this.state.doOnce) {
             this.setState({
                 doOnce: true,
@@ -212,7 +214,7 @@ class Register extends Component {
 
         return (
             <React.Fragment>
-                {this.state.registered ? <Redirect to={{ pathname: '/' }} /> :
+                {this.state.currentAccount.password != null ? <Redirect to={{ pathname: '/' }} /> :
                     <Grid
                         container
                         className={classes.register}
