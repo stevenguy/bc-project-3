@@ -95,7 +95,7 @@ module.exports = {
         [
         { $group: {
             _id: {
-              label: "$_id"
+              label: "$journal_id"
             }
           }
         }]
@@ -103,24 +103,16 @@ module.exports = {
       .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
   },    
-  transByPreparer: function(req, res) {
+  searchById: function(req, res) {
     // console.log('hit!')
     db.Transaction
-      .find({preparer: req.params.name})
+      .find({journal_id: req.params.id})
       .sort({ date: -1 })
       .limit(10)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  transByApprover: function(req, res) {
-    // console.log('hit!')
-    db.Transaction
-      .find({approver: req.params.name})
-      .sort({ date: -1 })
-      .limit(10)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
-  },
+
 
   accounts: function(req, res) {
     db.Transaction

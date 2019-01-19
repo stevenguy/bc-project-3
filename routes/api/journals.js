@@ -8,6 +8,10 @@ router.route('/')
 router.route('/status/:status')
 .get(journalsController.find)
 
+router.route('/approver/:approver')
+.get(journalsController.searchApprover)
 
+router.route('/preparer/:preparer')
+.get(journalsController.searchPreparer)
 
 module.exports = router;
