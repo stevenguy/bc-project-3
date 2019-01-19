@@ -75,7 +75,6 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    console.log(local.password)
     API.typemonth()
       .then((res) => {
         var _revenue = this.state.revenue;
