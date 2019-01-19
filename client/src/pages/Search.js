@@ -35,6 +35,7 @@ import Button from '@material-ui/core/Button'
 
 
 const drawerWidth = 180;
+const user = JSON.parse(localStorage.getItem('user'))
 
 const styles = theme => ({
   //Style goes here
@@ -197,6 +198,14 @@ class Search extends Component {
     searchData: [],
     category: 30,
     labelWidth: 0,
+
+
+    journals: 'Select',
+    journalData: [],
+    hideApprove: false,
+    hideUnapprove: false,
+    disableApprove: false,
+    disableUnapprove: false,
     }
 
     componentWillMount() {
@@ -232,6 +241,23 @@ class Search extends Component {
       });
     };
 
+    handleApprove = journal => {
+      this.setState({ hideUnapprove: true })
+      API.approveJournal({ journalId: journal })
+        .then(() => {
+          this.setState({ disableApprove: true })
+          API.notification(user.name + " Approved A Journal!")
+        }) 
+    }
+  
+    handleUnapprove = journal => {
+      this.setState({ hideApprove: true })
+      API.unapproveJournal({ journalId: journal })
+        .then(() => {
+          this.setState({ disableUnapprove: true })
+        })
+    }
+  
     selectChanger = () => {
       if(this.state.category === 20){
         API.preparerAutofill()
@@ -326,6 +352,9 @@ class Search extends Component {
 
     render() {
       const { classes } = this.props;
+      const hideApprove = this.state.hideApprove ? { display: 'none' } : {}
+      const hideUnapprove = this.state.hideUnapprove ? { display: 'none' } : {}
+
 
       const autosuggestProps = {
         renderInputComponent,
@@ -414,6 +443,34 @@ class Search extends Component {
                   {this.state.viewCard ? <SimpleCard info = {item} cat = {this.state.category} />: null}
                 </div>
                 )}
+                {
+                this.props.info.status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+              ? <Button style={hideUnapprove} onClick={() => {
+                this.handleApprove(this.props._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Approve
+                </Button>
+                      : this.props.info.status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
+              ? <Button disabled variant="contained" className={classes.button}>
+                Approved!
+                </Button>
+              : ''
+              }
+              {
+                this.props.info.status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+              ? <Button style={hideApprove} onClick={() => {
+                this.handleUnapprove(this.props._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Unapprove
+                </Button>
+                      : this.props.info.status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
+              ? <Button disabled variant="contained" className={classes.button}>
+                Unapproved!
+                </Button>
+              : ''
+              }
                 </Paper>
                 :
                 this.state.viewCard === true ? this.state.searchData.map(item => 
