@@ -96,17 +96,18 @@ class SimpleCard extends React.Component {
           className={classes.margins}
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.props.cat == 30 ? <BookmarkBorderIcon/> : <AccountCircleIcon/>}
+              {<BookmarkBorderIcon/>}
             </Avatar>
           }
           title={
               <Typography 
                 className={classes.card} 
                 paragraph variant= 'h4'>{
-                  this.props.cat == 30 ? this.props.info.journal_id : 
-                  this.props.cat == 20 ? this.props.info.preparer:
-                  this.props.cat == 10 ? this.props.info.approver: 
-                  'None Selected'
+                  // this.props.cat == 30 ? this.props.info.journal_id : 
+                  // this.props.cat == 20 ? this.props.info.preparer:
+                  // this.props.cat == 10 ? this.props.info.approver: 
+                  // 'None Selected'
+                  `$${this.props.info.amount}`
                   }
               </Typography>
           }
@@ -123,7 +124,7 @@ class SimpleCard extends React.Component {
                 <b>Account: </b> {this.props.info.account}<br></br>
                 <b>Memo: </b> {this.props.info.memo}<br></br>
                 <b>Details: </b> {this.props.info.details}<br></br>
-                <b>Amount: </b> {this.props.info.amount}<br></br>
+                {/* <b>Amount: </b> {this.props.info.amount}<br></br> */}
                 </Typography>
               </Grid>
               <Grid item>

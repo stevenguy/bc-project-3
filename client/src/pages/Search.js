@@ -102,8 +102,8 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    marginLeft: '100px',
-    marginRight: '100px'
+    // marginLeft: '100px',
+    // marginRight: '100px'
   },
   simpleCard: {
     display: 'flex',
@@ -111,7 +111,7 @@ const styles = theme => ({
     alignItems: 'center'
   },
   domCard: {
-    margin: 20
+    marginTop: '20px'
   }
 
 });
@@ -407,11 +407,14 @@ class Search extends Component {
           </Grid>
           </Paper>
               <div className={classes.carduh}> {
-                this.state.category === 30 && this.state.viewCard === true ? this.state.searchData.map (item => 
+                this.state.category === 30 && this.state.viewCard === true ? 
+                <Paper className = {classes.domCard}>                
+                {this.state.searchData.map (item => 
                 <div className={classes.simpleCard}>
                   {this.state.viewCard ? <SimpleCard info = {item} cat = {this.state.category} />: null}
                 </div>
-                )
+                )}
+                </Paper>
                 :
                 this.state.viewCard === true ? this.state.searchData.map(item => 
                   <Paper className = {classes.domCard}>
