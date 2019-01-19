@@ -63,10 +63,13 @@ class JournalRow extends Component {
                   {"Description: " + this.props.entry.description}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
+                  {'Amount: $' + this.props.entry.amount}
+                </Typography>
+                <Typography component="span" className={classes.inline} color="textPrimary">
                   {this.state.open ? "Memo: " + this.props.entry.memo : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {'Amount: $' + this.props.entry.amount}
+                  {this.state.open ? "Description: " + this.props.entry.description : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
                   {this.state.open ? 'Preparer: ' + this.props.entry.preparer : null}
@@ -76,11 +79,9 @@ class JournalRow extends Component {
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
                   {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapprover: ' : 'Approver: '} {this.props.entry.status === 'Pending' ? '' : this.props.entry.approver}
-                    {/* || this.props.entry.status === 'Approved' ? 'Approver: ' + this.props.entry.approver : 'Unapprover: ' + this.props.entry.unapprover} {this.props.entry.status === 'Pending' ? '' : this.props.approver} */}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapproved Date:' : 'Approved Date:'} {this.props.entry.status === 'Pending' ? '' : this.props.entry.approved_date.toLocaleDateString('en-US')}
-                    {/* 'Approved Date: ' + this.props.entry.approved_date.toLocaleDateString('en-US') : null} */}
+                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapproved Date: ' : 'Approved Date: '} {this.props.entry.status === 'Pending' ? '' : this.props.entry.approved_date.toLocaleDateString('en-US')}
                 </Typography>
                 {this.props.entry.date.toLocaleDateString('en-US')}
               </React.Fragment>
