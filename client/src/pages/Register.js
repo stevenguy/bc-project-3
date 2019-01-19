@@ -128,6 +128,8 @@ const styles = theme => ({
     },
 })
 
+var local = JSON.parse(localStorage.getItem('user'));
+
 class Register extends Component {
     state = {
         password: '',
@@ -159,10 +161,13 @@ class Register extends Component {
                 account.role = 'Preparer';
                 Auth.updateUser(account)
                     .then(res => {
-                        localStorage.setItem('user', JSON.stringify(res.data));
+                        res.data.password = this.state.password;
                         this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
+                        localStorage.removeItem('user');
+                        localStorage.setItem('user', JSON.stringify(res.data));
+                        local = JSON.parse(localStorage.getItem('user'));
                         this.state.registered = true;
-                        this.forceUpdate();
+                        window.location.reload();
                     })
             } else {
                 var account = {
@@ -174,9 +179,13 @@ class Register extends Component {
                 }
                 Auth.authUser(account)
                     .then(res => {
+                        res.data.password = this.state.password;
+                        this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
+                        localStorage.removeItem('user')
+                        localStorage.setItem('user', JSON.stringify(res.data));
+                        local = JSON.parse(localStorage.getItem('user'));
                         this.state.registered = true;
-                        console.log(this.state.registered)
-                        this.forceUpdate()
+                        window.location.reload();
                     })
             }
         }
@@ -197,7 +206,6 @@ class Register extends Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.state.registered)
         if (this.state.currentAccount && !this.state.doOnce) {
             this.setState({
                 doOnce: true,
@@ -214,7 +222,7 @@ class Register extends Component {
 
         return (
             <React.Fragment>
-                {this.state.currentAccount.password != null ? <Redirect to={{ pathname: '/' }} /> :
+                {((local != null && local.password != null)) ? <Redirect to={{ pathname: '/dashboard' }} /> :
                     <Grid
                         container
                         className={classes.register}
