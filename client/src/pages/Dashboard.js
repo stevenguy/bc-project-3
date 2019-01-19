@@ -108,8 +108,8 @@ class Dashboard extends Component {
 
     return (
       <React.Fragment>
-        {/* {!local.password ? <Redirect to={{pathname: '/register'
-    }} /> : */}
+        {local && !local.password ? <Redirect to={{pathname: '/register'
+    }} /> : 
         <React.Fragment>
           <Notifications />
           <ResponsiveDrawer />

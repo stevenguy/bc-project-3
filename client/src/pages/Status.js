@@ -46,6 +46,9 @@ const styles = theme => ({
   card: {
     minWidth: 275,
   },
+  margin: {
+    marginBottom: '15px'
+  },
 })
 
 const journals = [
@@ -118,7 +121,7 @@ class Status extends Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
 
-          <Paper className="row">
+          <Paper>
             <form className={classes.container} noValidate autoComplete="off">
               <TextField
                 id="journals"
@@ -145,7 +148,6 @@ class Status extends Component {
             </form>
           </Paper>
           <div style={{ height: 10 }}></div>
-          <Paper>
             {this.state.journalData.map((output, j) => (
               <React.Fragment key={j}>
                     <Card>
@@ -153,10 +155,9 @@ class Status extends Component {
                       output={output}
                       />
                   </Card>
-                  <Divider light />
+                <Divider className={classes.margin} light />
               </React.Fragment>
             ))}
-          </Paper>
         </main>
         <Footer />
       </React.Fragment>

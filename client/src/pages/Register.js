@@ -120,13 +120,15 @@ const styles = theme => ({
          padding: '0 10px',
          backgroundColor: "rgb(46, 50, 68)",
          fontFamily: "Roboto, Helvetica, Arial, sans-serif"
-     },
+    },
     breakPoints: {
         [theme.breakpoints.down('sm')]: {
             display: 'none',
           },
     },
 })
+
+var local = JSON.parse(localStorage.getItem('user'));
 
 class Register extends Component {
     state = {
@@ -135,7 +137,8 @@ class Register extends Component {
         email: '',
         name: '',
         currentAccount: {},
-        registered: false
+        registered: false,
+        doOnce: false
     }
 
     handleClickShowPassword = () => {
@@ -158,10 +161,13 @@ class Register extends Component {
                 account.role = 'Preparer';
                 Auth.updateUser(account)
                     .then(res => {
-                        localStorage.setItem('user', JSON.stringify(res.data));
+                        res.data.password = this.state.password;
                         this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
+                        localStorage.removeItem('user');
+                        localStorage.setItem('user', JSON.stringify(res.data));
+                        local = JSON.parse(localStorage.getItem('user'));
                         this.state.registered = true;
-                        this.forceUpdate();
+                        window.location.reload();
                     })
             } else {
                 var account = {
@@ -173,8 +179,13 @@ class Register extends Component {
                 }
                 Auth.authUser(account)
                     .then(res => {
+                        res.data.password = this.state.password;
+                        this.setState({ currentAccount: JSON.parse(localStorage.getItem('user')) });
+                        localStorage.removeItem('user')
+                        localStorage.setItem('user', JSON.stringify(res.data));
+                        local = JSON.parse(localStorage.getItem('user'));
                         this.state.registered = true;
-                        this.forceUpdate()
+                        window.location.reload();
                     })
             }
         }
@@ -192,7 +203,18 @@ class Register extends Component {
                 email: this.state.currentAccount.email
             })
         }
-    }
+    };
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.currentAccount && !this.state.doOnce) {
+            this.setState({
+                doOnce: true,
+                newURL: this.state.currentAccount.photoURL,
+                name: this.state.currentAccount.name,
+                email: this.state.currentAccount.email
+            })
+        }
+      }
 
     render() {
 
@@ -200,7 +222,7 @@ class Register extends Component {
 
         return (
             <React.Fragment>
-                {this.state.registered ? <Redirect to={{ pathname: '/' }} /> :
+                {((local != null && local.password != null)) ? <Redirect to={{ pathname: '/dashboard' }} /> :
                     <Grid
                         container
                         className={classes.register}
@@ -215,8 +237,9 @@ class Register extends Component {
                             <Paper square={true} className={classes.root + " " + classes.form} elevation={10}>
                             
                                 <Typography style={{alignSelf: 'flex-end'}} color='inherit' variant="h5" component="h5">Register</Typography>
-                                <form className={classes.container}>
-                                    <TextField
+                                <form className={classes.container} noValidate autoComplete="off">
+                                <TextField
+                                        disabled={this.state.currentAccount.email == null ? false : true}
                                         id="Email-input"
                                         label="Email"
                                         className={classes.textField}
@@ -224,7 +247,7 @@ class Register extends Component {
                                         name="username"
                                         margin="normal"
                                         variant="outlined"
-                                        value={this.state.currentAccount ? this.state.currentAccount.email : this.state.email}
+                                        value={this.state.email}
                                         onChange={this.handleChange('email')}
                                         InputLabelProps={{
                                             classes: {
@@ -276,6 +299,7 @@ class Register extends Component {
                                         }}
                                     />
                                     <TextField
+                                        disabled={this.state.currentAccount.name == null ? false : true}
                                         id="Name-input"
                                         label="Full Name"
                                         className={classes.textField}
@@ -283,7 +307,7 @@ class Register extends Component {
                                         name="name"
                                         margin="normal"
                                         variant="outlined"
-                                        value={this.state.currentAccount ? this.state.currentAccount.name : this.state.name}
+                                        value={this.state.name}
                                         onChange={this.handleChange('name')}
                                         InputLabelProps={{
                                             classes: {
@@ -302,6 +326,7 @@ class Register extends Component {
                                     />
 
                                     <TextField
+                                        disabled={this.state.currentAccount.photoURL == null ? false : true}
                                         id="photo-input"
                                         label="Photo URL"
                                         className={classes.textField}
