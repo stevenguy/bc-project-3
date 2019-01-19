@@ -77,14 +77,11 @@ class Dashboard extends Component {
   componentDidMount() {
     API.typemonth()
       .then((res) => {
-        console.log('string')
-        console.log(res)
         var _revenue = this.state.revenue;
         var _expense = this.state.expense;
         var _revenueGraph = this.state.revenueGraph;
         var _expenseGraph = this.state.expenseGraph;
         res.data.forEach(element => {
-          //console.log(element)
           switch (element._id.type) {
             case 'Revenue':
               _revenue[element._id.month - 1] += element.amount
@@ -102,11 +99,6 @@ class Dashboard extends Component {
       
 
         this.setState({ revenue: _revenue, expense: _expense, revenueGraph: _revenueGraph, expenseGraph: _expenseGraph })
-        // console.log(_revenue)
-        // console.log(_expense)
-        // console.log(_revenueGraph)
-        // console.log(_expenseGraph)
-        // console.log(this.state)
       })
   }
 

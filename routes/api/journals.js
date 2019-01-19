@@ -5,10 +5,6 @@ router.route('/')
 .get(journalsController.countPending)
 .post(journalsController.create)
 
-// router.route('/:status')
-// .get(journalsController.findAll)
-
-
 router.route('/status/:status')
 .get(journalsController.find)
 
