@@ -138,7 +138,7 @@ class SimpleCard extends React.Component {
                 </Typography>
               </Grid>
               {/* newcode~~~~~~~~~~~~~``` */}
-              {
+              {/* {
                 this.props.info.status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
               ? <Button style={hideUnapprove} onClick={() => {
                 this.handleApprove(this.props._id)
@@ -165,7 +165,7 @@ class SimpleCard extends React.Component {
                 Unapproved!
                 </Button>
               : ''
-              }
+              } */}
               {/* newcode~~~~~~~~~~~~~~~`` */}
             </Grid>
             {/* <Typography paragraph > Journal ID: {this.props.info.transaction} </Typography> */}

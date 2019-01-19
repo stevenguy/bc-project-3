@@ -36,7 +36,6 @@ import Button from '@material-ui/core/Button'
 
 const drawerWidth = 180;
 const user = JSON.parse(localStorage.getItem('user'))
-
 const styles = theme => ({
   //Style goes here
   toolbar: theme.mixins.toolbar,
@@ -242,6 +241,7 @@ class Search extends Component {
     };
 
     handleApprove = journal => {
+      console.log('journal testing hello' + journal)
       this.setState({ hideUnapprove: true })
       API.approveJournal({ journalId: journal })
         .then(() => {
@@ -251,6 +251,7 @@ class Search extends Component {
     }
   
     handleUnapprove = journal => {
+      console.log('journal unapprove hello' + journal)
       this.setState({ hideApprove: true })
       API.unapproveJournal({ journalId: journal })
         .then(() => {
@@ -444,28 +445,28 @@ class Search extends Component {
                 </div>
                 )}
                 {
-                this.props.info.status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+                this.state.searchData[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
               ? <Button style={hideUnapprove} onClick={() => {
-                this.handleApprove(this.props._id)
+                this.handleApprove(this.state.searchData[0].journal_id)
               }} 
               variant="contained" className={classes.button}>
                 Approve
                 </Button>
-                      : this.props.info.status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
+                      : this.state.searchData[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
               ? <Button disabled variant="contained" className={classes.button}>
                 Approved!
                 </Button>
               : ''
               }
               {
-                this.props.info.status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+                this.state.searchData[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
               ? <Button style={hideApprove} onClick={() => {
-                this.handleUnapprove(this.props._id)
+                this.handleUnapprove(this.state.searchData[0].journal_id)
               }} 
               variant="contained" className={classes.button}>
                 Unapprove
                 </Button>
-                      : this.props.info.status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
+                      : this.state.searchData[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
               ? <Button disabled variant="contained" className={classes.button}>
                 Unapproved!
                 </Button>
@@ -480,6 +481,34 @@ class Search extends Component {
                         <SimpleCard info = {item} cat = {this.state.category} />
                       </div>
                     )}
+                     {
+                item.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove
+              ? <Button style={hideUnapprove} onClick={() => {
+                this.handleApprove(item._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Approve
+                </Button>
+                      : item.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove
+              ? <Button disabled variant="contained" className={classes.button}>
+                Approved!
+                </Button>
+              : ''
+              }
+              {
+                item.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove
+              ? <Button style={hideApprove} onClick={() => {
+                this.handleUnapprove(item._id)
+              }} 
+              variant="contained" className={classes.button}>
+                Unapprove
+                </Button>
+                      : item.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove
+              ? <Button disabled variant="contained" className={classes.button}>
+                Unapproved!
+                </Button>
+              : ''
+              }
                   </Paper>
                 )
                 : null
