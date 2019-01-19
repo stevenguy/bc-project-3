@@ -1,26 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Grid from '@material-ui/core/Grid';
-import FolderOpenIcon from '@material-ui/icons/FolderOpen'
 import Button from '@material-ui/core/Button';
 import API from '../../utils/API'
-
+import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   card: {
@@ -50,6 +42,12 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500],
   },
+  margins: {
+    marginLeft: '20px'
+  },
+  content: {
+    marginLeft: '20px',
+  }
 });
 
 const user = JSON.parse(localStorage.getItem('user'))
@@ -92,45 +90,49 @@ class SimpleCard extends React.Component {
     const hideUnapprove = this.state.hideUnapprove ? { display: 'none' } : {}
 
     return (
-      <Card className={classes.card}>
+      <Card className={classes.card} raised={true}>
         <CardHeader
+          className={classes.margins}
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              P
+              {this.props.cat == 30 ? <BookmarkBorderIcon/> : <AccountCircleIcon/>}
             </Avatar>
           }
-          action={
-            <IconButton>
-              <MoreVertIcon />
-              {/* <FolderOpenIcon/> */}
-            </IconButton>
-          }
           title={
-              <Typography className={classes.card} paragraph variant= 'h4'>{this.props.info.preparer}</Typography>
+              <Typography 
+                className={classes.card} 
+                paragraph variant= 'h4'>{
+                  this.props.cat == 30 ? this.props.info.journal_id : 
+                  this.props.cat == 20 ? this.props.info.preparer:
+                  this.props.cat == 10 ? this.props.info.approver: 
+                  'None Selected'
+                  }
+              </Typography>
           }
-          subheader="September 14, 2016"
+          subheader={`Date Logged: ${this.props.info.date.toLocaleDateString('en-US')}`}
         />
-          <CardContent>
+          <Divider variant='middle'/>
+          <CardContent className={classes.content}>
             <Grid container spacing= {32}>
               <Grid item>
                 <Typography paragraph>
-                Journal ID: {this.props.info.journal_id}<br></br>
-                Date: {this.props.info.date}<br></br>
-                Description: {this.props.info.preparer}<br></br>
-                Account: {this.props.info.account}<br></br>
-                Memo: {this.props.info.memo}<br></br>
-                Details: {this.props.info.details}<br></br>
-                Amount: {this.props.info.amount}<br></br>
+                <b>Journal ID: </b> {this.props.info.journal_id}<br></br>
+                <b>Date: </b> {this.props.info.date.toLocaleDateString('en-US')}<br></br>
+                <b>Description: </b> {this.props.info.preparer}<br></br>
+                <b>Account: </b> {this.props.info.account}<br></br>
+                <b>Memo: </b> {this.props.info.memo}<br></br>
+                <b>Details: </b> {this.props.info.details}<br></br>
+                <b>Amount: </b> {this.props.info.amount}<br></br>
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography paragraph>
-                Type of Transaction: {this.props.info.transaction}<br></br>
-                Status: {this.props.info.status}<br></br>
-                Preparer's Name: {this.props.info.preparer}<br></br>
-                Prepared Date: {this.props.info.prepared_date}<br></br>
-                Approver's Name: {this.props.info.approver}<br></br>
-                Approved/Unapproved Date: {this.props.info.approved_date}<br></br>
+                <b>Type of Transaction: </b> {this.props.info.transaction}<br></br>
+                <b>Status: </b> {this.props.info.status}<br></br>
+                <b>Preparer's Name: </b> {this.props.info.preparer}<br></br>
+                <b>Prepared Date: </b> {this.props.info.prepared_date.toLocaleDateString('en-US')}<br></br>
+                <b>Approver's Name: </b> {this.props.info.approver}<br></br>
+                <b>Approved/Unapproved Date: </b> {this.props.info.approved_date.toLocaleDateString('en-US')}<br></br>
                 </Typography>
               </Grid>
               {/* newcode~~~~~~~~~~~~~``` */}

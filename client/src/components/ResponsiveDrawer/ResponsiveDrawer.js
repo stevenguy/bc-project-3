@@ -129,14 +129,13 @@ class ResponsiveDrawer extends React.Component {
 
   logout = () => {
     auth.signOut()
-        .then(() => {
-            // this.setState(({user: null}))
-            localStorage.removeItem('user');
-            local = null;
-            window.location.href = '/';
-        });
+      .then(() => {
+          // this.setState(({user: null}))
+          localStorage.removeItem('user');
+          local = null;
+          window.location.href = '/';
+      });
 }
-
   
   render() {
     const { classes, theme } = this.props;
@@ -149,17 +148,21 @@ class ResponsiveDrawer extends React.Component {
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
         {local 
-          ? <React.Fragment> <Avatar alt="Login User" src={user.photoURL === '' ? '../../images/avatar.jpg': user.photoURL} className={classes.avatar} />
+          ? <React.Fragment> <Avatar alt="Login User" src={!user.photoURL ? '../../images/avatar.jpg': user.photoURL} className={classes.avatar} />
           <Typography className={classes.userName}>{user.name}</Typography>
           </React.Fragment>
           : <Redirect to='/'/>}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.user}>
         <List className={classes.user}>
-            <ListItem button>
-              <ListItemIcon><SettingsIcon /></ListItemIcon>
-              <ListItemText primary='Settings' />
-            </ListItem>
+          {!local ? <Redirect to='/'/> : user.role.toLowerCase() === 'admin' ?
+            <NavLink  exact={true} style={{ textDecoration: 'none' }} to='/Admin'>
+              <ListItem button >
+                <ListItemIcon><SettingsIcon /></ListItemIcon>
+                <ListItemText primary='Admin' />
+              </ListItem>
+            </NavLink> : ""
+          }
             <ListItem button onClick={this.logout}>
               <ListItemIcon><PowerSettingsNewIcon/></ListItemIcon>
               <ListItemText primary='Log Out' />
@@ -212,6 +215,7 @@ class ResponsiveDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
+            {<Route path={'/Admin'} exact render={() => <div>Admin</div>}/>}
             {this.state.menuArr.map(text => (
               <Route key={text} path={'/' + text} exact render={() => <div>{text}</div>}/>
             ))}

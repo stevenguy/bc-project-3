@@ -204,16 +204,15 @@ class Login extends Component {
                 var temp = {
                     name: result.user.displayName,
                     email: result.user.email,
-                    photoURL: result.user.photoURL
+                    photoURL: result.user.photoURL,
+                    role: 'Preparer'
                 };
-                console.log(temp);
                 Auth.authUser(temp)
                     .then(res => {
                         localStorage.setItem('user', JSON.stringify(res.data));
                         local = JSON.parse(localStorage.getItem('user'));
                             window.location.reload();
                     })
-                // this.setState(({ user: result.user}))
             });
     }
 

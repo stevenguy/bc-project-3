@@ -8,9 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import Paper from '@material-ui/core/Paper';
 
-const drawerWidth = 180
 
 const styles = theme => ({
   //Style goes here
@@ -37,6 +35,10 @@ class JournalRow extends Component {
     //State goes here
     labelWidth: 0,
     open: false,
+    hideApprove: false,
+    hideUnapprove: false,
+    disableApprove: false,
+    disableUnapprove: false
   }
 
   handleClick = () => {

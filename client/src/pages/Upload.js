@@ -7,7 +7,6 @@ import API from '../utils/API'
 import Footer from "../components/Footer"
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles'; 
-import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -15,7 +14,6 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Notifications from "../components/Notifications"
 import { CSVLink, CSVDownload } from "react-csv";
@@ -75,7 +73,6 @@ class Upload extends Component {
     }
     
     updateData(result) {
-        console.log(result.data)
         var _map = []
         var _mapped = [null, null, null, null, null, null, null, null]
         _map = Object.keys(result.data[0])
@@ -120,9 +117,6 @@ class Upload extends Component {
     }
 
     handleFiles = (file, isDropped) => {
-        //console.log(file[0])
-        // console.log(files.base64)
-        // console.log(files.fileList[0].name)
         this.setState({
             map: [],
             mapped: [null, null, null, null, null, null, null, null]
@@ -153,12 +147,8 @@ class Upload extends Component {
             //start mapping
             let tempCSV = this.state.csv
             this.state.map.forEach((element, i) => {
-                // console.log(element)
                 tempCSV = tempCSV.split(element).join(this.state.mapped[i])
-                // console.log(tempCSV)
             });
-            console.log('here')
-            console.log(tempCSV)
             API.buntest({data: tempCSV, name: JSON.parse(localStorage.getItem('user')).name})
             .then(() => API.notification(user.name + " Added New Journal!"))
             this.setState({uploaded: 1})
