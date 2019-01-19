@@ -473,8 +473,8 @@ class IncomeMonth extends Component {
                     return (
                       <TableRow key={i}>
                         <TableCell><b>TOTAL</b></TableCell>
-                        <TableCell align="right">{output.prevTotal}</TableCell>
-                        <TableCell align="right">{output.currTotal}</TableCell>
+                        <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                        <TableCell align="right"><b>{output.currTotal}</b></TableCell>
                       </TableRow>
                     );  
                   }
@@ -530,8 +530,8 @@ class IncomeMonth extends Component {
                       return (
                         <TableRow key={i}>
                           <TableCell><b>TOTAL</b></TableCell>
-                          <TableCell align="right">{output.prevTotal}</TableCell>
-                          <TableCell align="right">{output.currTotal}</TableCell>
+                          <TableCell align="right"><b>{output.prevTotal}</b></TableCell>
+                          <TableCell align="right"><b>{output.currTotal}</b></TableCell>
                         </TableRow>
                       );
                     }
