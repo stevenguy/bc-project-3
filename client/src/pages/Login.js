@@ -207,14 +207,12 @@ class Login extends Component {
                     photoURL: result.user.photoURL,
                     role: 'Preparer'
                 };
-                console.log(temp);
                 Auth.authUser(temp)
                     .then(res => {
                         localStorage.setItem('user', JSON.stringify(res.data));
                         local = JSON.parse(localStorage.getItem('user'));
                             window.location.reload();
                     })
-                // this.setState(({ user: result.user}))
             });
     }
 

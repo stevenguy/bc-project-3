@@ -28,11 +28,9 @@ let server = app.listen(PORT, function() {
 let io = socket(server)
 
 io.on('connection', socket => {
-  console.log('Made socket connection')
   socket.on('notification', function(msg) {
     io.emit('notification', msg)
   })
   socket.on('disconnect', function() {
-    console.log('User disconnected')
   })
 })

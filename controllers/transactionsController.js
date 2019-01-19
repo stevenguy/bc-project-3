@@ -23,7 +23,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   csv: function(req, res) {
-    console.log(req.body)
     db.Transaction
       .create(req.body)
   },
@@ -35,7 +34,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   unapprove: function(req, res) {
-    console.log(req.body.journalId)
     db.Transaction
       .updateMany({ journal_id: req.body.journalId }, { $set: { status: 'Unapproved', approver: req.body.user, approved_date: new Date() } })
       .then(dbModel => res.json(dbModel))
@@ -49,7 +47,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   year: function(req, res) {
-    console.log('YEAR')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -65,7 +62,6 @@ module.exports = {
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
   },  
   getPreparer: function(req, res) {
-    console.log('preparer')
     db.Transaction
       .aggregate(
         [
@@ -80,7 +76,6 @@ module.exports = {
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
   }, 
   getApprover: function(req, res) {
-    console.log('approver')
     db.Transaction
       .aggregate(
         [
@@ -95,7 +90,6 @@ module.exports = {
       .catch(err => {console.log('YEAR2' + err);res.json(err)});
   }, 
   getJournalId: function(req, res) {
-    console.log('journal ID')
     db.Transaction
       .aggregate(
         [
@@ -129,7 +123,6 @@ module.exports = {
   },
 
   accounts: function(req, res) {
-    console.log('ACCOUNTS')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -142,11 +135,10 @@ module.exports = {
           }
         }]
       )
-      .then(dbModel => {console.log('ACCOUNTS' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('ACCOUNTS2' + err);res.json(err)});
   },  
   yearly: function(req, res) {
-    console.log('YEARLY AGGREGATE')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -161,11 +153,10 @@ module.exports = {
         }]
       )
       .sort({ amount: -1 })
-      .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
   },  
   quarterly: function(req, res) {
-    console.log('QTRLY AGGREGATE')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -181,11 +172,10 @@ module.exports = {
         }]
       )
       .sort({ amount: -1 })
-      .then(dbModel => {console.log('QTRLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('QTRLY AGGREGATE2' + err);res.json(err)});
   },
   monthly: function(req, res) {
-    console.log('REPORT DATA')
     db.Transaction
     .aggregate(
       [{ $match: {status: 'Approved' }},
@@ -201,11 +191,10 @@ module.exports = {
       }]
     )
     .sort({ amount: -1 })
-    .then(dbModel => {console.log('REPORT' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+    .then(dbModel => {res.json(dbModel)})
     .catch(err => {console.log('REPORT 2 ' + err);res.json(err)});
   }, 
   acctyear: function(req, res) {
-    console.log('YEARLY ACCT DETAIL AGGREGATE')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -230,11 +219,10 @@ module.exports = {
         }]
       )
       .sort({ date: -1 })
-      .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
   },  
   acctquarter: function(req, res) {
-    console.log('QTRLY ACCT DETAIL AGGREGATE')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -260,11 +248,10 @@ module.exports = {
         }]
       )
       .sort({ date: -1 })
-      .then(dbModel => {console.log('QTRLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('QTRLY AGGREGATE2' + err);res.json(err)});
   },
   acctmonth: function(req, res) {
-    console.log('MTHLY ACCT DETAIL AGGREGATE')
     db.Transaction
     .aggregate(
       [{ $match: {status: 'Approved' }},
@@ -291,11 +278,10 @@ module.exports = {
       }]
     )
     .sort({ date: -1 })
-    .then(dbModel => {console.log('REPORT' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+    .then(dbModel => {res.json(dbModel)})
     .catch(err => {console.log('REPORT 2 ' + err);res.json(err)});
   },
   typeyear: function(req, res) {
-    console.log('YEARLY AGGREGATE')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -309,11 +295,10 @@ module.exports = {
         }]
       )
       .sort({ amount: - 1 })
-      .then(dbModel => {console.log('YEARLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('YEARLY AGGREGATE2' + err);res.json(err)});
   },  
   typequarter: function(req, res) {
-    console.log('QTRLY AGGREGATE')
     db.Transaction
       .aggregate(
         [{ $match: {status: 'Approved' }},
@@ -328,11 +313,10 @@ module.exports = {
         }]
       )
       .sort({ amount: -1 })
-      .then(dbModel => {console.log('QTRLY AGGREGATE' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+      .then(dbModel => {res.json(dbModel)})
       .catch(err => {console.log('QTRLY AGGREGATE2' + err);res.json(err)});
   },
   typemonth: function(req, res) {
-    console.log('REPORT DATA')
     db.Transaction
     .aggregate(
       [{ $match: {status: 'Approved' }},
@@ -347,7 +331,7 @@ module.exports = {
       }]
     )
     .sort({ amount: -1 })
-    .then(dbModel => {console.log('REPORT' + JSON.stringify(dbModel[1])); res.json(dbModel)})
+    .then(dbModel => {res.json(dbModel)})
     .catch(err => {console.log('REPORT 2 ' + err);res.json(err)});
   },
 };

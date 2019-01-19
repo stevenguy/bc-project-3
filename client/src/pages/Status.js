@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import ResponsiveDrawer from "../components/ResponsiveDrawer"
 import Footer from "../components/Footer"
-import grey from '@material-ui/core/colors/grey'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import API from '../utils/API'
