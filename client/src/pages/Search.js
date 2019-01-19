@@ -58,6 +58,9 @@ const styles = theme => ({
     top: '200px',
   },
   container: {
+    // position: 'relative',
+    // flexGrow: 2
+    // width: '100%'
     flex: 1
   },
   suggestionsContainerOpen: {
@@ -266,11 +269,6 @@ class Search extends Component {
           // console.log(this.state.single)
           API.transByApprover(this.state.single)
             .then (r => {
-              r.data.map (item => {
-                item.date = new Date(item.date)
-                item.prepared_date = new Date(item.prepared_date)
-                item.approved_date = new Date(item.approved_date)
-              })
               this.setState({searchData: r.data})
               console.log(this.state.searchData)
               this.setState({viewCard: true})
@@ -282,11 +280,6 @@ class Search extends Component {
           // console.log(this.state.single)
           API.transByPreparer(this.state.single)
             .then (r => {
-              r.data.map (item => {
-                item.date = new Date(item.date)
-                item.prepared_date = new Date(item.prepared_date)
-                item.approved_date = new Date(item.approved_date)
-              })
               this.setState({searchData: r.data})
               console.log(this.state.searchData)
               this.setState({viewCard: true})
@@ -297,18 +290,26 @@ class Search extends Component {
           // console.log('Database ID')
           API.getTransaction(this.state.single)
             .then (r => {
-              r.data.date = new Date(r.data.date)
-              r.data.prepared_date = new Date(r.data.prepared_date)
-              r.data.approved_date = new Date(r.data.approved_date)
               this.setState({searchData: [r.data]})
-              // console.log(this.state.searchData)
-              // console.log(r.data)
+              console.log(this.state.searchData)
               this.setState({viewCard: true})
             })
         }
         default: console.log('please select a category!')
       }
     }
+
+    // renderButton = () => {
+    //   let isShowing = this.state.viewCard
+    //   if (isShowing) {
+    //     this.state.searchData.map(info => {
+    //       <SimpleCard info={info} /> 
+    //     })
+    //   } 
+    //   else {
+    //       null
+    //     }
+    // }
 
     render() {
       const { classes } = this.props;
@@ -322,6 +323,15 @@ class Search extends Component {
         renderSuggestion,
       };
 
+      //Renders Card when submit is clicked 
+      // let isShowing = this.state.viewCard
+      // let button 
+      // if (isShowing) {
+      // button = <SimpleCard info= {this.state.searchData} />;
+      // } else {
+      //   button = ""
+      // }
+
       // Calling selectChanger function here because view re-renders immediately after state.category is changed 
       this.selectChanger()
 
@@ -333,7 +343,6 @@ class Search extends Component {
         <main className = {classes.content}>
           <div className={classes.toolbar} />
             {/* <div className={classes.root}> */}
-            
             <Paper className={classes.toot} elevation={1}>
             <Grid container spacing={8} alignItems= 'flex-end'>
 {/* SELECT CODE  */}
@@ -348,6 +357,7 @@ class Search extends Component {
                   Search By:
                   </InputLabel>
                   <Select
+                    // defaultValue = {30}
                     value={this.state.category}
                     onChange={this.handleSelectChange}
                     input={
@@ -394,7 +404,7 @@ class Search extends Component {
               <div className={classes.carduh}> {
                 this.state.searchData.map(item => 
                   <div className={classes.simpleCard}>
-                  {this.state.viewCard ? <SimpleCard info = {item} cat = {this.state.category} />: null}
+                  {this.state.viewCard ? <SimpleCard info = {item}/>: null}
                   </div>
                   )
               } 
