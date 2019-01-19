@@ -18,20 +18,17 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
   },
-  table: {
-    minWidth: 700,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     flexBasis: '100%',
   },
-  card: {
-    minWidth: 275,
+  table: {
+    minWidth: 700,
+  },
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
   },
 })
 
@@ -100,7 +97,7 @@ class Journals extends Component {
                 {this.props.output.transaction.map((entry, index) => (
                   <React.Fragment key={index}>
                     <JournalRow entry={entry} index={index} />
-                    <Divider />
+                   {index === this.props.output.transaction.length - 1 ? '' : <Divider />} 
                   </React.Fragment>
                 )
                 )}
@@ -120,7 +117,7 @@ class Journals extends Component {
                 }
                 {
                   this.props.output.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
-                    ? <Button style={hideApprove} onClick={() => {
+                    ? <Button color='secondary' style={hideApprove} onClick={() => {
                       this.handleUnapprove(this.props.output._id)
                     }}
                       variant="contained" className={classes.button}>
@@ -142,41 +139,32 @@ class Journals extends Component {
                     <Table>
                       <TableBody>
                         <TableRow>
-                          <TableCell><b>Date:</b> {transactions.date.toLocaleDateString('en-US')}</TableCell>
+                          <TableCell align='left'><b>Status:</b> {transactions.status}</TableCell>
+                          <TableCell align='right'><b>Date:</b> {transactions.date.toLocaleDateString('en-US')}</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell><b>Account:</b> {transactions.account}</TableCell>
+                          <TableCell align='left'><b>Account:</b> {transactions.account}</TableCell>
+                          <TableCell align='right'><b>Description:</b> {transactions.description}</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell><b>Description:</b> {transactions.description}</TableCell>
+                          <TableCell align='left'><b>Amount: $</b> {transactions.amount}</TableCell>
+                          <TableCell align='right'><b>Type:</b> {transactions.type}</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell><b>Type:</b> {transactions.type}</TableCell>
+                          <TableCell align='left'><b>Memo:</b> {transactions.memo}</TableCell>
+                          <TableCell align='right'><b>Detail:</b> {transactions.details}</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell><b>Memo:</b> {transactions.memo}</TableCell>
-                        </TableRow>
+                          <TableCell align='left'><b>Preparer:</b> {transactions.preparer}</TableCell>
+                          <TableCell align='right'><b>Prepared Date:</b> {transactions.prepared_date.toLocaleDateString('en-US')}</TableCell>
+                          </TableRow>
                         <TableRow>
-                          <TableCell><b>Detail:</b> {transactions.details}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Preparer:</b> {transactions.preparer}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Prepared Date:</b> {transactions.prepared_date.toLocaleDateString('en-US')}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Approver:</b> {transactions.approver}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>{transactions.status === 'Unapproved' ? 'Unapproved Date:' : 'Approved Date:' } </b> {transactions.status === 'Pending' ? '' : transactions.approved_date.toLocaleDateString('en-US')}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell><b>Status:</b> {transactions.status}</TableCell>
+                          <TableCell align='left'><b>Approver:</b> {transactions.approver}</TableCell>
+                          <TableCell align='right'><b>{transactions.status === 'Unapproved' ? 'Unapproved Date:' : 'Approved Date:' } </b> {transactions.status === 'Pending' ? '' : transactions.approved_date.toLocaleDateString('en-US')}</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
-                  </CardContent>
+                  </CardContent>    
                 ))
               }
               {
@@ -184,7 +172,7 @@ class Journals extends Component {
               ? <Button style={hideUnapprove} onClick={() => {
                 this.handleApprove(this.props.output._id)
               }} 
-              variant="contained" className={classes.button}>
+                variant="contained" className={classes.button}>
                 Approve
                 </Button>
                       : this.props.output.transaction[0].status === 'Pending' && this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
@@ -198,7 +186,7 @@ class Journals extends Component {
               ? <Button style={hideApprove} onClick={() => {
                 this.handleUnapprove(this.props.output._id)
               }} 
-              variant="contained" className={classes.button}>
+              color='secondary' variant="contained" className={classes.button}>
                 Unapprove
                 </Button>
                       : this.props.output.transaction[0].status === 'Pending' && this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
@@ -207,7 +195,6 @@ class Journals extends Component {
                 </Button>
               : ''
               }
-              
               </React.Fragment>
             ) 
           }
