@@ -658,8 +658,8 @@ class Acct extends Component {
                 <ExpansionPanel expanded={this.state.expanded === i } onChange={this.handleExpand(i)} key={i}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography className={classes.heading}><b>Date:</b> {output.date.toLocaleDateString('en-US')}</Typography>
-                    <Typography className={classes.heading}>{output.transaction}</Typography>
-                    <Typography className={classes.secondaryHeading}>{ccyFormat(output.amount)}</Typography>
+                    <Typography className={classes.heading}><b>{output.transaction}</b></Typography>
+                    <Typography className={classes.secondaryHeading}><b>{ccyFormat(output.amount)}</b></Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                   <Table>
