@@ -8,4 +8,6 @@ router.route('/')
 router.route('/status/:status')
 .get(journalsController.find)
 
+
+
 module.exports = router;
