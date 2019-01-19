@@ -33,7 +33,7 @@ const styles = theme => ({
       <div className={classes.footer}>
           <Typography variant="h6" color="inherit">
            <a className={classes.link} href="https://github.com/stevenguy/bc-project-3">
-            <p>Github Repository</p>
+            <p style={{color: 'grey'}}>Github Repository</p>
            </a> 
           </Typography>
       </div>
