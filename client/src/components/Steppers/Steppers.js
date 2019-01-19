@@ -59,7 +59,6 @@ class Steppers extends React.Component {
         this.props.entries.map((entry) => {
           entry.details === "Debit" ? total += parseFloat(entry.amount) : total -= parseFloat(entry.amount)
         })
-        console.log(total)
         if (total === 0) {
           this.props.submitForm()
           this.setState({activeStep: this.state.activeStep + 1, isError: false, index: null})

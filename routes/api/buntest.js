@@ -6,7 +6,6 @@ const db = require("../../models")
 router.route("/")
   .post((req, res) => {
     let data = JSON.parse(req.body.header.data)
-    console.log(data.length)
     let _preparer = req.body.header.name
     let index = 0
 
@@ -14,7 +13,6 @@ router.route("/")
       .then(dbModel => {
         data.map(
           function(object){
-            console.log(object)
             let date = new Date(object.date)
             data[index]["preparer"] = _preparer,
             data[index]["prepared_date"] = new Date(),

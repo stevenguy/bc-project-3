@@ -8,11 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import API from '../../utils/API'
 
-const drawerWidth = 180
 
 const styles = theme => ({
   //Style goes here
@@ -51,8 +47,6 @@ class JournalRow extends Component {
 
   render() {
     const { classes } = this.props;
-    const hideApprove = this.state.hideApprove ? { display: 'none' } : {}
-    const hideUnapprove = this.state.hideUnapprove ? { display: 'none' } : {}
 
     return (
       <React.Fragment>
@@ -67,7 +61,6 @@ class JournalRow extends Component {
             secondary={
               <React.Fragment>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {console.log(this.props.entry)}
                   {"Description: " + this.props.entry.description}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">

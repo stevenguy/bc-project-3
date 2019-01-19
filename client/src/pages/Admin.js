@@ -40,7 +40,6 @@ class Admin extends Component {
     roleInfo.role = role;
     Auth.updateUser(roleInfo)
       .then(res => {
-        console.log(res.data)
         this.forceUpdate()
       })
       .catch(err => console.log(err));
@@ -58,7 +57,6 @@ class Admin extends Component {
   componentDidMount() {
     Auth.getUser()
       .then(res => {
-        console.log(res.data);
         var temp = res.data;
         this.state.accounts = temp;
         this.forceUpdate();
