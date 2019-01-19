@@ -95,16 +95,16 @@ class SimpleCard extends React.Component {
           className={classes.margins}
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.props.cat == 30 ? <BookmarkBorderIcon/> : <AccountCircleIcon/>}
+              {this.props.cat === 30 ? <BookmarkBorderIcon/> : <AccountCircleIcon/>}
             </Avatar>
           }
           title={
               <Typography 
                 className={classes.card} 
                 paragraph variant= 'h4'>{
-                  this.props.cat == 30 ? this.props.info.journal_id : 
-                  this.props.cat == 20 ? this.props.info.preparer:
-                  this.props.cat == 10 ? this.props.info.approver: 
+                  this.props.cat === 30 ? this.props.info.journal_id : 
+                  this.props.cat === 20 ? this.props.info.preparer:
+                  this.props.cat === 10 ? this.props.info.approver: 
                   'None Selected'
                   }
               </Typography>
