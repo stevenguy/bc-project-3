@@ -29,8 +29,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   margin: {
-    margin: theme.spacing.unit,
-    alignSelf: 'center'
+    marginBottom: '10px'
   },
 })
 
@@ -56,7 +55,7 @@ class JournalRow extends Component {
 
     return (
       <React.Fragment>
-        <ListItem button onClick={this.handleClick} key={this.props.index} alignItems="flex-start">
+        <ListItem className={classes.margin} button onClick={this.handleClick} key={this.props.index} alignItems="flex-start">
           <ListItemAvatar>
             {this.props.entry.details === "Debit"
               ? <Avatar style={{ backgroundColor: 'green' }}>DR</Avatar>
@@ -83,10 +82,12 @@ class JournalRow extends Component {
                   {this.state.open ? 'Prepared Date: ' + this.props.entry.prepared_date.toLocaleDateString('en-US') : null}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open ? 'Approver: ' + this.props.entry.approver : null}
+                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapprover: ' : 'Approver: '} {this.props.entry.status === 'Pending' ? '' : this.props.entry.approver}
+                    {/* || this.props.entry.status === 'Approved' ? 'Approver: ' + this.props.entry.approver : 'Unapprover: ' + this.props.entry.unapprover} {this.props.entry.status === 'Pending' ? '' : this.props.approver} */}
                 </Typography>
                 <Typography component="span" className={classes.inline} color="textPrimary">
-                  {this.state.open ? 'Approved Date: ' + this.props.entry.approved_date.toLocaleDateString('en-US') : null}
+                  {this.state.open && this.props.entry.status === 'Unapproved' ? 'Unapproved Date:' : 'Approved Date:'} {this.props.entry.status === 'Pending' ? '' : this.props.entry.approved_date.toLocaleDateString('en-US')}
+                    {/* 'Approved Date: ' + this.props.entry.approved_date.toLocaleDateString('en-US') : null} */}
                 </Typography>
                 {this.props.entry.date.toLocaleDateString('en-US')}
               </React.Fragment>

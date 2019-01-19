@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import Journals from '../components/Journals'
 import Notifications from "../components/Notifications"
 import MenuItem from '@material-ui/core/MenuItem';
+import { borders } from '@material-ui/system';
 
 const drawerWidth = 180
 
@@ -46,6 +47,9 @@ const styles = theme => ({
   },
   card: {
     minWidth: 275,
+  },
+  margin: {
+    marginBottom: '15px'
   },
 })
 
@@ -119,7 +123,7 @@ class Status extends Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
 
-          <Paper className="row">
+          <Paper>
             <form className={classes.container} noValidate autoComplete="off">
               <TextField
                 id="journals"
@@ -146,7 +150,6 @@ class Status extends Component {
             </form>
           </Paper>
           <div style={{ height: 10 }}></div>
-          <Paper>
             {this.state.journalData.map((output, j) => (
               <React.Fragment key={j}>
                     <Card>
@@ -154,10 +157,9 @@ class Status extends Component {
                       output={output}
                       />
                   </Card>
-                  <Divider light />
+                <Divider className={classes.margin} light />
               </React.Fragment>
             ))}
-          </Paper>
         </main>
         <Footer />
       </React.Fragment>
