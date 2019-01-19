@@ -107,7 +107,11 @@ const styles = theme => ({
   },
   simpleCard: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  domCard: {
+    margin: 20
   }
 
 });
@@ -207,6 +211,7 @@ class Search extends Component {
       this.setState({
         labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
       });
+      console.log(this.state.category)
     }
     
     handleSuggestionsFetchRequested = ({ value }) => {
@@ -264,48 +269,57 @@ class Search extends Component {
         case 10: {
           // console.log('Approver')
           // console.log(this.state.single)
-          API.transByApprover(this.state.single)
+          API.getApproverJournals(this.state.single)
             .then (r => {
-              r.data.map (item => {
-                item.date = new Date(item.date)
-                item.prepared_date = new Date(item.prepared_date)
-                item.approved_date = new Date(item.approved_date)
+              r.data.map((data) => {
+                data.transaction.map((data) => {
+                  data.date = new Date(data.date)
+                  data.prepared_date = new Date(data.prepared_date)
+                  data.approved_date = new Date(data.approved_date)
+                })
               })
               this.setState({searchData: r.data})
-              console.log(this.state.searchData)
+              // console.log(this.state.searchData)
               this.setState({viewCard: true})
+              console.log(r.data)
             })
         }
         break
         case 20: {
           // console.log('Preparer')
           // console.log(this.state.single)
-          API.transByPreparer(this.state.single)
+          API.getPreparerJournals(this.state.single)
             .then (r => {
-              r.data.map (item => {
-                item.date = new Date(item.date)
-                item.prepared_date = new Date(item.prepared_date)
-                item.approved_date = new Date(item.approved_date)
+              r.data.map((data) => {
+                data.transaction.map((data) => {
+                  data.date = new Date(data.date)
+                  data.prepared_date = new Date(data.prepared_date)
+                  data.approved_date = new Date(data.approved_date)
+                })
               })
               this.setState({searchData: r.data})
               console.log(this.state.searchData)
               this.setState({viewCard: true})
+              // console.log(r.data)
             })
         }
         break 
         case 30: {
-          // console.log('Database ID')
-          API.getTransaction(this.state.single)
+          console.log('Database ID')
+          API.searchTransaction(this.state.single)
             .then (r => {
-              r.data.date = new Date(r.data.date)
-              r.data.prepared_date = new Date(r.data.prepared_date)
-              r.data.approved_date = new Date(r.data.approved_date)
-              this.setState({searchData: [r.data]})
-              // console.log(this.state.searchData)
-              // console.log(r.data)
+              r.data.map(data =>{
+                data.date = new Date(data.date)
+                data.prepared_date = new Date(data.prepared_date)
+                data.approved_date = new Date(data.approved_date)
+              })
+              this.setState({searchData: r.data})
+              console.log(this.state.searchData)
               this.setState({viewCard: true})
+              // console.log(r.data)
             })
         }
+        break
         default: console.log('please select a category!')
       }
     }
@@ -391,16 +405,33 @@ class Search extends Component {
               <Button variant= 'contained' color= 'primary' onClick = {this.searchItem} >Submit</Button>
               </Grid>
           </Grid>
+          </Paper>
               <div className={classes.carduh}> {
-                this.state.searchData.map(item => 
-                  <div className={classes.simpleCard}>
+                this.state.category === 30 && this.state.viewCard === true ? this.state.searchData.map (item => 
+                <div className={classes.simpleCard}>
                   {this.state.viewCard ? <SimpleCard info = {item} cat = {this.state.category} />: null}
-                  </div>
-                  )
+                </div>
+                )
+                :
+                this.state.viewCard === true ? this.state.searchData.map(item => 
+                  <Paper className = {classes.domCard}>
+                    {item.transaction.map(item => 
+                      <div className={classes.simpleCard}>
+                        <SimpleCard info = {item} cat = {this.state.category} />
+                      </div>
+                    )}
+                  </Paper>
+                )
+                : null
+                // this.state.searchData.map (item => 
+                //   <div className={classes.simpleCard}>
+                //     {this.state.viewCard ? <SimpleCard info = {item} cat = {this.state.category} />: null}
+                //   </div>
+                //   )
               } 
               </div>
           {/* </div> */}
-          </Paper>
+         
       </main>
       <Footer />
       </React.Fragment>

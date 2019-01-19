@@ -17,6 +17,10 @@ export default {
   getTransaction: function(id) {
     return axios.get("/api/transactions/" + id);
   },
+  // Gets the transaction with the given id for SEARCH FUNCTION
+  searchTransaction: function(id) {
+    return axios.get("/api/transactions/search/" + id);
+  },
   // // Deletes the transaction with the given id
   deleteTransaction: function(id) {
     return axios.delete("/api/transactions/" + id);
@@ -47,6 +51,12 @@ export default {
   //Get list of journal
   getJournals: function(status) {
     return axios.get('/api/journals/status/' + status)
+  },
+  getApproverJournals: function(approver) {
+    return axios.get('/api/journals/approver/' + approver)
+  },
+  getPreparerJournals: function(preparer) {
+    return axios.get('/api/journals/preparer/' + preparer)
   },
   approveJournal: function(journalId) {
     return axios.put('/api/transactions/approve/', journalId)

@@ -17,8 +17,9 @@ import Divider from '@material-ui/core/Divider';
 const styles = theme => ({
   card: {
     flex: 1,
-    marginBottom: '0px',
-    marginTop: '20px',
+    // marginBottom: '0px',
+    // marginTop: '20px',
+    margin: '15px',
     maxWidth: '820px',
     left: 0
   },

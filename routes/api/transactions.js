@@ -14,13 +14,13 @@ router.route('/approve')
 router.route('/unapprove')
   .put(transactionsController.unapprove)
 
-// Finds Transaction by Preparer's name
-router.route("/preparer/:name")
-  .get(transactionsController.transByPreparer)
+// // Finds Transaction by Preparer's name
+// router.route("/preparer/:name")
+//   .get(transactionsController.transByPreparer)
 
-// Finds Transaction by Approver's name
-router.route("/approver/:name")
-  .get(transactionsController.transByApprover)
+// // Finds Transaction by Approver's name
+// router.route("/approver/:name")
+//   .get(transactionsController.transByApprover)
 
 // Aggregate Preparer Data for Autofill Feature
 router.route("/preparer")
@@ -83,5 +83,8 @@ router.route("/:id")
   .get(transactionsController.findById)
   // .put(transactionsController.update)
   .delete(transactionsController.remove)
+router.route("/search/:id")
+  .get(transactionsController.searchById)
+  
   
 module.exports = router;
