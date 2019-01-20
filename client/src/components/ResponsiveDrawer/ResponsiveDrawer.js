@@ -143,12 +143,12 @@ class ResponsiveDrawer extends React.Component {
     const drawer = (
       <div>
         <div className={classes.toolbar}>
-        <p className={classes.brand}><img src="../../images/acctg_blue.png" alt="acctg" style={ { height: 50, width: 100}}/></p>
+        <p className={classes.brand}><img src="./images/acctg_blue.png" alt="acctg" style={ { height: 50, width: 100}}/></p>
         </div>
         <ExpansionPanel className={classes.user}>
         <ExpansionPanelSummary className={classes.user} expandIcon={<ExpandMoreIcon />}>
         {local 
-          ? <React.Fragment> <Avatar alt="Login User" src={!user.photoURL ? '../../images/avatar.jpg': user.photoURL} className={classes.avatar} />
+          ? <React.Fragment> <Avatar alt="Login User" src={!user.photoURL ? './images/avatar.jpg': user.photoURL} className={classes.avatar} />
           <Typography className={classes.userName}>{user.name}</Typography>
           </React.Fragment>
           : <Redirect to='/'/>}
