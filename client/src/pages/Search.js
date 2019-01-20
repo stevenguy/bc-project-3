@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-// import PropTypes from 'prop-types';
-// import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import Footer from "../components/Footer"
-
-// import React from 'react';
 import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
@@ -15,19 +10,12 @@ import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
-import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 import SimpleCard from '../components/Cards/searchCard'
-import { red } from "@material-ui/core/colors";
 import Notifications from "../components/Notifications"
-
-
 import ReactDOM from 'react-dom';
-import Input from '@material-ui/core/Input';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import FilledInput from '@material-ui/core/FilledInput';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
@@ -166,18 +154,18 @@ function getSuggestions(value) {
   const inputValue = deburr(value.trim()).toLowerCase();
   const inputLength = inputValue.length;
   let count = 0;
-
   return inputLength === 0
     ? []
     : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 && suggestion._id.label.slice(0, inputLength).toLowerCase() === inputValue;
-
-        if (keep) {
-          count += 1;
+        if (suggestion._id.label !== null) {
+          const keep =
+            count < 5 && suggestion._id.label.slice(0, inputLength).toLowerCase() === inputValue;
+  
+          if (keep) {
+            count += 1;
+          }
+          return keep;
         }
-
-        return keep;
       });
 }
 
@@ -212,14 +200,12 @@ class Search extends Component {
         .then(r => {
             suggestions = r.data
           })
-          .then(r => console.log(suggestions))
     }
     
     componentDidMount() {
       this.setState({
         labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
       });
-      console.log(this.state.category)
     }
     
     handleSuggestionsFetchRequested = ({ value }) => {
@@ -241,8 +227,6 @@ class Search extends Component {
     };
 
     handleApprove = journal => {
-      console.log('journal testing hello' + journal)
-      this.setState({ hideUnapprove: true })
       API.approveJournal({ journalId: journal, user: user.name })
         .then(() => {
           this.setState({ disableApprove: true })
@@ -251,8 +235,6 @@ class Search extends Component {
     }
   
     handleUnapprove = journal => {
-      console.log('journal unapprove hello' + journal)
-      this.setState({ hideApprove: true })
       API.unapproveJournal({ journalId: journal, user: user.name })
         .then(() => {
           this.setState({ disableUnapprove: true })
@@ -263,9 +245,7 @@ class Search extends Component {
       if(this.state.category === 20){
         API.preparerAutofill()
           .then(r => {
-            console.log('hey its working')
             suggestions = r.data
-            console.log(r.data)
           })
       }
       else if(this.state.category === 30) {
@@ -273,20 +253,17 @@ class Search extends Component {
         .then(r => {
             suggestions = r.data
           })
-          .then(r => console.log(suggestions))
       }
       else if(this.state.category === 10){
         API.approverAutofill()
         .then(r => {
             suggestions = r.data
           })
-          .then(r => console.log(suggestions))
       }
     }
 
     handleSelectChange = event => {
       this.setState({ [event.target.name]: event.target.value })
-      console.log('ran!')
       this.setState({viewCard: false})
       this.setState({single: ""})
     };
@@ -294,8 +271,6 @@ class Search extends Component {
     searchItem = () => {
       switch (this.state.category){
         case 10: {
-          // console.log('Approver')
-          // console.log(this.state.single)
           API.getApproverJournals(this.state.single)
             .then (r => {
               r.data.map((data) => {
@@ -313,8 +288,6 @@ class Search extends Component {
         }
         break
         case 20: {
-          // console.log('Preparer')
-          // console.log(this.state.single)
           API.getPreparerJournals(this.state.single)
             .then (r => {
               r.data.map((data) => {
@@ -325,14 +298,11 @@ class Search extends Component {
                 })
               })
               this.setState({searchData: r.data})
-              console.log(this.state.searchData)
               this.setState({viewCard: true})
-              // console.log(r.data)
             })
         }
         break 
         case 30: {
-          console.log('Database ID')
           API.searchTransaction(this.state.single)
             .then (r => {
               r.data.map(data =>{
@@ -341,9 +311,7 @@ class Search extends Component {
                 data.approved_date = new Date(data.approved_date)
               })
               this.setState({searchData: r.data})
-              console.log(this.state.searchData)
               this.setState({viewCard: true})
-              // console.log(r.data)
             })
         }
         break
@@ -353,10 +321,6 @@ class Search extends Component {
 
     render() {
       const { classes } = this.props;
-      const hideApprove = this.state.hideApprove ? { display: 'none' } : {}
-      const hideUnapprove = this.state.hideUnapprove ? { display: 'none' } : {}
-
-
       const autosuggestProps = {
         renderInputComponent,
         suggestions: this.state.suggestions,
@@ -446,7 +410,7 @@ class Search extends Component {
                 )}
                 {
                 this.state.searchData[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
-              ? <Button style={hideUnapprove} onClick={() => {
+              ? <Button onClick={() => {
                 this.handleApprove(this.state.searchData[0].journal_id)
               }} 
               variant="contained" className={classes.button}>
@@ -460,7 +424,7 @@ class Search extends Component {
               }
               {
                 this.state.searchData[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
-              ? <Button style={hideApprove} onClick={() => {
+              ? <Button onClick={() => {
                 this.handleUnapprove(this.state.searchData[0].journal_id)
               }} 
               variant="contained" className={classes.button}>
@@ -483,7 +447,7 @@ class Search extends Component {
                     )}
                      {
                 item.transaction[0].status === 'Pending' && !this.state.disableApprove && !this.state.disableUnapprove && user.role.toLowerCase() === 'manager'
-              ? <Button style={hideUnapprove} onClick={() => {
+              ? <Button onClick={() => {
                 this.handleApprove(item._id)
               }} 
               variant="contained" className={classes.button}>
@@ -497,7 +461,7 @@ class Search extends Component {
               }
               {
                 item.transaction[0].status === 'Pending' && !this.state.disableUnapprove && !this.state.disableApprove && user.role.toLowerCase() === 'manager'
-              ? <Button style={hideApprove} onClick={() => {
+              ? <Button onClick={() => {
                 this.handleUnapprove(item._id)
               }} 
               variant="contained" className={classes.button}>
