@@ -83,7 +83,7 @@ Users have a login page and each user will have assigned “roles”.  The user 
 1. Lowest authority
 2. The person who prepares and initiates the Journal Entry
 
-##### APPROVERER 
+##### MANAGER: 
 1. Middle authority
 2. The approver will be the person who approves the Preparer’s journal entry
 
