@@ -13,6 +13,8 @@ A simple enterprise accounting/book-keeping web-based application where the user
 6. Approved/Unapproved Journal Entries
 7. Search Journal Entries
 
+The Application is completely mobile responsive. Desktop and mobile screenshots below @ each functionality description.
+
 ## Technology
 1. MongoDB/Mongoose
 2. Express
