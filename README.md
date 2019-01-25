@@ -146,7 +146,7 @@ User will have the ability to book a journal entry manually and create new accou
 The user will be able to run financial statement reports regardless of user roles
 1. Reports will be populated on 'Approved' journal entries only. 
 2. Reports include Income Statement, Balance Sheet, Account Details, Comparative Income Statement (e.g., August 2018 vs Sept 2018, Q1 vs Q2, and 2018 vs 2019) and Comparative Balance Sheet (e.g., August 2018 vs Sept 2018, Q1 vs Q2, and 2018 vs 2019) 
-3. Users can run yearly, quarterly, and monthly
+3. Users can run yearly, quarterly, and monthly reports
 
 #### Desktop View
 ![alt text](./client/public/images/Reports.png "Logo Title Text 1")
