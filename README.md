@@ -19,15 +19,17 @@ A simple enterprise accounting/book-keeping web-based application where the user
 
 The Application is completely mobile responsive. Desktop and mobile screenshots below @ each functionality description.
 
-
-
 ## Technology
-1. MongoDB/Mongoose
-2. Express
-3. ReactJS
-4. NodeJS
-5. Firebase Authentication
-6. Material Ui
+1. [MongoDB](https://www.mongodb.com/) + [Mongoose](https://mongoosejs.com/)
+2. [Express](https://expressjs.com/)
+3. [ReactJS](https://reactjs.org/)
+4. [NodeJS](https://nodejs.org/en/)
+5. [Firebase Authentication](https://firebase.google.com/docs/auth/)
+6. [Material UI](https://material-ui.com/)
+7. [JSON](https://www.json.org/)
+8. [Socket.io](https://socket.io/)
+9. [NPM Packages](https://www.npmjs.com/)
+10. 100s of NPM packages
 
 ## API Routes
 1. Create
