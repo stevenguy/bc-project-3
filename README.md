@@ -15,6 +15,8 @@ A simple enterprise accounting/book-keeping web-based application where the user
 
 The Application is completely mobile responsive. Desktop and mobile screenshots below @ each functionality description.
 
+DEMO on Heroku [here](https://peaceful-anchorage-98434.herokuapp.com/)
+
 ## Technology
 1. MongoDB/Mongoose
 2. Express
