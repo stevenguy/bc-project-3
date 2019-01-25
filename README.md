@@ -25,17 +25,17 @@ The Application is completely mobile responsive. Desktop and mobile screenshots 
 
 ## API Routes
 1. Create
-⋅⋅a. Create via Functionality #3
-⋅⋅b. Create via Functionality #4
+⋅⋅* Create via Functionality #3
+⋅⋅* Create via Functionality #4
 2. Read:
-⋅⋅a. Create via Functionality #5
-⋅⋅b. Create via Functionality #6
-⋅⋅c. Create via Functionality #7
+⋅⋅* Create via Functionality #5
+⋅⋅* Create via Functionality #6
+⋅⋅* Create via Functionality #7
 3. Update
-⋅⋅a. Create via Functionality #6
-⋅⋅b. Create via Functionality #7
+⋅⋅* Create via Functionality #6
+⋅⋅* Create via Functionality #7
 4. Delete
-⋅⋅a. Create via Functionality #4
+⋅⋅* Create via Functionality #4
 5. User signin
 6. User ID
 
