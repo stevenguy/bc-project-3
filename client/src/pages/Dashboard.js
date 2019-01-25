@@ -118,8 +118,8 @@ class Dashboard extends Component {
             <Grid container alignItems={'center'} alignContent = {'center'} spacing={24}>
               <Grid item lg={3} sm={6} xs={12}>
                 <DashboardCard
-                  title='Approved/Unapproved Journal Entries'
-                  path='Entries'
+                  title='Status'
+                  path='Status'
                   icon={<DoneAllIcon className={classes.icon} />}
                   text='Create a new Journal Entry or check to see if existing entries are Approved/Unapproved'   
                   color={'#76ff03'}               
