@@ -5,55 +5,55 @@
 ## Description:
 A simple enterprise accounting/book-keeping web-based application where the user can do the following:
 
-### 1. Login and different user roles
-### 2. User Dashboard
-### 3. Upload a CSV file into the database
-### 4. Book a Journal Entry
-### 5. Run financial statement reports
-### 6. Approved/Unapproved Journal Entries
-### 7. Search Journal Entries
+1. Login and different user roles
+2. User Dashboard
+3. Upload a CSV file into the database
+4. Book a Journal Entry
+5. Run financial statement reports
+6. Approved/Unapproved Journal Entries
+7. Search Journal Entries
 
 ## Technology
-### 1. MongoDB/Mongoose
-### 2. Express
-### 3. ReactJS
-### 4. NodeJS
-### 5. Firebase Authentication
-### 6. Material Ui
+1. MongoDB/Mongoose
+2. Express
+3. ReactJS
+4. NodeJS
+5. Firebase Authentication
+6. Material Ui
 
 ## API Routes
-### 1. Create
-#### a. Create via Functionality #3
-#### b. Create via Functionality #4
-### 2. Read:
-#### a. Create via Functionality #5
-#### b. Create via Functionality #6
-#### c. Create via Functionality #7
-### 3. Update
-#### a. Create via Functionality #6
-#### b. Create via Functionality #7
-### 4. Delete
-#### a. Create via Functionality #4
-### 5. User signin
-### 6. User ID
+1. Create
+a. Create via Functionality #3
+b. Create via Functionality #4
+2. Read:
+a. Create via Functionality #5
+b. Create via Functionality #6
+c. Create via Functionality #7
+3. Update
+a. Create via Functionality #6
+b. Create via Functionality #7
+4. Delete
+ a. Create via Functionality #4
+5. User signin
+6. User ID
 
 ## Website’s Appearance
-### 1. Home/Login Page:  Dark color scheme (Red and Black)
-### 2. Dashboard, etc: Light color scheme (White background, light grey top menu, and dark grey side menu)
-### 3. Design: Clean, minimalist, and simple
-#### a. A child should be able to navigate through it
-#### b. Emphasis card usage
-### 4. Pictures: No pictures except on the login page and homepage
-### 5. CSS framework = Material UI
+1. Home/Login Page:  Dark color scheme (Red and Black)
+2. Dashboard, etc: Light color scheme (White background, light grey top menu, and dark grey side menu)
+3. Design: Clean, minimalist, and simple
+a. A child should be able to navigate through it
+b. Emphasis card usage
+4. Pictures: No pictures except on the login page and homepage
+5. CSS framework = Material UI
 
 ## Functionality Assignment
-### 1. Login and different user roles coded by [Thomas Nguyen] (https://github.com/tealeafnguyen)
-### 2. User Dashboard coded by [Jon Song] (https://github.com/jonsong246)
-### 3. Upload a CSV file into the database coded by [Bunrith Buth] (https://github.com/bunrithbuth)
-### 4. Book a Journal Entry coded by [Mearat Hou] (https://github.com/mearatjames)
-### 5. Run financial statement reports coded by [Steve Nguy] (https://github.com/stevenguy)
-### 6. Approved/Pending/Unapproved Journal Entries coded by [Ben Oh] (https://github.com/b3n0h)
-### 7. Search Journal Entries coded by [Jin Choi] (https://github.com/jchoi166)
+1. Login and different user roles coded by [Thomas Nguyen](https://github.com/tealeafnguyen)
+2. User Dashboard coded by [Jon Song](https://github.com/jonsong246)
+3. Upload a CSV file into the database coded by [Bunrith Buth](https://github.com/bunrithbuth)
+4. Book a Journal Entry coded by [Mearat Hou](https://github.com/mearatjames)
+5. Run financial statement reports coded by [Steve Nguy](https://github.com/stevenguy)
+6. Approved/Pending/Unapproved Journal Entries coded by [Ben Oh](https://github.com/b3n0h)
+7. Search Journal Entries coded by [Jin Choi](https://github.com/jchoi166)
 
 ## Each team member was responsible for coding their assigned functionality with ReactJS and writing their own API routes for their functionality.
 
