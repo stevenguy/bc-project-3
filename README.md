@@ -31,17 +31,17 @@ The Application is completely mobile responsive. Desktop and mobile screenshots 
 
 ## API Routes
 1. Create
-⋅⋅* Create via Functionality #3
-⋅⋅* Create via Functionality #4
+  * Create via Functionality #3
+  * Create via Functionality #4
 2. Read:
-⋅⋅* Create via Functionality #5
-⋅⋅* Create via Functionality #6
-⋅⋅* Create via Functionality #7
+  * Create via Functionality #5
+  * Create via Functionality #6
+  * Create via Functionality #7
 3. Update
-⋅⋅* Create via Functionality #6
-⋅⋅* Create via Functionality #7
+  * Create via Functionality #6
+  * Create via Functionality #7
 4. Delete
-⋅⋅* Create via Functionality #4
+  * Create via Functionality #4
 5. User signin
 6. User ID
 
@@ -72,11 +72,9 @@ b. Emphasis card usage
 Users have a login page and each user will have assigned “roles”.  The user will be assigned as 'Preparer' upon registering and the Admin will change their roles. In addition, users have the ability to login with Google via Firebase Authentication. 
 
 #### Desktop View
-Inline-style: 
 ![alt text](./client/public/images/Login.png "Logo Title Text 1")
 
 #### Mobile View
-Inline-style: 
 ![alt text](./client/public/images/Login-Mobile.png "Logo Title Text 1")
 
 #### Roles
