@@ -49,8 +49,8 @@ The Application is completely mobile responsive. Desktop and mobile screenshots 
 1. Home/Login Page:  Dark color scheme (Red and Black)
 2. Dashboard, etc: Light color scheme (White background, light grey top menu, and dark grey side menu)
 3. Design: Clean, minimalist, and simple
-a. A child should be able to navigate through it
-b. Emphasis card usage
+  * A child should be able to navigate through it
+  * Emphasis card usage
 4. Pictures: No pictures except on the login page and homepage
 5. CSS framework = Material UI
 
