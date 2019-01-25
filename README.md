@@ -65,11 +65,11 @@ Users have a login page and each user will have assigned “roles”.  The user 
 
 #### Desktop View
 Inline-style: 
-![alt text](../client/images/Login.png "Logo Title Text 1")
+![alt text](./client/public/images/Login.png "Logo Title Text 1")
 
 #### Mobile View
 Inline-style: 
-![alt text](../client/images/Login-Mobile.png "Logo Title Text 1")
+![alt text](./client/public/images/Login-Mobile.png "Logo Title Text 1")
 
 #### Roles
 
