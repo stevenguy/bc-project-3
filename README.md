@@ -2,6 +2,10 @@
 
 # ACCTG Web Accounting
 
+## DEMO on Heroku [here](https://peaceful-anchorage-98434.herokuapp.com/)
+
+## Github [here](https://github.com/stevenguy/bc-project-3)
+
 ## Description:
 A simple enterprise accounting/book-keeping web-based application where the user can do the following:
 
@@ -15,7 +19,7 @@ A simple enterprise accounting/book-keeping web-based application where the user
 
 The Application is completely mobile responsive. Desktop and mobile screenshots below @ each functionality description.
 
-DEMO on Heroku [here](https://peaceful-anchorage-98434.herokuapp.com/)
+
 
 ## Technology
 1. MongoDB/Mongoose
