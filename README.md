@@ -29,7 +29,9 @@ The Application is completely mobile responsive. Desktop and mobile screenshots 
 7. [JSON](https://www.json.org/)
 8. [Socket.io](https://socket.io/)
 9. [NPM Packages](https://www.npmjs.com/)
-10. 100s of NPM packages
+10. [Heroku](https://www.heroku.com/)
+11. [Mlab](https://mlab.com/)
+12. 100s of npmjs packages
 
 ## API Routes
 1. Create
